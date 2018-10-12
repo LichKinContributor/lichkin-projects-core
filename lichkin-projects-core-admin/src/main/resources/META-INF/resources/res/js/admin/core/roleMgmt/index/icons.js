@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'roleMgmt' : 'user-secret',
+});

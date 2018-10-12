@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'userMgmt' : 'users',
+});

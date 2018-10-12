@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'errorLog' : 'exclamation-triangle',
+});

@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'compMgmt' : 'building',
+});
