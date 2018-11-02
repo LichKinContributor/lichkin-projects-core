@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'deptMgmt' : 'suitcase',
+});

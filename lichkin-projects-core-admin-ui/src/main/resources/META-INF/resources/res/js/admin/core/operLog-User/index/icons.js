@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'operLog' : 'book-open',
+});

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <packaging>pom</packaging>
+
+  <groupId>com.lichkin.projects</groupId>
+  <artifactId>lichkin-projects-core</artifactId>
+  <version>1.0.0.RELEASE</version>
+
+  <parent>
+    <groupId>com.lichkin.springframework.boot</groupId>
+    <artifactId>lichkin-spring-boot</artifactId>
+    <version>1.4.1.RELEASE</version>
+  </parent>
+
+  <properties>
+    <com.lichkin.projects.core.version>1.0.0.RELEASE</com.lichkin.projects.core.version>
+    <com.lichkin.ui.version>1.1.6.RELEASE</com.lichkin.ui.version>
+  </properties>
+
+  <modules>
+    <module>lichkin-projects-core-db-connector</module>
+    <module>lichkin-projects-core-common</module>
+    <module>lichkin-projects-core-entities</module>
+    <module>lichkin-projects-core-services</module>
+    <module>lichkin-projects-core-apis-common</module>
+    <module>lichkin-projects-core-admin</module>
+    <module>lichkin-projects-core-admin-ui</module>
+    <module>lichkin-projects-core-user</module>
+    <module>lichkin-projects-core-user-ui</module>
+    <module>lichkin-projects-core-employee</module>
+    <module>lichkin-projects-core-employee-ui</module>
+    <module>lichkin-projects-core-quartz</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- lichkin-ui -->
+      <dependency>
+        <groupId>com.lichkin.ui</groupId>
+        <artifactId>lichkin-ui</artifactId>
+        <version>${com.lichkin.ui.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+</project>

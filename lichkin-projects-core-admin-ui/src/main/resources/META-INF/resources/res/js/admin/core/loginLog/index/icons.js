@@ -1,0 +1,3 @@
+$.LKExtendICON({
+  'loginLog' : 'address-book',
+});
