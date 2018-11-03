@@ -26,11 +26,11 @@ public class S extends LKApiBusInsertService<I, SysCompEntity> {
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		SysComp_EXIST(100000),
+		SysComp_EXIST(20000),
 
-		SysComp_parent_code_can_not_modify_when_restore(100000),
+		SysComp_parent_code_can_not_modify_when_restore(20000),
 
-		SysComp_comp_key_can_not_modify_when_restore(100000),
+		SysComp_comp_key_can_not_modify_when_restore(20000),
 
 		;
 

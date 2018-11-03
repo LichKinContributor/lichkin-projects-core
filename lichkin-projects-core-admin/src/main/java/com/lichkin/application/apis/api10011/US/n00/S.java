@@ -30,7 +30,7 @@ public class S extends LKApiBusUpdateUsingStatusService<I, SysDeptEntity> {
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		SysDept_can_not_delete_dept_when_has_employee(100000),
+		SysDept_can_not_delete_dept_when_has_employee(20000),
 
 		;
 

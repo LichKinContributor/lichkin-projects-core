@@ -24,7 +24,7 @@ public class S extends LKApiBusUpdateService<I, SysDictionaryEntity> {
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		SysDictionary_EXIST(100000),
+		SysDictionary_EXIST(20000),
 
 		;
 

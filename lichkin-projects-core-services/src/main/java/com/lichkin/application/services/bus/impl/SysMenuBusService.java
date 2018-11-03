@@ -25,7 +25,7 @@ public class SysMenuBusService extends LKDBService {
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		SysMenu_LEVEL_OUT(100001),
+		SysMenu_LEVEL_OUT(20000),
 
 		;
 

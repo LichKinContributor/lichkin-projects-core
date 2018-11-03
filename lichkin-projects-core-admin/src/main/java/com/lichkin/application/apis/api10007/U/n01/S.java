@@ -18,7 +18,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysAdminLoginEntit
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		SysAdminLogin_old_pwd_incorrect(100002)
+		SysAdminLogin_old_pwd_incorrect(20000)
 
 		;
 

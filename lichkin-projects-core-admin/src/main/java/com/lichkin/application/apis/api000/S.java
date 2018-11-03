@@ -53,15 +53,15 @@ public class S extends LKApiServiceImpl<I, SO> implements LKApiService<I, SO> {
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		Admin_AccountLogin_account_inexistent(100001),
+		Admin_AccountLogin_account_inexistent(20000),
 
-		Admin_AccountLogin_comp_inexistent(100002),
+		Admin_AccountLogin_comp_inexistent(20000),
 
-		Admin_AccountLogin_account_locked_byAdmin(100003),
+		Admin_AccountLogin_account_locked_byAdmin(20000),
 
-		Admin_AccountLogin_account_locked(100004),
+		Admin_AccountLogin_account_locked(20000),
 
-		Admin_AccountLogin_pwd_incorrect(100005),
+		Admin_AccountLogin_pwd_incorrect(20000),
 
 		;
 

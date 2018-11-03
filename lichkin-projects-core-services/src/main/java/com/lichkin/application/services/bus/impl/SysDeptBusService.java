@@ -28,7 +28,7 @@ public class SysDeptBusService extends LKDBService {
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		SysDept_LEVEL_OUT(100001),
+		SysDept_LEVEL_OUT(20000),
 
 		;
 

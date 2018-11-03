@@ -26,9 +26,9 @@ public class S extends LKApiBusInsertService<I, SysAdminLoginEntity> {
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		SysAdminLogin_EXIST(100000),
+		SysAdminLogin_EXIST(20000),
 
-		SysAdminLoginComp_EXIST(100001),
+		SysAdminLoginComp_EXIST(20000),
 
 		;
 

@@ -24,7 +24,7 @@ public class S extends LKApiBusInsertService<I, SysCategoryEntity> {
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		SysCategory_EXIST(100000),
+		SysCategory_EXIST(20000),
 
 		;
 
