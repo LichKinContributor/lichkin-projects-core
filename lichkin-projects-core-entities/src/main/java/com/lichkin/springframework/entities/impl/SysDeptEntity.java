@@ -8,6 +8,7 @@ import com.lichkin.framework.defines.annotations.FieldGenerator;
 import com.lichkin.framework.defines.annotations.InsertCheckType;
 import com.lichkin.framework.defines.annotations.InsertType;
 import com.lichkin.framework.defines.annotations.UpdateCheckType;
+import com.lichkin.framework.defines.entities.I_Dept;
 import com.lichkin.springframework.entities.suppers.BaseCompEntity;
 
 import lombok.Getter;
@@ -29,7 +30,7 @@ import lombok.Setter;
 		, updateCheckType = UpdateCheckType.CHECK
 
 )
-public class SysDeptEntity extends BaseCompEntity {
+public class SysDeptEntity extends BaseCompEntity implements I_Dept {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 10011L;
