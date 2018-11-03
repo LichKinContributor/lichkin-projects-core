@@ -39,8 +39,7 @@ public class EmployeePageSSOController extends LKPagesController {
 				LKSession.setComp(session, comp);
 				LKSession.setUser(session, employee);
 				LKSession.setLogin(session, userLogin);
-				LKSession.setObject(session, "dept", dept);
-				LKSession.setString(session, "deptId", dept.getId());
+				LKSession.setDept(session, dept);
 				mv.setViewName("redirect:" + redirectUrl);
 			} catch (Exception e) {
 			}
