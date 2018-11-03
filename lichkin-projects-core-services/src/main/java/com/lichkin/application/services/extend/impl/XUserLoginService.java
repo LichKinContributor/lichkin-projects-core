@@ -50,28 +50,17 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 	}
 
 
-	@Override
-	public SysUserLoginEntity findUserByUserLogin(boolean throwException, SysUserLoginEntity userLogin) {
-		if (userLogin == null) {
-			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_USER_LOGIN);
-			}
-			return null;
-		}
-		return userLogin;
-	}
-
-
 	public SysEmployeeEntity findEmployeeByUserLoginAndCompId(boolean throwException, SysUserLoginEntity userLogin, String compId) {
-		if (userLogin == null) {
-			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_USER_LOGIN);
-			}
-			return null;
-		}
 		if (StringUtils.isBlank(compId)) {
 			if (throwException) {
 				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_COMP_ID);
+			}
+			return null;
+		}
+
+		if (userLogin == null) {
+			if (throwException) {
+				throw new LKRuntimeException(LKErrorCodesEnum.ACCOUNT_INEXIST);
 			}
 			return null;
 		}
@@ -88,6 +77,11 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 			}
 		}
 		return employee;
+	}
+
+
+	public SysEmployeeEntity findEmployeeByTokenAndCompId(boolean throwException, String token, String compId) {
+		return findEmployeeByUserLoginAndCompId(throwException, findUserLoginByToken(throwException, token), compId);
 	}
 
 

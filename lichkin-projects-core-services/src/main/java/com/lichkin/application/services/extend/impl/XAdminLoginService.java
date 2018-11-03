@@ -38,16 +38,4 @@ public class XAdminLoginService extends LoginService<SysAdminLoginEntity, SysAdm
 		return userLogin;
 	}
 
-
-	@Override
-	public SysAdminLoginEntity findUserByUserLogin(boolean throwException, SysAdminLoginEntity userLogin) {
-		if (userLogin == null) {
-			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_USER_LOGIN);
-			}
-			return null;
-		}
-		return userLogin;
-	}
-
 }
