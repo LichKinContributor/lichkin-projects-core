@@ -16,7 +16,7 @@
 
   <properties>
     <com.lichkin.projects.core.version>1.0.0.RELEASE</com.lichkin.projects.core.version>
-    <com.lichkin.ui.version>1.1.6.RELEASE</com.lichkin.ui.version>
+    <com.lichkin.ui.version>1.1.7.RELEASE</com.lichkin.ui.version>
   </properties>
 
   <modules>
