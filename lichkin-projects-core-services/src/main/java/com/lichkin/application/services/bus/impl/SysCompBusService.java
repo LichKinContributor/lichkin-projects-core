@@ -2,21 +2,17 @@ package com.lichkin.application.services.bus.impl;
 
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.Condition;
-import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysCompR;
 import com.lichkin.framework.db.beans.eq;
-import com.lichkin.framework.defines.beans.impl.LKPageBean;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
-import com.lichkin.framework.defines.exceptions.LKRuntimeException;
-import com.lichkin.framework.utils.LKCodeUtils;
 import com.lichkin.springframework.entities.impl.SysCompEntity;
+import com.lichkin.springframework.services.LKCodeService;
 import com.lichkin.springframework.services.LKDBService;
 
 import lombok.Getter;
@@ -62,19 +58,12 @@ public class SysCompBusService extends LKDBService {
 	}
 
 
+	@Autowired
+	private LKCodeService codeService;
+
+
 	public String analysisCompCode(String parentCode) {
-		QuerySQL sql = new QuerySQL(false, SysCompEntity.class);
-		sql.eq(SysCompR.parentCode, parentCode);
-		sql.setPage(new LKPageBean(1));
-		sql.addOrders(new Order(SysCompR.compCode, false));
-		Page<SysCompEntity> page = dao.getPage(sql, SysCompEntity.class);
-		if (CollectionUtils.isNotEmpty(page.getContent())) {
-			return LKCodeUtils.nextCode(page.getContent().get(0).getCompCode());
-		}
-		if (LKCodeUtils.currentLevel(parentCode) == 8) {
-			throw new LKRuntimeException(ErrorCodes.SysComp_LEVEL_OUT);
-		}
-		return LKCodeUtils.createCode(parentCode);
+		return codeService.analysisCode(SysCompEntity.class, null, parentCode, "compCode", 0, SysCompR.parentCode, SysCompR.compCode, ErrorCodes.SysComp_LEVEL_OUT);
 	}
 
 }

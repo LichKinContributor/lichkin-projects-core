@@ -9,7 +9,6 @@ import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysDictionaryR;
 import com.lichkin.framework.db.beans.eq;
-import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.springframework.entities.impl.SysDictionaryEntity;
 import com.lichkin.springframework.services.LKDBService;
 
@@ -23,7 +22,7 @@ public class SysDictionaryBusService extends LKDBService {
 			sql.neq(SysDictionaryR.id, id);
 		}
 
-		sql.eq(SysDictionaryR.compId, LKFrameworkStatics.LichKin.equals(compId) && StringUtils.isNotBlank(busCompId) ? busCompId : compId);
+		addConditionCompId(true, sql, SysDictionaryR.compId, compId, busCompId);
 		sql.eq(SysDictionaryR.locale, locale);
 		sql.eq(SysDictionaryR.categoryCode, categoryCode);
 

@@ -94,17 +94,6 @@ public class LKDictUtils {
 
 
 	/**
-	 * 连接字典表（是否）
-	 * @param sql SQL语句对象
-	 * @param columnResId 列资源ID
-	 * @param tableIdx 字典表序号（从0开始）
-	 */
-	public static void yesNo(QuerySQL sql, int columnResId, int tableIdx) {
-		leftJoinDictionary(sql, "yesNo", LKFrameworkStatics.LichKin, "YES_NO", columnResId, tableIdx);
-	}
-
-
-	/**
 	 * 连接字典表（客户端类型）
 	 * @param sql SQL语句对象
 	 * @param columnResId 列资源ID

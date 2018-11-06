@@ -25,7 +25,7 @@ public class SysEmployeeBusService extends LKDBService {
 			sql.neq(SysEmployeeR.id, id);
 		}
 
-		sql.eq(SysEmployeeR.compId, compId);
+		addConditionCompId(true, sql, SysEmployeeR.compId, compId, busCompId);
 
 		sql.where(new Condition(true,
 

@@ -26,7 +26,7 @@ public class SysRoleBusService extends LKDBService {
 			sql.neq(SysRoleR.id, id);
 		}
 
-		sql.eq(SysRoleR.compId, compId);
+		addConditionCompId(true, sql, SysRoleR.compId, compId, busCompId);
 
 		sql.eq(SysRoleR.roleName, roleName);
 

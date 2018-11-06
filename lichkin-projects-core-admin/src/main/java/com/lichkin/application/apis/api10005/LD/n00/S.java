@@ -25,7 +25,7 @@ public class S extends LKApiBusGetDroplistService<I> {
 		sql.select(SysRoleR.roleName, "text");
 
 		// 筛选条件（必填项）
-		sql.eq(SysRoleR.compId, compId);
+		addConditionCompId(true, sql, SysRoleR.compId, compId, sin.getCompId());
 		sql.eq(SysRoleR.usingStatus, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）

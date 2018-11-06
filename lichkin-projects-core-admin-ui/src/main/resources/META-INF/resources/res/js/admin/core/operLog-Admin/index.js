@@ -47,7 +47,8 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         options : {
           name : 'operType',
           param : {
-            categoryCode : 'OPERATION_TYPE'
+            categoryCode : 'OPERATION_TYPE',
+            excludes : 'LOGIN'
           }
         }
       }, {

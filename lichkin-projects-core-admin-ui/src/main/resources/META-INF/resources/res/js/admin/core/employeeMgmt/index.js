@@ -275,7 +275,9 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           param : {
             categoryCode : 'EMPLOYEE_USING_STATUS',
             includes : 'USING#@#DEPRECATED'
-          }
+          },
+          value : 'USING',
+          cancelable : false
         }
       }
   ]
