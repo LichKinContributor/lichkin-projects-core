@@ -27,6 +27,12 @@ public class O {
 
 	private String email;
 
+	private String userCard;
+
+	private String pwd;
+
 	private Byte level;
+
+	private String token;
 
 }

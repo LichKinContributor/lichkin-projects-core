@@ -68,7 +68,7 @@ public class S extends LKApiBusGetListService<I, O, SysDictionaryEntity> {
 		}
 
 		// 排序条件
-		sql.addOrders(new Order(SysDictionaryR.sortId), new Order(SysDictionaryR.id, false));
+		sql.addOrders(new Order(SysDictionaryR.categoryCode), new Order(SysDictionaryR.sortId), new Order(SysDictionaryR.id, false));
 	}
 
 }

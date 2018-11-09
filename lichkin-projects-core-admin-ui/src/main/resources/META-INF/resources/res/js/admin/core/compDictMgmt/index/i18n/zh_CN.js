@@ -11,6 +11,8 @@ $.LKExtendI18N({
         'dictName' : '字典名称',
         'dictCode' : '字典编码'
       },
+
+      'set' : '设置',
     },
 
     'comp-grid' : {

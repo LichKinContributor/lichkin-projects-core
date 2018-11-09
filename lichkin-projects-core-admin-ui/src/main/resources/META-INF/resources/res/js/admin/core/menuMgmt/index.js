@@ -13,17 +13,17 @@ var menuMgmtFormPlugins = [
         data : [
             {
               text : $.LKGetI18N('ROOT_ONLY', 'true'),
-              value : true
+              value : 'true'
             }, {
               text : $.LKGetI18N('ROOT_ONLY', 'false'),
-              value : false
+              value : 'false'
             }, {
               text : $.LKGetI18N('ROOT_ONLY', 'null'),
-              value : null
+              value : 'null'
             }
         ],
         cancelable : false,
-        value : false
+        value : 'false'
       }
     }, {
       plugin : 'droplist',
@@ -32,14 +32,14 @@ var menuMgmtFormPlugins = [
         data : [
             {
               text : $.LKGetI18N('ASSIGNABLE', 'true'),
-              value : true
+              value : 'true'
             }, {
               text : $.LKGetI18N('ASSIGNABLE', 'false'),
-              value : false
+              value : 'false'
             }
         ],
         cancelable : false,
-        value : true
+        value : 'true'
       }
     }, {
       plugin : 'droplist',
@@ -48,14 +48,14 @@ var menuMgmtFormPlugins = [
         data : [
             {
               text : $.LKGetI18N('ON_LINE', 'true'),
-              value : true
+              value : 'true'
             }, {
               text : $.LKGetI18N('ON_LINE', 'false'),
-              value : false
+              value : 'false'
             }
         ],
         cancelable : false,
-        value : false
+        value : 'false'
       }
     }, {
       plugin : 'textbox',
@@ -245,13 +245,13 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           data : [
               {
                 text : $.LKGetI18N('ROOT_ONLY', 'true'),
-                value : true
+                value : 'true'
               }, {
                 text : $.LKGetI18N('ROOT_ONLY', 'false'),
-                value : false
+                value : 'false'
               }, {
                 text : $.LKGetI18N('ROOT_ONLY', 'null'),
-                value : null
+                value : 'null'
               }
           ],
         }
@@ -262,10 +262,10 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           data : [
               {
                 text : $.LKGetI18N('ASSIGNABLE', 'true'),
-                value : true
+                value : 'true'
               }, {
                 text : $.LKGetI18N('ASSIGNABLE', 'false'),
-                value : false
+                value : 'false'
               }
           ],
         }
@@ -276,10 +276,10 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           data : [
               {
                 text : $.LKGetI18N('ON_LINE', 'true'),
-                value : true
+                value : 'true'
               }, {
                 text : $.LKGetI18N('ON_LINE', 'false'),
-                value : false
+                value : 'false'
               }
           ],
         }

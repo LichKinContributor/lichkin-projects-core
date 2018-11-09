@@ -44,6 +44,7 @@ public class S extends LKApiBusGetListService<I, SysDeptEntity, SysDeptEntity> {
 
 			QuerySQL sql = new QuerySQL(false, SysDeptEntity.class, true);
 
+			addConditionCompId(false, sql, SysDeptR.compId, compId, sin.getCompId());
 			sql.in(SysDeptR.deptCode, codeList);
 			sql.addOrders(new Order(SysDeptR.deptCode));
 

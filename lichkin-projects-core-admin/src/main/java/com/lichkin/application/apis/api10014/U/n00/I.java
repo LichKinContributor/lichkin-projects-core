@@ -34,7 +34,7 @@ public class I extends LKRequestIDBean {
 
 	private String jobTitle;
 
-	/** 部门IDs */
-	private String deptIds;
+	/** 部门ID */
+	private String deptId;
 
 }

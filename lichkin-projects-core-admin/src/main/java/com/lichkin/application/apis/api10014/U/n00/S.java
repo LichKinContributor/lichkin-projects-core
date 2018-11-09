@@ -78,7 +78,7 @@ public class S extends LKApiBusUpdateService<I, SysEmployeeEntity> {
 
 	@Override
 	protected void addSubs(I sin, String locale, String compId, String loginId, SysEmployeeEntity entity, String id) {
-		busService.addEmployeeDept(id, sin.getDeptIds());
+		busService.addEmployeeDept(id, sin.getDeptId());
 	}
 
 }

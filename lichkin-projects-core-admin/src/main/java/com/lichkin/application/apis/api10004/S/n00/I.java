@@ -13,11 +13,11 @@ public class I extends LKRequestBean {
 
 //	private String icon;
 
-//	private Boolean assignable;
+	private String assignable;
 
-//	private Boolean onLine;
+	private String onLine;
 
-//	private Boolean rootOnly;
+	private String rootOnly;
 
 	private String menuName;
 

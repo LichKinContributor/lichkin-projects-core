@@ -52,7 +52,7 @@ public class S extends LKApiBusGetDroplistService<I> {
 		if (category == null) {
 			return Collections.emptyList();
 		}
-		switch (category.getAuthType()) {
+		switch (category.getAuthTypeDictCode()) {
 			case "ENUM":
 			case "ROOT":
 				sql.eq(SysDictionaryR.compId, LKFrameworkStatics.LichKin);

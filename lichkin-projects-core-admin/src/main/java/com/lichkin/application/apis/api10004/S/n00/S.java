@@ -23,13 +23,32 @@ public class S extends LKApiBusGetListService<I, SysMenuEntity, SysMenuEntity> {
 			sql.like(SysMenuR.menuName, LikeType.ALL, sin.getMenuName());
 		}
 
+		String rootOnly = sin.getRootOnly();
+		if (StringUtils.isNotBlank(rootOnly)) {
+			if (!"null".equals(rootOnly)) {
+				sql.eq(SysMenuR.rootOnly, Boolean.parseBoolean(rootOnly));
+			} else {
+				sql.isNull(SysMenuR.rootOnly);
+			}
+		}
+
+		String onLine = sin.getOnLine();
+		if (StringUtils.isNotBlank(onLine)) {
+			sql.eq(SysMenuR.onLine, Boolean.parseBoolean(onLine));
+		}
+
+		String assignable = sin.getAssignable();
+		if (StringUtils.isNotBlank(assignable)) {
+			sql.eq(SysMenuR.assignable, Boolean.parseBoolean(assignable));
+		}
+
 		sql.addOrders(new Order(SysMenuR.menuCode));
 	}
 
 
 	@Override
 	protected List<SysMenuEntity> afterQuery(I sin, String locale, String compId, String loginId, List<SysMenuEntity> list) {
-		if (StringUtils.isNotBlank(sin.getMenuName())) {
+		if (StringUtils.isNotBlank(sin.getMenuName()) || StringUtils.isNotBlank(sin.getRootOnly()) || StringUtils.isNotBlank(sin.getOnLine()) || StringUtils.isNotBlank(sin.getAssignable())) {
 			List<String> codeList = new ArrayList<>();
 			for (int i = 0; i < list.size(); i++) {
 				codeList.add(list.get(i).getMenuCode());

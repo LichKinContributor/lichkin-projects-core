@@ -43,6 +43,18 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
   pageable : true,
   searchForm : [
       {
+        plugin : 'textbox',
+        options : {
+          name : 'userName',
+          cls : 'fuzzy-left fuzzy-right'
+        }
+      }, {
+        plugin : 'textbox',
+        options : {
+          name : 'email',
+          cls : 'fuzzy-left fuzzy-right'
+        }
+      }, {
         plugin : 'droplist',
         options : {
           name : 'operType',
@@ -55,18 +67,6 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         plugin : 'textbox',
         options : {
           name : 'busType',
-          cls : 'fuzzy-left fuzzy-right'
-        }
-      }, {
-        plugin : 'textbox',
-        options : {
-          name : 'userName',
-          cls : 'fuzzy-left fuzzy-right'
-        }
-      }, {
-        plugin : 'textbox',
-        options : {
-          name : 'email',
           cls : 'fuzzy-left fuzzy-right'
         }
       }, {

@@ -8,10 +8,8 @@ import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysUserLoginR;
 import com.lichkin.framework.db.enums.LikeType;
-import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.enums.impl.LKDateTimeTypeEnum;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
-import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -28,7 +26,10 @@ public class S extends LKApiBusGetPageService<I, O, SysUserLoginEntity> {
 		sql.select(SysUserLoginR.loginName);
 		sql.select(SysUserLoginR.cellphone);
 		sql.select(SysUserLoginR.email);
+		sql.select(SysUserLoginR.userCard);
+		sql.select(SysUserLoginR.pwd);
 		sql.select(SysUserLoginR.level);
+		sql.select(SysUserLoginR.token);
 
 		// 关联表
 
@@ -39,19 +40,9 @@ public class S extends LKApiBusGetPageService<I, O, SysUserLoginEntity> {
 
 		// 筛选条件（必填项）
 		// 在用状态
-		LKUsingStatusEnum usingStatus = sin.getUsingStatus();
-		if (usingStatus == null) {
-			if (LKFrameworkStatics.LichKin.equals(compId)) {
-				sql.neq(SysUserLoginR.usingStatus, LKUsingStatusEnum.DEPRECATED);
-			} else {
-				sql.eq(SysUserLoginR.usingStatus, LKUsingStatusEnum.USING);
-			}
-		} else {
-			sql.eq(SysUserLoginR.usingStatus, usingStatus);
-		}
+		addConditionUsingStatus(sql, SysUserLoginR.usingStatus, compId, sin.getUsingStatus());
 
 		// 筛选条件（业务项）
-
 		String userName = sin.getUserName();
 		if (StringUtils.isNotBlank(userName)) {
 			sql.like(SysUserLoginR.userName, LikeType.ALL, userName);

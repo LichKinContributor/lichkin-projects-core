@@ -16,6 +16,9 @@ $.LKExtendI18N({
         'startDate' : '起始注册日期',
         'endDate' : '截止注册日期',
         'gender' : '性别',
+        'userCard' : '身份证号',
+        'token' : '令牌',
+        'pwd' : '密码',
       }
     }
   }

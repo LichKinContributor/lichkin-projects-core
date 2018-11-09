@@ -81,11 +81,13 @@ public class SysUserLoginEntity extends BaseEntity implements I_User, I_Login {
 
 	/** 身份证号（自定义加密） */
 	@DefaultStringValue
+	@FieldGenerator(resultColumn = true)
 	@Column(length = 64, nullable = false)
 	private String userCard;
 
 	/** 密码（两次MD5） */
 	@DefaultStringValue
+	@FieldGenerator(resultColumn = true)
 	@Column(length = 32, nullable = false)
 	private String pwd;
 
@@ -107,6 +109,7 @@ public class SysUserLoginEntity extends BaseEntity implements I_User, I_Login {
 
 	/** 登录令牌 */
 	@DefaultStringValue(DefaultStringValue.TOKEN)
+	@FieldGenerator(resultColumn = true)
 	@Column(length = 64, nullable = false)
 	private String token;
 

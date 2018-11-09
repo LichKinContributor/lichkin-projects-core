@@ -274,7 +274,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
           name : 'usingStatus',
           param : {
             categoryCode : 'EMPLOYEE_USING_STATUS',
-            includes : 'USING#@#DEPRECATED'
+            includes : 'USING' + LK.SPLITOR + 'DEPRECATED'
           },
           value : 'USING',
           cancelable : false

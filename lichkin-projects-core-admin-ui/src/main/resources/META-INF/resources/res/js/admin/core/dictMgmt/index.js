@@ -174,18 +174,5 @@ LK.UI.datagrid({
     titleTools : true,
     saveUrl : '/SysDictionary/US'
   },
-  toolsView : {
-    titleTools : true,
-    dialog : {
-      size : {
-        cols : 1,
-        rows : 3
-      }
-    },
-    form : {
-      url : '/SysDictionary/O',
-      plugins : dictMgmtFormPlugins
-    }
-  },
   leftBorder : true
 });

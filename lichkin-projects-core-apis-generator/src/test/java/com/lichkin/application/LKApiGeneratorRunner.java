@@ -62,6 +62,7 @@ public class LKApiGeneratorRunner {
 	public void generateList() {
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysCategoryEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysDictionaryEntity", index, errorCode, Type.GetList, "获取列表数据接口");
+		LKApiGenerator.generate(userType, apiType, projectDir, "SysMenuEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 		LKApiGenerator.generate(userType, apiType, projectDir, "SysEmployeeEntity", index, errorCode, Type.GetList, "获取列表数据接口");
 	}
 

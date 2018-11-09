@@ -52,17 +52,17 @@ public class SysMenuEntity extends IDEntity implements I_Menu {
 	private String menuName;
 
 	/** true:ROOT权限可用;false:非ROOT权限可用;NULL:通用; */
-	@FieldGenerator
+	@FieldGenerator(queryCondition = true, queryConditionLike = false)
 	@Column
 	private Boolean rootOnly;
 
 	/** true:已上线;false:未上线; */
-	@FieldGenerator
+	@FieldGenerator(queryCondition = true, queryConditionLike = false)
 	@Column(nullable = false)
 	private Boolean onLine;
 
 	/** true:可分配;false:不可分配; */
-	@FieldGenerator
+	@FieldGenerator(queryCondition = true, queryConditionLike = false)
 	@Column(nullable = false)
 	private Boolean assignable;
 

@@ -4,7 +4,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
 } : {}), {
   i18nKey : 'userMgmt',
   $appendTo : true,
-  cols : 4,
+  cols : 6,
   url : '/SysUserLogin/P',
   columns : [
       {
@@ -28,9 +28,21 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         width : 60,
         name : 'gender'
       }, {
+        text : 'userCard',
+        width : 140,
+        name : 'userCard'
+      }, {
         text : 'level',
         width : 60,
         name : 'level'
+      }, {
+        text : 'token',
+        width : 460,
+        name : 'token'
+      }, {
+        text : 'pwd',
+        width : 260,
+        name : 'pwd'
       }, {
         text : 'insertTime',
         width : 160,
@@ -76,7 +88,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
             ].join(LK.SPLITOR)
           }
         }
-      }, {
+      }, '-', {
         plugin : 'datepicker',
         options : {
           name : 'startDate'
