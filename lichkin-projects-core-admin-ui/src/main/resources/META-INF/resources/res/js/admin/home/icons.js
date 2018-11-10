@@ -9,8 +9,4 @@ $.LKExtendICON({
   'ALIEN' : 'bug',
   'FEMALE' : 'female',
   'MALE' : 'male',
-
-  // 菜单目录
-  'sysMgmt' : 'cog',
-  'orgMgmt' : 'sitemap',
 });

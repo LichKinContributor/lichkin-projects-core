@@ -35,8 +35,4 @@ $.LKExtendI18N({
     'UNKNOWN' : '未知',
     'SECRECY' : '保密',
   },
-
-  // 菜单目录
-  'sysMgmt' : '系统管理',
-  'orgMgmt' : '组织架构管理',
 });
