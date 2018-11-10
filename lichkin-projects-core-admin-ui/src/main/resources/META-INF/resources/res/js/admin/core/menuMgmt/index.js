@@ -254,6 +254,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
                 value : 'null'
               }
           ],
+          multiSelect : true
         }
       }, {
         plugin : 'droplist',

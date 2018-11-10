@@ -6,10 +6,14 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysMenuR;
+import com.lichkin.framework.db.beans.eq;
+import com.lichkin.framework.db.beans.isNull;
 import com.lichkin.framework.db.enums.LikeType;
+import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.utils.LKCodeUtils;
 import com.lichkin.springframework.entities.impl.SysMenuEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
@@ -25,10 +29,34 @@ public class S extends LKApiBusGetListService<I, SysMenuEntity, SysMenuEntity> {
 
 		String rootOnly = sin.getRootOnly();
 		if (StringUtils.isNotBlank(rootOnly)) {
-			if (!"null".equals(rootOnly)) {
-				sql.eq(SysMenuR.rootOnly, Boolean.parseBoolean(rootOnly));
+			if (rootOnly.contains(LKFrameworkStatics.SPLITOR)) {
+				String[] rootOnlyArr = rootOnly.split(LKFrameworkStatics.SPLITOR);
+				List<Condition> listCondition = new ArrayList<>(rootOnlyArr.length);
+				for (String rootOnlyI : rootOnlyArr) {
+					if ("null".equals(rootOnlyI)) {
+						listCondition.add(new Condition(false, new isNull(SysMenuR.rootOnly)));
+						continue;
+					}
+					listCondition.add(new Condition(false, new eq(SysMenuR.rootOnly, Boolean.parseBoolean(rootOnlyI))));
+				}
+				int size = listCondition.size();
+				switch (size) {
+					case 2:
+						sql.where(new Condition(true, listCondition.get(0), listCondition.get(1)));
+					break;
+					default:
+						Condition condition0 = listCondition.remove(0);
+						Condition condition1 = listCondition.remove(1);
+						Condition[] conditions = new Condition[listCondition.size()];
+						sql.where(new Condition(true, condition0, condition1, listCondition.toArray(conditions)));
+					break;
+				}
 			} else {
-				sql.isNull(SysMenuR.rootOnly);
+				if (!"null".equals(rootOnly)) {
+					sql.eq(SysMenuR.rootOnly, Boolean.parseBoolean(rootOnly));
+				} else {
+					sql.isNull(SysMenuR.rootOnly);
+				}
 			}
 		}
 
