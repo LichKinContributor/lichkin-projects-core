@@ -715,3 +715,27 @@ var onDocumentResize = function() {
     }
   }
 };
+
+// 缓存字典类目
+LK.ajax({
+  showLoading : false,
+  url : '/SysCategory/L01',
+  success : function(reseponseDatas) {
+    for (var i = 0; i < reseponseDatas.length; i++) {
+      var categoryCode = reseponseDatas[i].categoryCode;
+      LK.needCacheCategoryCodes.push(categoryCode);
+      (function(categoryCode) {
+        LK.ajax({
+          showLoading : false,
+          url : '/SysDictionary/LD',
+          data : {
+            categoryCode : categoryCode
+          },
+          success : function(datas) {
+            LK.cacheDictionaryDatas(categoryCode, datas);
+          }
+        });
+      })(categoryCode);
+    }
+  }
+});

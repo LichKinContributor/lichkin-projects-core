@@ -84,4 +84,27 @@ public class LKSysCatagoryCache {
 				.collect(Collectors.toList());
 	}
 
+
+	public static List<Category> getList(String locale) {
+		return listInner.stream()
+
+				.filter(category -> {
+					return category.getLocale().equals(locale);
+				})
+
+				.filter(category -> {
+					String authTypeDictCode = category.getAuthTypeDictCode();
+					switch (authTypeDictCode) {
+						case "ENUM":
+						case "ROOT":
+						case "R_2_C":
+							return true;
+						default:
+							return false;
+					}
+				})
+
+				.collect(Collectors.toList());
+	}
+
 }
