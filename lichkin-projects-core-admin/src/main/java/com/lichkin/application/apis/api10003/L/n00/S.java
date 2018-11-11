@@ -27,8 +27,7 @@ public class S extends LKApiBusGetListService<I, O, SysDictionaryEntity> {
 		// 关联表
 
 		// 字典表
-		int i = 0;
-		LKDictUtils.usingStatus(sql, SysDictionaryR.usingStatus, i++);
+		LKDictUtils.usingStatus(sql, SysDictionaryR.usingStatus, 1);
 
 		// 筛选条件（必填项）
 		// 公司ID
