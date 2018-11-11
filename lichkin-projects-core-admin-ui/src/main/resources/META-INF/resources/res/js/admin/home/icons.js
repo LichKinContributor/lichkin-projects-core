@@ -9,4 +9,6 @@ $.LKExtendICON({
   'ALIEN' : 'bug',
   'FEMALE' : 'female',
   'MALE' : 'male',
+
+  'check' : 'check'
 });
