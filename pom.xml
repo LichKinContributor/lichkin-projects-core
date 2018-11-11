@@ -28,13 +28,10 @@
     <module>lichkin-projects-core-apis-common</module>
     <module>lichkin-projects-core-admin</module>
     <module>lichkin-projects-core-admin-ui</module>
-    <module>lichkin-projects-core-admin-launcher</module>
     <module>lichkin-projects-core-user</module>
     <module>lichkin-projects-core-user-ui</module>
-    <module>lichkin-projects-core-user-launcher</module>
     <module>lichkin-projects-core-employee</module>
     <module>lichkin-projects-core-employee-ui</module>
-    <module>lichkin-projects-core-employee-launcher</module>
     <module>lichkin-projects-core-quartz</module>
   </modules>
 
