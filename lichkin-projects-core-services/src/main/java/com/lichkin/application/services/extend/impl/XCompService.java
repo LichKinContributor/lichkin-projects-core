@@ -3,6 +3,8 @@ package com.lichkin.application.services.extend.impl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.lichkin.framework.db.beans.QuerySQL;
+import com.lichkin.framework.db.beans.SysCompR;
 import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.springframework.entities.impl.SysCompEntity;
@@ -12,15 +14,17 @@ import com.lichkin.springframework.services.CompService;
 public class XCompService extends CompService {
 
 	@Override
-	public SysCompEntity findCompById(boolean throwException, String compId) {
-		if (StringUtils.isBlank(compId)) {
+	public SysCompEntity findCompByToken(boolean throwException, String compToken) {
+		if (StringUtils.isBlank(compToken)) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.ACCOUNT_INEXIST);
+				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_COMP_TOKEN);
 			}
 			return null;
 		}
 
-		SysCompEntity comp = dao.findOneById(SysCompEntity.class, compId);
+		QuerySQL sql = new QuerySQL(SysCompEntity.class);
+		sql.eq(SysCompR.token, compToken);
+		SysCompEntity comp = dao.getOne(sql, SysCompEntity.class);
 		if (comp == null) {
 			if (throwException) {
 				throw new LKRuntimeException(LKErrorCodesEnum.COMP_INEXIST);

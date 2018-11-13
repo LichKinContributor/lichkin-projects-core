@@ -8,22 +8,27 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
+import com.lichkin.framework.db.beans.SysCompR;
 import com.lichkin.framework.db.beans.SysDeptR;
 import com.lichkin.framework.db.beans.SysEmployeeDeptR;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysUserLoginR;
 import com.lichkin.framework.db.beans.eq;
+import com.lichkin.framework.defines.entities.I_Login;
+import com.lichkin.framework.defines.entities.I_User;
 import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.entities.impl.SysCompEntity;
 import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LoginService;
+import com.lichkin.springframework.services.UserToEmployeeService;
 
 @Service
-public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserLoginEntity> {
+public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserLoginEntity> implements UserToEmployeeService {
 
 	@Override
 	public SysUserLoginEntity findUserLoginByToken(boolean throwException, String token) {
@@ -50,10 +55,11 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 	}
 
 
-	public SysEmployeeEntity findEmployeeByUserLoginAndCompId(boolean throwException, SysUserLoginEntity userLogin, String compId) {
-		if (StringUtils.isBlank(compId)) {
+	@Override
+	public I_User findEmployeeByUserLoginAndCompToken(boolean throwException, I_Login userLogin, String compToken) {
+		if (StringUtils.isBlank(compToken)) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_COMP_ID);
+				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_COMP_TOKEN);
 			}
 			return null;
 		}
@@ -67,7 +73,8 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 
 		QuerySQL sql = new QuerySQL(false, SysEmployeeEntity.class);
 
-		sql.eq(SysEmployeeR.compId, compId);
+		sql.innerJoin(SysCompEntity.class, new Condition(SysCompR.id, SysEmployeeR.compId), new Condition(true, new eq(SysCompR.token, compToken)));
+
 		sql.eq(SysEmployeeR.loginId, userLogin.getId());
 
 		SysEmployeeEntity employee = dao.getOne(sql, SysEmployeeEntity.class);
@@ -77,11 +84,6 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 			}
 		}
 		return employee;
-	}
-
-
-	public SysEmployeeEntity findEmployeeByTokenAndCompId(boolean throwException, String token, String compId) {
-		return findEmployeeByUserLoginAndCompId(throwException, findUserLoginByToken(throwException, token), compId);
 	}
 
 
