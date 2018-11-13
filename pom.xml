@@ -33,6 +33,7 @@
     <module>lichkin-projects-core-employee</module>
     <module>lichkin-projects-core-employee-ui</module>
     <module>lichkin-projects-core-quartz</module>
+    <module>lichkin-projects-core-ALiYunSmsSender</module>
   </modules>
 
   <dependencyManagement>
