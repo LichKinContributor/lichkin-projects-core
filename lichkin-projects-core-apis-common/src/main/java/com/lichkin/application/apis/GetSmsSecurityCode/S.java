@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lichkin.application.services.LKSmsSender;
 import com.lichkin.framework.db.beans.SysScR;
 import com.lichkin.framework.db.beans.UpdateSQL;
+import com.lichkin.framework.defines.LKConfigStatics;
 import com.lichkin.framework.defines.enums.impl.LKRangeTypeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
@@ -69,6 +70,10 @@ public class S extends LKApiServiceImpl<I, Void> implements LKApiVoidService<I> 
 		sms.setSms(LKStringUtils.replaceEL(smsContent, replaceParams));
 		dao.persistOne(sms);
 
+		// 测试环境不实际发送短信
+		if (LKConfigStatics.SYSTEM_DEBUG || LKConfigStatics.WEB_DEBUG || LKConfigStatics.WEB_ADMIN_DEBUG) {
+			return;
+		}
 		// 发送短信
 		new Thread(() -> smsSender.send(locale, "securityCode", busType, cellphone, smsContent, replaceParams)).start();
 	}
