@@ -16,8 +16,7 @@ public interface LKSmsSender {
 	 * @param cellphone 手机号码
 	 * @param smsContent 短信内容
 	 * @param replaceParams 替换参数
-	 * @param smsContentReplaced 替换后的短信内容
 	 */
-	public void send(String locale, String busType, String subBusType, String cellphone, String smsContent, Map<String, String> replaceParams, String smsContentReplaced);
+	public void send(String locale, String busType, String subBusType, String cellphone, String smsContent, Map<String, Object> replaceParams);
 
 }
