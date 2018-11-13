@@ -13,6 +13,7 @@ import com.lichkin.springframework.controllers.LKApiY0Controller;
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public abstract class CSuper extends LKApiY0Controller<I, List<Category>> {
 
+	@Deprecated
 	@Override
 	protected List<Category> doInvoke(I cin) throws LKException {
 		return LKSysCatagoryCache.getList(cin.isShowFull(), LKFrameworkStatics.LichKin.equals(cin.getDatas().getCompId()) ? cin.getLocale() : cin.getDatas().getLocale(), cin.getDatas().getCompId(), cin.getCategoryCode(), cin.getCategoryName(), cin.getAuthType());

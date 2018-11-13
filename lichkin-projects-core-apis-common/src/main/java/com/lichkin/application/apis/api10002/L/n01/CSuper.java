@@ -12,6 +12,7 @@ import com.lichkin.springframework.controllers.LKApiY0Controller;
 @LKApiType(apiType = ApiType.OPEN)
 public abstract class CSuper extends LKApiY0Controller<I, List<Category>> {
 
+	@Deprecated
 	@Override
 	protected List<Category> doInvoke(I cin) throws LKException {
 		return LKSysCatagoryCache.getList(cin.getDatas().getLocale());

@@ -27,6 +27,7 @@ public class C extends LKApiBusUpdateController<I, SysAdminLoginEntity> {
 	}
 
 
+	@Deprecated
 	@Override
 	protected I beforeInvokeService(I cin) throws LKException {
 		cin.setId(cin.getDatas().getLoginId());

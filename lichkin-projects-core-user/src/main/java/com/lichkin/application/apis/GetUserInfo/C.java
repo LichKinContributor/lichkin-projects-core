@@ -16,6 +16,7 @@ import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 @LKApiType(apiType = ApiType.PERSONAL_BUSINESS)
 public class C extends LKApiY0Controller<LKRequestBean, O> {
 
+	@Deprecated
 	@Override
 	protected O doInvoke(LKRequestBean cin) throws LKException {
 		SysUserLoginEntity login = (SysUserLoginEntity) cin.getDatas().getLogin();
