@@ -7,6 +7,6 @@ import com.lichkin.framework.defines.LKFrameworkStatics;
 
 @RestController("SysCategoryL01Controller")
 @RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysCategory/L01")
-public class C extends CSupper {
+public class C extends CSuper {
 
 }

@@ -11,7 +11,7 @@ import com.lichkin.framework.web.enums.ApiType;
 import com.lichkin.springframework.controllers.LKApiY0Controller;
 
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
-public abstract class CSupper extends LKApiY0Controller<I, List<Category>> {
+public abstract class CSuper extends LKApiY0Controller<I, List<Category>> {
 
 	@Override
 	protected List<Category> doInvoke(I cin) throws LKException {

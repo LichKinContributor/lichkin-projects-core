@@ -7,6 +7,6 @@ import com.lichkin.framework.defines.LKFrameworkStatics;
 
 @RestController("SysDictionaryLD00Controller")
 @RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysDictionary/LD")
-public class C extends CSupper {
+public class C extends CSuper {
 
 }
