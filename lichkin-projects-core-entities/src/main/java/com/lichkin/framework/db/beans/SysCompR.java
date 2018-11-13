@@ -20,20 +20,22 @@ public interface SysCompR {
 
 	public static final int compKey = 0x10001006;
 
-	public static final int telephone = 0x10001007;
+	public static final int token = 0x10001007;
 
-	public static final int email = 0x10001008;
+	public static final int telephone = 0x10001008;
 
-	public static final int address = 0x10001009;
+	public static final int email = 0x10001009;
 
-	public static final int website = 0x10001010;
+	public static final int address = 0x10001010;
 
-	public static final int description = 0x10001011;
+	public static final int website = 0x10001011;
 
-	public static final int linkmanName = 0x10001012;
+	public static final int description = 0x10001012;
 
-	public static final int linkmanCellphone = 0x10001013;
+	public static final int linkmanName = 0x10001013;
 
-	public static final int photo = 0x10001014;
+	public static final int linkmanCellphone = 0x10001014;
+
+	public static final int photo = 0x10001015;
 
 }

@@ -56,6 +56,10 @@ public class SysCompEntity extends BaseEntity implements I_Comp {
 	@Column(length = 16, nullable = false)
 	private String compKey;
 
+	/** 令牌 */
+	@Column(length = 64)
+	private String token;
+
 	/** 联系电话 */
 	@FieldGenerator(resultColumn = true)
 	@Column(length = 16)
