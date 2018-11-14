@@ -23,12 +23,14 @@ import com.lichkin.framework.db.beans.in;
 import com.lichkin.framework.db.beans.isNull;
 import com.lichkin.framework.defines.LKConfigStatics;
 import com.lichkin.framework.defines.LKFrameworkStatics;
+import com.lichkin.framework.defines.beans.impl.LichKin;
+import com.lichkin.framework.defines.beans.impl.LichKinUserLogin;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
-import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.json.LKJsonUtils;
+import com.lichkin.framework.utils.LKBeanUtils;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
 import com.lichkin.framework.utils.security.otp.LKOTPEncrypter;
@@ -193,10 +195,9 @@ public class S extends LKApiServiceImpl<I, SO> implements LKApiService<I, SO> {
 
 
 	private SO superAdmin(I sin) {
-		// TODO check pwd
 		SO out = new SO();
 		out.setComp(superComp());
-		out.setAdminLogin(superAdminLogin());
+		out.setAdminLogin(LKBeanUtils.newInstance(LichKinUserLogin.getInstance(), SysAdminLoginEntity.class));
 		out.setListRole(dao.getList(new QuerySQL(false, SysRoleEntity.class), SysRoleEntity.class));
 		QuerySQL sql = new QuerySQL(false, SysMenuEntity.class);
 		sql.where(new Condition(new Condition(new eq(SysMenuR.rootOnly, Boolean.TRUE)), new Condition(false, new isNull(SysMenuR.rootOnly))));
@@ -206,27 +207,7 @@ public class S extends LKApiServiceImpl<I, SO> implements LKApiService<I, SO> {
 
 
 	private SysCompEntity superComp() {
-		SysCompEntity comp = new SysCompEntity();
-		comp.setId(LKFrameworkStatics.LichKin);
-		comp.setEmail("lichkin@lichkin.com");
-		comp.setWebsite("http://www.lichkin.com");
-		comp.setLinkmanName("庄绪鑫");
-		comp.setLinkmanCellphone("18621118733");
-		return comp;
-	}
-
-
-	private SysAdminLoginEntity superAdminLogin() {
-		SysAdminLoginEntity adminLogin = new SysAdminLoginEntity();
-		adminLogin.setId(LKFrameworkStatics.LichKin);
-		adminLogin.setCompId(LKFrameworkStatics.LichKin);
-		adminLogin.setUserName(LKFrameworkStatics.LichKin);
-		adminLogin.setGender(LKGenderEnum.FEMALE);
-		adminLogin.setEmail("lichkin@lichkin.com");
-		adminLogin.setLevel((byte) 63);
-		adminLogin.setToken(LKFrameworkStatics.LichKin);
-		adminLogin.setSuperAdmin(true);
-		return adminLogin;
+		return LKBeanUtils.newInstance(LichKin.getInstance(), SysCompEntity.class);
 	}
 
 
