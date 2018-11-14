@@ -42,14 +42,20 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 		// 获取登录信息
 		SysUserLoginEntity userLogin = findUserLoginByCellphone(cellphone);
 
-		// 设置Token
-		userLogin.setToken(LKRandomUtils.create64());
-
 		boolean isLogin = userLogin != null;
 		if (isLogin) {// 登录
+			// 设置Token
+			userLogin.setToken(LKRandomUtils.create64());
+
 			// 修改数据
 			dao.mergeOne(userLogin);
 		} else {// 注册
+			userLogin = new SysUserLoginEntity();
+
+			// 设置Token
+			userLogin.setToken(LKRandomUtils.create64());
+
+			// 设置其它值
 			userLogin.setUserName("");
 			userLogin.setUserCard("");
 			userLogin.setGender(LKGenderEnum.UNKNOWN);
