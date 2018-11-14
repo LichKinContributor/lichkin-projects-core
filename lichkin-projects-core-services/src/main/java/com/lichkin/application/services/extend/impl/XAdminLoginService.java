@@ -5,20 +5,40 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysAdminLoginR;
-import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
+import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.services.LoginService;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 @Service
 public class XAdminLoginService extends LoginService<SysAdminLoginEntity, SysAdminLoginEntity> {
+
+	@Getter
+	@RequiredArgsConstructor
+	enum ErrorCodes implements LKCodeEnum {
+
+		/** 登录信息已失效 */
+		INVALIDED_TOKEN(29000),
+
+		/** 账号不存在 */
+		ACCOUNT_INEXIST(29001),
+
+		;
+
+		private final Integer code;
+
+	}
+
 
 	@Override
 	public SysAdminLoginEntity findUserLoginByToken(boolean throwException, String token) {
 		if (StringUtils.isBlank(token)) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_TOKEN);
+				throw new LKRuntimeException(ErrorCodes.INVALIDED_TOKEN);
 			}
 			return null;
 		}
@@ -31,7 +51,7 @@ public class XAdminLoginService extends LoginService<SysAdminLoginEntity, SysAdm
 		SysAdminLoginEntity userLogin = dao.getOne(sql, SysAdminLoginEntity.class);
 		if (userLogin == null) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.ACCOUNT_INEXIST);
+				throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
 			}
 			return null;
 		}

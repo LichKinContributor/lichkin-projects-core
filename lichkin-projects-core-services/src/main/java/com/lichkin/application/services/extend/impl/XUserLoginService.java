@@ -16,7 +16,7 @@ import com.lichkin.framework.db.beans.SysUserLoginR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.defines.entities.I_Login;
 import com.lichkin.framework.defines.entities.I_User;
-import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
+import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.springframework.entities.impl.SysCompEntity;
@@ -27,14 +27,49 @@ import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LoginService;
 import com.lichkin.springframework.services.UserToEmployeeService;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 @Service
 public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserLoginEntity> implements UserToEmployeeService {
+
+	@Getter
+	@RequiredArgsConstructor
+	enum ErrorCodes implements LKCodeEnum {
+
+		/** 登录信息已失效 */
+		INVALIDED_TOKEN(29000),
+
+		/** 账号不存在 */
+		ACCOUNT_INEXIST(29001),
+
+		/** 公司信息有误 */
+		INVALIDED_COMP_TOKEN(29002),
+
+		/** 不是员工 */
+		YOU_ARE_NOT_A_EMPLOYEE(29003),
+
+		/** 员工信息有误 */
+		INVALIDED_EMPLOYEE_ID(29004),
+
+		/** 公司信息有误 */
+		INVALIDED_COMP_ID(29005),
+
+		/** 没有所属部门 */
+		DEPT_INEXIST(29006),
+
+		;
+
+		private final Integer code;
+
+	}
+
 
 	@Override
 	public SysUserLoginEntity findUserLoginByToken(boolean throwException, String token) {
 		if (StringUtils.isBlank(token)) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_TOKEN);
+				throw new LKRuntimeException(ErrorCodes.INVALIDED_TOKEN);
 			}
 			return null;
 		}
@@ -47,7 +82,7 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 		SysUserLoginEntity userLogin = dao.getOne(sql, SysUserLoginEntity.class);
 		if (userLogin == null) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.ACCOUNT_INEXIST);
+				throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
 			}
 			return null;
 		}
@@ -59,14 +94,14 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 	public I_User findEmployeeByUserLoginAndCompToken(boolean throwException, I_Login userLogin, String compToken) {
 		if (StringUtils.isBlank(compToken)) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_COMP_TOKEN);
+				throw new LKRuntimeException(ErrorCodes.INVALIDED_COMP_TOKEN);
 			}
 			return null;
 		}
 
 		if (userLogin == null) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.ACCOUNT_INEXIST);
+				throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
 			}
 			return null;
 		}
@@ -80,7 +115,7 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 		SysEmployeeEntity employee = dao.getOne(sql, SysEmployeeEntity.class);
 		if (employee == null) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.ACCOUNT_INEXIST);
+				throw new LKRuntimeException(ErrorCodes.YOU_ARE_NOT_A_EMPLOYEE);
 			}
 		}
 		return employee;
@@ -90,13 +125,13 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 	public SysDeptEntity findDeptByLoginIdAndCompId(boolean throwException, String employeeId, String compId) {
 		if (StringUtils.isBlank(employeeId)) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_USER_LOGIN);
+				throw new LKRuntimeException(ErrorCodes.INVALIDED_EMPLOYEE_ID);
 			}
 			return null;
 		}
 		if (StringUtils.isBlank(compId)) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.INVALIDED_COMP_ID);
+				throw new LKRuntimeException(ErrorCodes.INVALIDED_COMP_ID);
 			}
 			return null;
 		}
@@ -116,7 +151,7 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 		List<SysDeptEntity> list = dao.getList(sql, SysDeptEntity.class);
 		if (CollectionUtils.isEmpty(list)) {
 			if (throwException) {
-				throw new LKRuntimeException(LKErrorCodesEnum.DEPT_INEXIST);
+				throw new LKRuntimeException(ErrorCodes.DEPT_INEXIST);
 			}
 			return null;
 		}
