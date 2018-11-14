@@ -60,6 +60,10 @@ public class SysCompEntity extends BaseEntity implements I_Comp {
 	@Column(length = 64)
 	private String token;
 
+	/** 简名（用于客户端显示） */
+	@Column(length = 6)
+	private String abbreviation;
+
 	/** 联系电话 */
 	@FieldGenerator(resultColumn = true)
 	@Column(length = 16)
