@@ -9,19 +9,39 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lichkin.defines.CoreStatics;
 import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
+import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysUserLoginR;
 import com.lichkin.framework.db.beans.eq;
+import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.LKRandomUtils;
+import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LKApiService;
 import com.lichkin.springframework.services.LKApiServiceImpl;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+
 @Service(Statics.SERVICE_NAME)
 public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
+
+	@Getter
+	@RequiredArgsConstructor
+	enum ErrorCodes implements LKCodeEnum {
+
+		/** 不是员工 */
+		YOU_ARE_NOT_A_EMPLOYEE(29003),
+
+		;
+
+		private final Integer code;
+
+	}
+
 
 	/** 接口服务器URL根路径 */
 	@Value("${com.lichkin.apis.server.rootUrl}")
@@ -38,6 +58,19 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 
 		// 校验验证码
 		validateSmsSecurityCodeService.validateSms(cellphone, sin.getSecurityCode());
+
+		// 用户版为OPEN，不会有公司ID，员工版为COMPANY_QUERY，有该值。
+		SysEmployeeEntity employee = null;
+		if (StringUtils.isNotBlank(compId)) {
+			// 验证是否为员工
+			QuerySQL sql = new QuerySQL(false, SysEmployeeEntity.class);
+			sql.eq(SysEmployeeR.compId, compId);
+			sql.eq(SysEmployeeR.cellphone, cellphone);
+			employee = dao.getOne(sql, SysEmployeeEntity.class);
+			if (employee == null) {
+				throw new LKException(ErrorCodes.YOU_ARE_NOT_A_EMPLOYEE);
+			}
+		}
 
 		// 获取登录信息
 		SysUserLoginEntity userLogin = findUserLoginByCellphone(cellphone);
@@ -71,6 +104,12 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 
 			// 新增数据
 			dao.persistOne(userLogin);
+
+			// 用户版为OPEN，不会有公司ID，员工版为COMPANY_QUERY，有该值。
+			if (StringUtils.isNotBlank(compId)) {
+				// 将员工与登录信息绑定
+				employee.setLoginId(userLogin.getId());
+			}
 		}
 
 		O out = new O();
