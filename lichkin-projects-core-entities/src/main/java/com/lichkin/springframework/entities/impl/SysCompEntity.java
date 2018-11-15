@@ -57,10 +57,12 @@ public class SysCompEntity extends BaseEntity implements I_Comp {
 	private String compKey;
 
 	/** 令牌 */
+	@FieldGenerator(check = true, insertType = InsertType.COPY_ERROR, updateable = false, resultColumn = true)
 	@Column(length = 64)
 	private String token;
 
 	/** 简名（用于客户端显示） */
+	@FieldGenerator(resultColumn = true)
 	@Column(length = 6)
 	private String abbreviation;
 

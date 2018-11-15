@@ -34,7 +34,7 @@ public class SysCompBusService extends LKDBService {
 	}
 
 
-	public List<SysCompEntity> findExist(String id, String parentCode, String compName, String compKey) {
+	public List<SysCompEntity> findExist(String id, String parentCode, String compName, String compKey, String token) {
 		QuerySQL sql = new QuerySQL(false, SysCompEntity.class);
 
 		if (StringUtils.isNotBlank(id)) {
@@ -48,7 +48,9 @@ public class SysCompBusService extends LKDBService {
 
 						new Condition(null, new eq(SysCompR.compName, compName)),
 
-						new Condition(false, new eq(SysCompR.compKey, compKey))
+						new Condition(false, new eq(SysCompR.compKey, compKey)),
+
+						new Condition(false, new eq(SysCompR.token, token))
 
 				)
 

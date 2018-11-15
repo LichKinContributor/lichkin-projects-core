@@ -21,6 +21,10 @@ public class O {
 
 	private String compKey;
 
+	private String token;
+
+	private String abbreviation;
+
 	private String telephone;
 
 	private String email;

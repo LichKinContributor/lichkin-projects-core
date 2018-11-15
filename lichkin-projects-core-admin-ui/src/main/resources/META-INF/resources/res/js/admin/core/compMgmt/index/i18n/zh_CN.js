@@ -8,6 +8,8 @@ $.LKExtendI18N({
       'columns' : {
         'compName' : '公司名称',
         'compKey' : '公司标识',
+        'token' : '公司令牌',
+        'abbreviation' : '公司简名',
         'linkman' : '联系人',
         'telephone' : '联系电话',
         'linkmanCellphone' : '手机号码',

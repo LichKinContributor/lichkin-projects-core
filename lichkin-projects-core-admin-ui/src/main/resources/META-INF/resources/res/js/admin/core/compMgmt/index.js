@@ -42,6 +42,20 @@ var compMgmtFormPlugins = [
     }, {
       plugin : 'textbox',
       options : {
+        name : 'token',
+        validator : true,
+        maxlength : 64
+      }
+    }, {
+      plugin : 'textbox',
+      options : {
+        name : 'abbreviation',
+        validator : true,
+        maxlength : 6
+      }
+    }, {
+      plugin : 'textbox',
+      options : {
         name : 'email',
         validator : 'email',
         maxlength : 128
@@ -103,6 +117,14 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
         width : 200,
         name : 'compName'
       }, {
+        text : 'abbreviation',
+        width : 100,
+        name : 'abbreviation'
+      }, {
+        text : 'token',
+        width : 100,
+        name : 'token'
+      }, {
         text : 'linkman',
         width : 80,
         name : 'linkmanName'
@@ -135,7 +157,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     dialog : {
       size : {
         cols : 2,
-        rows : 11
+        rows : 12
       }
     },
     form : {
@@ -147,12 +169,12 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     dialog : {
       size : {
         cols : 2,
-        rows : 11
+        rows : 12
       }
     },
     form : {
       plugins : LK.UI.formUtils.newReadonlyPlugins(compMgmtFormPlugins, [
-        'compKey'
+          'compKey', 'token'
       ]),
       url : '/SysComp/O'
     }
@@ -164,7 +186,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     dialog : {
       size : {
         cols : 2,
-        rows : 11
+        rows : 12
       }
     },
     form : {

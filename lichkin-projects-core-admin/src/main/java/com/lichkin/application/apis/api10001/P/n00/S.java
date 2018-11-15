@@ -23,6 +23,8 @@ public class S extends LKApiBusGetPageService<I, O, SysCompEntity> {
 		sql.select(SysCompR.insertTime);
 		sql.select(SysCompR.compName);
 		sql.select(SysCompR.compKey);
+		sql.select(SysCompR.token);
+		sql.select(SysCompR.abbreviation);
 		sql.select(SysCompR.telephone);
 		sql.select(SysCompR.email);
 		sql.select(SysCompR.address);

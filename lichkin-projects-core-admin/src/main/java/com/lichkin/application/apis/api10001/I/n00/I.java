@@ -15,6 +15,10 @@ public class I extends LKRequestBean {
 
 	private String compKey;
 
+	private String token;
+
+	private String abbreviation;
+
 	private String telephone;
 
 	private String email;

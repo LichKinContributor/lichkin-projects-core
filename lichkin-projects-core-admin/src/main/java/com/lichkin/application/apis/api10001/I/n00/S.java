@@ -41,7 +41,7 @@ public class S extends LKApiBusInsertService<I, SysCompEntity> {
 
 	@Override
 	protected List<SysCompEntity> findExist(I sin, String locale, String compId, String loginId) {
-		return busService.findExist(null, sin.getParentCode(), sin.getCompName(), sin.getCompKey());
+		return busService.findExist(null, sin.getParentCode(), sin.getCompName(), sin.getCompKey(), sin.getToken());
 	}
 
 

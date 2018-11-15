@@ -11,6 +11,8 @@ public class I extends LKRequestIDBean {
 
 	private String compName;
 
+	private String abbreviation;
+
 	private String telephone;
 
 	private String email;
