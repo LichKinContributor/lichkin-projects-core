@@ -22,7 +22,7 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 	public O handle(I sin, String locale, String compId, String loginId) throws LKException {
 		SysUserLoginEntity login = (SysUserLoginEntity) sin.getDatas().getLogin();
 		O out = LKBeanUtils.newInstance(login, O.class);
-		out.setSecurityCenterUrl(apisServerRootUrl + CoreStatics.SECURITY_CENTER_URL);
+		out.setSecurityCenterUrl(apisServerRootUrl + CoreStatics.SSO_URL + CoreStatics.SECURITY_CENTER_URL);
 		out.setApiServerRootUrl(apisServerRootUrl);
 		return out;
 	}
