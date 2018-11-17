@@ -128,6 +128,11 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     form : {
       url : '/SysAdminLogin/O',
       plugins : compAdminMgmtEditFormPlugins
+    },
+    readonlyPlugins : function() {
+      return [
+        'email'
+      ];
     }
   },
   toolsRemove : {

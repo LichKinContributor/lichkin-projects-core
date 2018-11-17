@@ -23,7 +23,7 @@ public class I extends LKRequestIDBean {
 
 //	private String pwd;
 
-	private String email;
+//	private String email;
 
 	private String photo;
 
