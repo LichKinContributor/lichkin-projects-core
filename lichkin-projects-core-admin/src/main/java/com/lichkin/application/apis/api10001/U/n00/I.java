@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestIDBean {
 
-	private String compName;
-
 	private String abbreviation;
 
 	private String telephone;

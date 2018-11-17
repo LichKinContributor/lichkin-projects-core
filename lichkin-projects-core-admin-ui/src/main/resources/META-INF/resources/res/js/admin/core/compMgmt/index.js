@@ -174,7 +174,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     },
     form : {
       plugins : LK.UI.formUtils.newReadonlyPlugins(compMgmtFormPlugins, [
-          'compKey', 'token'
+          'compName', 'compKey', 'token'
       ]),
       url : '/SysComp/O'
     }
