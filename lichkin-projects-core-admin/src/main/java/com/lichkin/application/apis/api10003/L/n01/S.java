@@ -8,6 +8,7 @@ import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysCategoryR;
 import com.lichkin.framework.db.beans.SysDictionaryR;
+import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.enums.impl.CategoryAuthTypeEnum;
@@ -32,7 +33,7 @@ public class S extends LKApiBusGetListService<I, O, SysDictionaryEntity> {
 //		sql.select(SysDictionaryR.locale);
 
 		// 关联表
-		sql.innerJoin(SysCategoryEntity.class, new Condition(SysCategoryR.categoryCode, SysDictionaryR.categoryCode));
+		sql.innerJoin(SysCategoryEntity.class, new Condition(SysCategoryR.categoryCode, SysDictionaryR.categoryCode), new Condition(true, new eq(SysCategoryR.locale, locale)));
 		sql.select(SysCategoryR.categoryName);
 
 		// 字典表
