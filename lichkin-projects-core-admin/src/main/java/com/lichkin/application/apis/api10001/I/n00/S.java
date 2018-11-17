@@ -32,6 +32,8 @@ public class S extends LKApiBusInsertService<I, SysCompEntity> {
 
 		SysComp_comp_key_can_not_modify_when_restore(20000),
 
+		SysComp_token_can_not_modify_when_restore(20000),
+
 		;
 
 		private final Integer code;
@@ -66,6 +68,9 @@ public class S extends LKApiBusInsertService<I, SysCompEntity> {
 		entity.setCompCode(exist.getCompCode());
 		if (!exist.getCompKey().equals(entity.getCompKey())) {
 			throw new LKRuntimeException(ErrorCodes.SysComp_comp_key_can_not_modify_when_restore).withParam("#compKey", exist.getCompKey());
+		}
+		if (!exist.getToken().equals(entity.getToken())) {
+			throw new LKRuntimeException(ErrorCodes.SysComp_token_can_not_modify_when_restore).withParam("#token", exist.getToken());
 		}
 	}
 
