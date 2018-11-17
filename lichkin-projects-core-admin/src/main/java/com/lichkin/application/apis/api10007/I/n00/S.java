@@ -9,6 +9,7 @@ import com.lichkin.application.services.bus.impl.SysAdminLoginBusService;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
@@ -29,6 +30,8 @@ public class S extends LKApiBusInsertService<I, SysAdminLoginEntity> {
 		SysAdminLogin_EXIST(20000),
 
 		SysAdminLoginComp_EXIST(20000),
+
+		SysAdminLoginComp_email_can_not_modify_when_restore(20000),
 
 		;
 
@@ -59,6 +62,11 @@ public class S extends LKApiBusInsertService<I, SysAdminLoginEntity> {
 	protected void beforeRestore(I sin, String locale, String compId, String loginId, SysAdminLoginEntity entity, SysAdminLoginEntity exist) {
 		entity.setUsingStatus(LKUsingStatusEnum.USING);
 		entity.setCompId(exist.getCompId());
+		if (LKFrameworkStatics.LichKin.equals(compId)) {
+			if (!exist.getEmail().equals(entity.getEmail())) {
+				throw new LKRuntimeException(ErrorCodes.SysAdminLoginComp_email_can_not_modify_when_restore).withParam("#email", exist.getEmail());
+			}
+		}
 		entity.setEmail(exist.getEmail());
 		entity.setLevel(exist.getLevel());
 		entity.setSuperAdmin(exist.getSuperAdmin());
