@@ -14,12 +14,12 @@
   </parent>
 
   <dependencies>
-    <!-- lichkin starter -->
-    <dependency>
-      <groupId>com.lichkin.springframework.boot</groupId>
-      <artifactId>lichkin-spring-boot-starter-web-api-generator</artifactId>
-    </dependency>
     <!-- lichkin projects core -->
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-core-starter-web-api-admin</artifactId>
+      <version>${com.lichkin.projects.core.version}</version>
+    </dependency>
     <dependency>
       <groupId>com.lichkin.projects</groupId>
       <artifactId>lichkin-projects-core-apis-common</artifactId>

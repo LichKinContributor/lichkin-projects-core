@@ -14,15 +14,10 @@
   </parent>
 
   <dependencies>
-    <!-- lichkin starter -->
-    <dependency>
-      <groupId>com.lichkin.springframework.boot</groupId>
-      <artifactId>lichkin-spring-boot-starter-database</artifactId>
-    </dependency>
     <!-- lichkin projects core -->
     <dependency>
       <groupId>com.lichkin.projects</groupId>
-      <artifactId>lichkin-projects-core-entities</artifactId>
+      <artifactId>lichkin-projects-core-common</artifactId>
       <version>${com.lichkin.projects.core.version}</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core -->

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <packaging>jar</packaging>
 
-  <artifactId>lichkin-projects-core-user</artifactId>
+  <artifactId>lichkin-projects-core-starter-web-api-admin</artifactId>
 
   <parent>
     <groupId>com.lichkin.projects</groupId>
@@ -17,12 +17,7 @@
     <!-- lichkin projects core -->
     <dependency>
       <groupId>com.lichkin.projects</groupId>
-      <artifactId>lichkin-projects-core-starter-web-api-user</artifactId>
-      <version>${com.lichkin.projects.core.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>com.lichkin.projects</groupId>
-      <artifactId>lichkin-projects-core-apis-common</artifactId>
+      <artifactId>lichkin-projects-core-starter-web-api-common</artifactId>
       <version>${com.lichkin.projects.core.version}</version>
     </dependency>
   </dependencies>

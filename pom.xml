@@ -20,19 +20,36 @@
   </properties>
 
   <modules>
-    <module>lichkin-projects-core-db-connector</module>
+    <!-- 通用模块（子项目需依赖） -->
     <module>lichkin-projects-core-common</module>
     <module>lichkin-projects-core-entities</module>
     <module>lichkin-projects-core-services</module>
+    <module>lichkin-projects-core-starter-web-api-common</module>
+
+    <!-- 平台间通用模块（子项目不依赖） -->
     <module>lichkin-projects-core-apis-generator</module>
     <module>lichkin-projects-core-apis-common</module>
+
+    <!-- 管理平台模块（子项目需依赖starter） -->
+    <module>lichkin-projects-core-starter-web-api-admin</module>
     <module>lichkin-projects-core-admin</module>
     <module>lichkin-projects-core-admin-ui</module>
+
+    <!-- 用户平台模块（子项目需依赖starter） -->
+    <module>lichkin-projects-core-starter-web-api-user</module>
     <module>lichkin-projects-core-user</module>
     <module>lichkin-projects-core-user-ui</module>
+
+    <!-- 员工平台模块（子项目需依赖starter） -->
+    <module>lichkin-projects-core-starter-web-api-employee</module>
     <module>lichkin-projects-core-employee</module>
     <module>lichkin-projects-core-employee-ui</module>
+
+    <!-- 定时任务模块 -->
     <module>lichkin-projects-core-quartz</module>
+
+    <!-- 特殊实现模块 -->
+    <module>lichkin-projects-core-db-connector</module>
     <module>lichkin-projects-core-ALiYunSmsSender</module>
   </modules>
 
