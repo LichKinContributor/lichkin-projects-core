@@ -15,7 +15,6 @@ import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysUserLoginR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.defines.entities.I_Login;
-import com.lichkin.framework.defines.entities.I_User;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
@@ -24,6 +23,7 @@ import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
+import com.lichkin.springframework.services.EmployeeDeptService;
 import com.lichkin.springframework.services.LoginService;
 import com.lichkin.springframework.services.UserToEmployeeService;
 
@@ -31,7 +31,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Service
-public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserLoginEntity> implements UserToEmployeeService {
+public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserLoginEntity> implements UserToEmployeeService, EmployeeDeptService {
 
 	@Getter
 	@RequiredArgsConstructor
@@ -91,7 +91,7 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 
 
 	@Override
-	public I_User findEmployeeByUserLoginAndCompToken(boolean throwException, I_Login userLogin, String compToken) {
+	public SysEmployeeEntity findEmployeeByUserLoginAndCompToken(boolean throwException, I_Login userLogin, String compToken) {
 		if (StringUtils.isBlank(compToken)) {
 			if (throwException) {
 				throw new LKRuntimeException(ErrorCodes.INVALIDED_COMP_TOKEN);
@@ -122,6 +122,7 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 	}
 
 
+	@Override
 	public SysDeptEntity findDeptByLoginIdAndCompId(boolean throwException, String employeeId, String compId) {
 		if (StringUtils.isBlank(employeeId)) {
 			if (throwException) {
