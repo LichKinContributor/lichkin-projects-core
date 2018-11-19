@@ -38,6 +38,7 @@ public class LKSysCatagoryCache {
 		}
 		mapInner.put("en", new HashMap<>());
 		for (Category category : list) {
+			category.setCategoryCodeLocale(category.getCategoryCode() + LKFrameworkStatics.SPLITOR_FIELDS + category.getLocale());
 			mapInner.get(category.getLocale()).put(category.getCategoryCode(), category);
 		}
 	}

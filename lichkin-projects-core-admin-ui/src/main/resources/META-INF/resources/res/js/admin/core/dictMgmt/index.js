@@ -35,7 +35,7 @@ LK.UI.datagrid({
     'dictionary'
   ],
   url : '/SysCategory/L',
-  valueFieldName : 'categoryCode',
+  valueFieldName : 'categoryCodeLocale',
   columns : [
     {
       text : 'categoryName',
@@ -94,9 +94,11 @@ LK.UI.datagrid({
         if (linkage.linkageValue == '') {
           $plugin.LKClearDatas();
         } else {
+          var linkageValue = linkage.linkageValue.split('@#@');
           $plugin.LKLoad({
             param : {
-              categoryCode : linkage.linkageValue
+              categoryCode : linkageValue[0],
+              locale : linkageValue[1]
             }
           }, linkage);
         }
@@ -104,7 +106,9 @@ LK.UI.datagrid({
     }
   },
   reloadParam : function($plugin, param) {
-    param.categoryCode = $plugin.LKGetSiblingPlugin('category').LKGetValue();
+    var categoryCodeLocale = $plugin.LKGetSiblingPlugin('category').LKGetValue().split('@#@');
+    param.categoryCode = categoryCodeLocale[0];
+    param.locale = categoryCodeLocale[1];
     return param;
   },
   url : '/SysDictionary/L',
@@ -136,8 +140,10 @@ LK.UI.datagrid({
       return true;
     },
     beforeSave : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog) {
+      var categoryCodeLocale = $datagrid.LKGetSiblingPlugin('category').LKGetValue().split('@#@');
       return {
-        categoryCode : $datagrid.LKGetSiblingPlugin('category').LKGetValue()
+        categoryCode : categoryCodeLocale[0],
+        locale : categoryCodeLocale[1]
       };
     },
     saveUrl : '/SysDictionary/I',

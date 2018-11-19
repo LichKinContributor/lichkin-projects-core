@@ -46,8 +46,13 @@ public class S extends LKApiBusGetListService<I, O, SysDictionaryEntity> {
 		}
 
 		// 筛选条件（业务项）
-		if (!LKFrameworkStatics.LichKin.equals(compId)) {
-			sql.eq(SysDictionaryR.locale, locale);
+		String inLocale = sin.getLocale();
+		if (StringUtils.isNotBlank(inLocale)) {
+			sql.eq(SysDictionaryR.locale, inLocale);
+		} else {
+			if (!LKFrameworkStatics.LichKin.equals(compId)) {
+				sql.eq(SysDictionaryR.locale, locale);
+			}
 		}
 
 		String categoryCode = sin.getCategoryCode();

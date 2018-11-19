@@ -30,4 +30,7 @@ public class Category implements Serializable {
 	/** 是否为ROOT */
 	private boolean root;
 
+	/** 唯一组合 */
+	private String categoryCodeLocale;
+
 }

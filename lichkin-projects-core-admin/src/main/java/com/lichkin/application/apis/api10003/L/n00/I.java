@@ -16,4 +16,6 @@ public class I extends LKRequestBean {
 
 	private String categoryCode;
 
+	private String locale;
+
 }
