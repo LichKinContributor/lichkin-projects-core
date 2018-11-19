@@ -61,6 +61,8 @@ public class S extends LKApiBusInsertService<I, SysEmployeeEntity> {
 	@Override
 	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysEmployeeEntity entity) {
 		entity.setBirthday(busService.analysisBirthday(sin.getUserCard()));
+		// 框架会将当前登录ID设置值，此登录ID不能设置
+		entity.setLoginId(null);
 	}
 
 
