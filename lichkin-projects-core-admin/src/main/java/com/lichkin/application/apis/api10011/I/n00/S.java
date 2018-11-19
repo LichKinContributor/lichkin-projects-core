@@ -63,6 +63,7 @@ public class S extends LKApiBusInsertService<I, SysDeptEntity> {
 			throw new LKRuntimeException(ErrorCodes.SysDept_parent_code_can_not_modify_when_restore).withParam("#parentCode", exist.getParentCode());
 		}
 		entity.setDeptCode(exist.getDeptCode());
+		entity.setFullName(exist.getFullName());
 	}
 
 
@@ -70,11 +71,6 @@ public class S extends LKApiBusInsertService<I, SysDeptEntity> {
 	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysDeptEntity entity) {
 		entity.setCompId(getCompId(compId, sin.getCompId()));
 		entity.setDeptCode(busService.analysisDeptCode(compId, sin.getParentCode()));
-	}
-
-
-	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysDeptEntity entity) {
 		entity.setFullName(busService.analysisFullName(compId, entity.getDeptCode(), entity.getDeptName()));
 	}
 
