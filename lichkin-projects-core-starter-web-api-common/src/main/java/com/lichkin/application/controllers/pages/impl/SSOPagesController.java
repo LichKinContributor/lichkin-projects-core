@@ -11,7 +11,7 @@ import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 
-abstract class SSOPagesController {
+public abstract class SSOPagesController {
 
 	@Autowired
 	protected HttpSession session;
