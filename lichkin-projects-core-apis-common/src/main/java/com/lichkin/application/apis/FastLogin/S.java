@@ -82,6 +82,12 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 
 			// 修改数据
 			dao.mergeOne(userLogin);
+
+			if (StringUtils.isNotBlank(compId) && StringUtils.isBlank(employee.getLoginId())) {
+				// 将员工与登录信息绑定
+				employee.setLoginId(userLogin.getId());
+				dao.mergeOne(employee);
+			}
 		} else {// 注册
 			userLogin = new SysUserLoginEntity();
 
@@ -109,6 +115,7 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 			if (StringUtils.isNotBlank(compId)) {
 				// 将员工与登录信息绑定
 				employee.setLoginId(userLogin.getId());
+				dao.mergeOne(employee);
 			}
 		}
 
