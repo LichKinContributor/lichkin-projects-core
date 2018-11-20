@@ -96,6 +96,43 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       plugins : deptMgmtFormPlugins
     }
   },
+  tools : [
+      {
+        singleCheck : true,
+        icon : 'up',
+        text : 'up',
+        click : function($button, $plugin, $selecteds, selectedDatas, value) {
+          LK.ajax({
+            url : '/SysDept/S01',
+            data : {
+              up : true,
+              deptCode : $selecteds.data().code,
+            },
+            showSuccess : true,
+            success : function() {
+              $plugin.LKLoad();
+            }
+          });
+        }
+      }, {
+        singleCheck : true,
+        icon : 'down',
+        text : 'down',
+        click : function($button, $plugin, $selecteds, selectedDatas, value) {
+          LK.ajax({
+            url : '/SysDept/S01',
+            data : {
+              up : false,
+              deptCode : $selecteds.data().code
+            },
+            showSuccess : true,
+            success : function() {
+              $plugin.LKLoad();
+            }
+          });
+        }
+      }
+  ],
   searchForm : [
     {
       plugin : 'textbox',
