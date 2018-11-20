@@ -28,7 +28,7 @@ public class S extends LKApiBusService<I, Void, SysDeptEntity> implements LKApiV
 		List<SysDeptEntity> targetSubList = null;
 		if (up) {// 向上
 			String prevCode = LKCodeUtils.prevCode(deptCode);
-			if (prevCode == null) {// 第一个菜单
+			if (prevCode == null) {// 第一个
 				return;
 			}
 			targetRealCode = LKCodeUtils.realCode(prevCode);
@@ -36,7 +36,7 @@ public class S extends LKApiBusService<I, Void, SysDeptEntity> implements LKApiV
 		} else {// 向下
 			targetRealCode = LKCodeUtils.realCode(LKCodeUtils.nextCode(deptCode));
 			targetSubList = getSubList(targetRealCode);
-			if (CollectionUtils.isEmpty(targetSubList)) {// 最后一个菜单
+			if (CollectionUtils.isEmpty(targetSubList)) {// 最后一个
 				return;
 			}
 		}
