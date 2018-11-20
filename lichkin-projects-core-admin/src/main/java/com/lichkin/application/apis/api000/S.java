@@ -1,6 +1,8 @@
 package com.lichkin.application.apis.api000;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +16,7 @@ import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysAdminLoginR;
 import com.lichkin.framework.db.beans.SysAdminLoginRoleR;
+import com.lichkin.framework.db.beans.SysCompR;
 import com.lichkin.framework.db.beans.SysMenuR;
 import com.lichkin.framework.db.beans.SysRoleMenuR;
 import com.lichkin.framework.db.beans.SysRoleR;
@@ -130,7 +133,15 @@ public class S extends LKApiServiceImpl<I, SO> implements LKApiService<I, SO> {
 
 		List<SysRoleEntity> listRole = findListRoleByLoginId(adminLogin.getId());
 
-		List<SysMenuEntity> listMenu = findListMenuByListRole(sin.getLoginName(), listRole);
+		List<SysMenuEntity> listAllMenu = findListMenuByListRole(sin.getLoginName(), listRole);
+
+		List<SysMenuEntity> compListMenu = findCompanyOwnedMenus(compId);
+		List<String> menuIds = new ArrayList<>();
+		for (SysMenuEntity menuEntity : compListMenu) {
+			menuIds.add(menuEntity.getId());
+		}
+		// 过滤掉员工有公司没有的菜单
+		List<SysMenuEntity> listMenu = listAllMenu.stream().filter(item -> menuIds.contains(item.getId())).collect(Collectors.toList());
 
 		SO out = new SO();
 		out.setComp(comp);
@@ -221,6 +232,19 @@ public class S extends LKApiServiceImpl<I, SO> implements LKApiService<I, SO> {
 		log.setRequestIp(requestInfo.getRequestIp());
 		log.setRequestDatas(LKJsonUtils.toJson(requestInfo.getRequestDatas()));
 		dao.persistOne(log);
+	}
+
+
+	private List<SysMenuEntity> findCompanyOwnedMenus(String compId) {
+		QuerySQL sql = new QuerySQL(SysMenuEntity.class);
+		sql.innerJoin(SysRoleMenuEntity.class, new Condition(SysMenuR.id, SysRoleMenuR.menuId));
+		sql.innerJoin(SysRoleEntity.class, new Condition(SysRoleMenuR.roleId, SysRoleR.id));
+		sql.innerJoin(SysAdminLoginRoleEntity.class, new Condition(SysRoleR.id, SysAdminLoginRoleR.roleId));
+		sql.innerJoin(SysAdminLoginEntity.class, new Condition(SysAdminLoginRoleR.loginId, SysAdminLoginR.id));
+		sql.innerJoin(SysCompEntity.class, new Condition(SysAdminLoginR.compId, SysCompR.id));
+		sql.eq(SysCompR.id, compId);
+		sql.eq(SysAdminLoginR.superAdmin, true);
+		return dao.getList(sql, SysMenuEntity.class);
 	}
 
 }
