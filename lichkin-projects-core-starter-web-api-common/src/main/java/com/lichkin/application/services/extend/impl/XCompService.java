@@ -4,17 +4,19 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.QuerySQL;
+import com.lichkin.framework.db.beans.SysAdminLoginR;
 import com.lichkin.framework.db.beans.SysCompR;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.springframework.entities.impl.SysCompEntity;
-import com.lichkin.springframework.services.CompService;
+import com.lichkin.springframework.services.LKDBService;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Service
-public class XCompService extends CompService {
+public class XCompService extends LKDBService {
 
 	@Getter
 	@RequiredArgsConstructor
@@ -33,23 +35,19 @@ public class XCompService extends CompService {
 	}
 
 
-	@Override
-	public SysCompEntity findCompByToken(boolean throwException, String compToken) {
+	public SysCompEntity findCompByToken(String compToken) {
 		if (StringUtils.isBlank(compToken)) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.INVALIDED_COMP_TOKEN);
-			}
-			return null;
+			throw new LKRuntimeException(ErrorCodes.INVALIDED_COMP_TOKEN);
 		}
 
 		QuerySQL sql = new QuerySQL(SysCompEntity.class);
+
+		sql.neq(SysAdminLoginR.usingStatus, LKUsingStatusEnum.DEPRECATED);
 		sql.eq(SysCompR.token, compToken);
+
 		SysCompEntity comp = dao.getOne(sql, SysCompEntity.class);
 		if (comp == null) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.COMP_INEXIST);
-			}
-			return null;
+			throw new LKRuntimeException(ErrorCodes.COMP_INEXIST);
 		}
 		return comp;
 	}

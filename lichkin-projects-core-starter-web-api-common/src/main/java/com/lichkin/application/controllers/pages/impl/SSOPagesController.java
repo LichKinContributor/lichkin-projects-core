@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.lichkin.framework.defines.LKFrameworkStatics;
+import com.lichkin.framework.defines.Platform;
 import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 
@@ -19,7 +20,7 @@ public abstract class SSOPagesController {
 
 	@GetMapping(value = "/SSO")
 	public ModelAndView sso(String compToken, String token, String redirectUrl) {
-		String platform = getPlatform();
+		String platform = Platform.PLATFORM.toString().toLowerCase();
 		try {
 			if (StringUtils.isBlank(compToken) || StringUtils.isBlank(token) || StringUtils.isBlank(redirectUrl)) {
 				throw new LKRuntimeException(LKErrorCodesEnum.PARAM_ERROR);
@@ -32,9 +33,6 @@ public abstract class SSOPagesController {
 			return new ModelAndView("redirect:" + "/" + platform + "/index");
 		}
 	}
-
-
-	protected abstract String getPlatform();
 
 
 	protected abstract void handle(String compToken, String token);

@@ -10,7 +10,7 @@ import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
 import com.lichkin.springframework.controllers.LKApiY0Controller;
 
-@LKApiType(apiType = ApiType.COMPANY_BUSINESS)
+@LKApiType(apiType = ApiType.COMPANY_QUERY)
 public abstract class CSuper extends LKApiY0Controller<I, List<Category>> {
 
 	@Deprecated

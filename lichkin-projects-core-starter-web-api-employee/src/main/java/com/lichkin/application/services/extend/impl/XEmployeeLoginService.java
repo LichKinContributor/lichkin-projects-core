@@ -14,7 +14,7 @@ import com.lichkin.framework.db.beans.SysEmployeeDeptR;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysUserLoginR;
 import com.lichkin.framework.db.beans.eq;
-import com.lichkin.framework.defines.entities.I_Login;
+import com.lichkin.framework.db.beans.neq;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
@@ -23,15 +23,13 @@ import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
-import com.lichkin.springframework.services.EmployeeDeptService;
 import com.lichkin.springframework.services.LoginService;
-import com.lichkin.springframework.services.UserToEmployeeService;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Service
-public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserLoginEntity> implements UserToEmployeeService, EmployeeDeptService {
+public class XEmployeeLoginService extends LoginService {
 
 	@Getter
 	@RequiredArgsConstructor
@@ -66,12 +64,9 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 
 
 	@Override
-	public SysUserLoginEntity findUserLoginByToken(boolean throwException, String token) {
+	public SysUserLoginEntity findUserLoginByToken(String token) {
 		if (StringUtils.isBlank(token)) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.INVALIDED_TOKEN);
-			}
-			return null;
+			throw new LKRuntimeException(ErrorCodes.INVALIDED_TOKEN);
 		}
 
 		QuerySQL sql = new QuerySQL(false, SysUserLoginEntity.class);
@@ -81,60 +76,50 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 
 		SysUserLoginEntity userLogin = dao.getOne(sql, SysUserLoginEntity.class);
 		if (userLogin == null) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
-			}
-			return null;
+			throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
 		}
 		return userLogin;
 	}
 
 
-	@Override
-	public SysEmployeeEntity findEmployeeByUserLoginAndCompToken(boolean throwException, I_Login userLogin, String compToken) {
-		if (StringUtils.isBlank(compToken)) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.INVALIDED_COMP_TOKEN);
-			}
-			return null;
+	public SysEmployeeEntity findEmployeeByUserLoginIdAndCompToken(String userLoginId, String compToken) {
+		if (StringUtils.isBlank(userLoginId)) {
+			throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
 		}
 
-		if (userLogin == null) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
-			}
-			return null;
+		if (StringUtils.isBlank(compToken)) {
+			throw new LKRuntimeException(ErrorCodes.INVALIDED_COMP_TOKEN);
 		}
 
 		QuerySQL sql = new QuerySQL(false, SysEmployeeEntity.class);
 
-		sql.innerJoin(SysCompEntity.class, new Condition(SysCompR.id, SysEmployeeR.compId), new Condition(true, new eq(SysCompR.token, compToken)));
+		sql.innerJoin(SysCompEntity.class,
 
-		sql.eq(SysEmployeeR.loginId, userLogin.getId());
+				new Condition(SysCompR.id, SysEmployeeR.compId),
+
+				new Condition(true, new eq(SysCompR.token, compToken)),
+
+				new Condition(true, new neq(SysCompR.usingStatus, LKUsingStatusEnum.DEPRECATED))
+
+		);
+
+		sql.neq(SysEmployeeR.usingStatus, LKUsingStatusEnum.DEPRECATED);
+		sql.eq(SysEmployeeR.loginId, userLoginId);
 
 		SysEmployeeEntity employee = dao.getOne(sql, SysEmployeeEntity.class);
 		if (employee == null) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.YOU_ARE_NOT_A_EMPLOYEE);
-			}
+			throw new LKRuntimeException(ErrorCodes.YOU_ARE_NOT_A_EMPLOYEE);
 		}
 		return employee;
 	}
 
 
-	@Override
-	public SysDeptEntity findDeptByLoginIdAndCompId(boolean throwException, String employeeId, String compId) {
+	public SysDeptEntity findDeptByEmployeeIdAndCompId(String employeeId, String compId) {
 		if (StringUtils.isBlank(employeeId)) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.INVALIDED_EMPLOYEE_ID);
-			}
-			return null;
+			throw new LKRuntimeException(ErrorCodes.INVALIDED_EMPLOYEE_ID);
 		}
 		if (StringUtils.isBlank(compId)) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.INVALIDED_COMP_ID);
-			}
-			return null;
+			throw new LKRuntimeException(ErrorCodes.INVALIDED_COMP_ID);
 		}
 
 		QuerySQL sql = new QuerySQL(false, SysDeptEntity.class);
@@ -151,10 +136,7 @@ public class XUserLoginService extends LoginService<SysUserLoginEntity, SysUserL
 
 		List<SysDeptEntity> list = dao.getList(sql, SysDeptEntity.class);
 		if (CollectionUtils.isEmpty(list)) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.DEPT_INEXIST);
-			}
-			return null;
+			throw new LKRuntimeException(ErrorCodes.DEPT_INEXIST);
 		}
 
 		return list.get(0);

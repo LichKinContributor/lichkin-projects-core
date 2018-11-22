@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Service
-public class XAdminLoginService extends LoginService<SysAdminLoginEntity, SysAdminLoginEntity> {
+public class XAdminLoginService extends LoginService {
 
 	@Getter
 	@RequiredArgsConstructor
@@ -35,12 +35,9 @@ public class XAdminLoginService extends LoginService<SysAdminLoginEntity, SysAdm
 
 
 	@Override
-	public SysAdminLoginEntity findUserLoginByToken(boolean throwException, String token) {
+	public SysAdminLoginEntity findUserLoginByToken(String token) {
 		if (StringUtils.isBlank(token)) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.INVALIDED_TOKEN);
-			}
-			return null;
+			throw new LKRuntimeException(ErrorCodes.INVALIDED_TOKEN);
 		}
 
 		QuerySQL sql = new QuerySQL(false, SysAdminLoginEntity.class);
@@ -50,10 +47,7 @@ public class XAdminLoginService extends LoginService<SysAdminLoginEntity, SysAdm
 
 		SysAdminLoginEntity userLogin = dao.getOne(sql, SysAdminLoginEntity.class);
 		if (userLogin == null) {
-			if (throwException) {
-				throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
-			}
-			return null;
+			throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
 		}
 		return userLogin;
 	}

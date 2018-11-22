@@ -7,7 +7,7 @@ import com.lichkin.framework.web.enums.ApiType;
 import com.lichkin.springframework.controllers.LKApiBusGetDroplistController;
 import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 
-@LKApiType(apiType = ApiType.COMPANY_BUSINESS)
+@LKApiType(apiType = ApiType.COMPANY_QUERY)
 public abstract class CSuper extends LKApiBusGetDroplistController<I> {
 
 	@Autowired

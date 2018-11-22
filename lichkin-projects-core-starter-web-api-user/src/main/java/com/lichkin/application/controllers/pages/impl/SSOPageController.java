@@ -11,20 +11,14 @@ import com.lichkin.springframework.web.LKSession;
 public class SSOPageController extends SSOPagesController {
 
 	@Autowired
-	private XUserLoginService userLoginService;
-
-
-	@Override
-	protected String getPlatform() {
-		return "user";
-	}
+	private XUserLoginService loginService;
 
 
 	@Override
 	protected void handle(String compToken, String token) {
-		SysUserLoginEntity userLogin = userLoginService.findUserLoginByToken(true, token);
-		LKSession.setUser(session, userLogin);
+		SysUserLoginEntity userLogin = loginService.findUserLoginByToken(token);
 		LKSession.setLogin(session, userLogin);
+		LKSession.setUser(session, userLogin);
 	}
 
 }
