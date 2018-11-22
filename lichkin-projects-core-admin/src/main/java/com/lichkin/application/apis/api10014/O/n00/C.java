@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.services.LKApiBusGetOneService;
 
 @RestController("SysEmployeeO00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysEmployee/O")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysEmployee/O")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusGetOneController<I, O, SysEmployeeEntity> {
 

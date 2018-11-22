@@ -11,7 +11,7 @@ import com.lichkin.framework.web.enums.ApiType;
 import com.lichkin.springframework.controllers.LKApiY0Controller;
 
 @RestController(Statics.CONTROLLER_NAME)
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_APP + Statics.SUB_URL)
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + Statics.SUB_URL)
 @LKApiType(apiType = ApiType.PERSONAL_BUSINESS)
 public class C extends LKApiY0Controller<LKRequestBean, O> {
 

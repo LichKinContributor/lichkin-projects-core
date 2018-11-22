@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysCompEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
 @RestController("SysCompI00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysComp/I")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysComp/I")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusInsertController<I, SysCompEntity> {
 

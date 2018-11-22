@@ -12,7 +12,7 @@ import com.lichkin.springframework.controllers.LKApiVVController;
 import com.lichkin.springframework.services.LKApiVoidService;
 
 @RestController("ModifyPwdController")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/ModifyPwd")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/ModifyPwd")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiVVController<I, I> {
 

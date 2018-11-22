@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateUsingStatusService;
 
 @RestController("SysEmployeeUS00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysEmployee/US")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysEmployee/US")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusUpdateUsingStatusController<I, SysEmployeeEntity> {
 

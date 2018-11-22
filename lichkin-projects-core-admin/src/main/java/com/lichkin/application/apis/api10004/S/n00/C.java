@@ -17,7 +17,7 @@ import com.lichkin.springframework.entities.impl.SysMenuEntity;
 import com.lichkin.springframework.services.LKApiService;
 
 @RestController("SysMenuS00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysMenu/T")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysMenu/T")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiYYController<I, List<LKTreeBean>, I, List<SysMenuEntity>> {
 

@@ -17,7 +17,7 @@ import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.services.LKApiService;
 
 @RestController("SysDeptS00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysDept/S")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysDept/S")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiYYController<I, List<LKTreeBean>, I, List<SysDeptEntity>> {
 

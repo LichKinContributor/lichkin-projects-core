@@ -13,7 +13,7 @@ import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
 @RestController("SysEmployeeI00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysEmployee/I")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API + "/SysEmployee/I")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusInsertController<I, SysEmployeeEntity> {
 
