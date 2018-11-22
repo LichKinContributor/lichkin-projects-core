@@ -461,7 +461,7 @@ var addMenu = function(menuJson, $container) {
     if (typeof menuJson.params.url != 'undefined' && menuJson.params.url != '') {
       $menu.click(function() {
         if (_WEB_DEBUG) {
-          window.open(_CTX + menuJson.params.url + '/index' + _MAPPING_PAGES);
+          LK.openWin(menuJson.params.url + '/index');
           return;
         }
         addTask(menuJson.id, menuJson.params.menuName, menuJson.params.icon, menuJson.params.url);
