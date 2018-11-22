@@ -4,7 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.QuerySQL;
-import com.lichkin.framework.db.beans.SysAdminLoginR;
 import com.lichkin.framework.db.beans.SysCompR;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
@@ -42,7 +41,7 @@ public class XCompService extends LKDBService {
 
 		QuerySQL sql = new QuerySQL(SysCompEntity.class);
 
-		sql.neq(SysAdminLoginR.usingStatus, LKUsingStatusEnum.DEPRECATED);
+		sql.neq(SysCompR.usingStatus, LKUsingStatusEnum.DEPRECATED);
 		sql.eq(SysCompR.token, compToken);
 
 		SysCompEntity comp = dao.getOne(sql, SysCompEntity.class);
