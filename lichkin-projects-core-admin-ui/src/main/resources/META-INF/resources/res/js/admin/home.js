@@ -288,7 +288,7 @@ LK.home.commonMenus = {
   exit : {
     type : 'danger',
     click : function() {
-      window.location.href = _CTX + "/logout" + _MAPPING_PAGES;
+      LK.Go('/logout');
     }
   }
 };

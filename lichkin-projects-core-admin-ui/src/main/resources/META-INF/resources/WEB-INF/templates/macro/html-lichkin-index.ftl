@@ -55,7 +55,7 @@ $loginBtn.click(function(e) {
     success : function() {
       beforeToHome();
       setTimeout(function() {
-        window.location.href = _CTX + "/admin/home" + _MAPPING_PAGES
+        LK.Go('/admin/home');
       }, 1000);
     }
   });
