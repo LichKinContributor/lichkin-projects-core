@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysRoleEntity;
 import com.lichkin.springframework.services.LKApiBusDeleteService;
 
 @RestController("SysRoleD00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysRole/D")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysRole/D")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusDeleteController<I, SysRoleEntity> {
 

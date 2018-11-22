@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 
 @RestController("SysCategoryL00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysCategory/L")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysCategory/L")
 public class C extends CSuper {
 
 }

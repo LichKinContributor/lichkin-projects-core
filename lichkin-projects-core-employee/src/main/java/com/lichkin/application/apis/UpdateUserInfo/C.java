@@ -12,7 +12,7 @@ import com.lichkin.springframework.controllers.LKApiVVController;
 import com.lichkin.springframework.services.LKApiVoidService;
 
 @RestController(Statics.CONTROLLER_NAME)
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_APP_EMPLOYEE + Statics.SUB_URL)
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_APP + Statics.SUB_URL)
 @LKApiType(apiType = ApiType.PERSONAL_BUSINESS)
 public class C extends LKApiVVController<I, I> {
 

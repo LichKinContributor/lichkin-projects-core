@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysUserOperLogEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
 
 @RestController("SysUserOperLogP00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysUserOperLog/P")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysUserOperLog/P")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusGetPageController<I, O, SysUserOperLogEntity> {
 

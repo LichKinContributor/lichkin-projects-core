@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysDictionaryEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
 
 @RestController("SysDictionaryL02Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysDictionary/L02")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysDictionary/L02")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusGetListController<I, O, SysDictionaryEntity> {
 

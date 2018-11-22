@@ -12,7 +12,7 @@ import com.lichkin.springframework.controllers.LKApiVVController;
 import com.lichkin.springframework.services.LKApiVoidService;
 
 @RestController("ModifyPhotoController")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/ModifyPhoto")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/ModifyPhoto")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiVVController<I, I> {
 

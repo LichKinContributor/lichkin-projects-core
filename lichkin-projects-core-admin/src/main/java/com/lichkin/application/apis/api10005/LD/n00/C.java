@@ -11,7 +11,7 @@ import com.lichkin.springframework.controllers.LKApiBusGetDroplistController;
 import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 
 @RestController("SysRoleLD00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysRole/LD")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysRole/LD")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusGetDroplistController<I> {
 

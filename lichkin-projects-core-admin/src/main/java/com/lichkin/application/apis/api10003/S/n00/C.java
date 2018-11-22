@@ -12,7 +12,7 @@ import com.lichkin.springframework.controllers.LKApiVVController;
 import com.lichkin.springframework.services.LKApiVoidService;
 
 @RestController("SysDictionaryS00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysDictionary/S")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysDictionary/S")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiVVController<I, I> {
 

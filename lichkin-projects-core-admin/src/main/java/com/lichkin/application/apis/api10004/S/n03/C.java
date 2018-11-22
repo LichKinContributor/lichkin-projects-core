@@ -12,7 +12,7 @@ import com.lichkin.springframework.controllers.LKApiVVController;
 import com.lichkin.springframework.services.LKApiVoidService;
 
 @RestController("SysMenuS03Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysMenu/Move")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysMenu/Move")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiVVController<I, I> {
 

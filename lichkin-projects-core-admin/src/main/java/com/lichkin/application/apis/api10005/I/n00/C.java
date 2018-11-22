@@ -13,7 +13,7 @@ import com.lichkin.springframework.entities.impl.SysRoleEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
 @RestController("SysRoleI00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysRole/I")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysRole/I")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusInsertController<I, SysRoleEntity> {
 

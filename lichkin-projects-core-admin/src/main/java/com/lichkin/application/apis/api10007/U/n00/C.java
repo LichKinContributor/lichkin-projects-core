@@ -12,7 +12,7 @@ import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
 @RestController("SysAdminLoginU00Controller")
-@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB_ADMIN + "/SysAdminLogin/U")
+@RequestMapping(value = LKFrameworkStatics.WEB_MAPPING_API_WEB + "/SysAdminLogin/U")
 @LKApiType(apiType = ApiType.COMPANY_BUSINESS)
 public class C extends LKApiBusUpdateController<I, SysAdminLoginEntity> {
 
