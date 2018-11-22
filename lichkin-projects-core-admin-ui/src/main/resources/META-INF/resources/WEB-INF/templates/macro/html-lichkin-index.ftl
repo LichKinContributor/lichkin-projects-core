@@ -15,7 +15,7 @@
 		</#if>
 		<#if section="javascript-contents-after-links">
 			<#nested "javascript-contents-after-links-bofore-init"/>
-$('<img src="' + _CTX + '/res/img/logo-${systemTag}.png" />').appendTo('.logoBox');
+$('<img src="' + _IMG + '/logo-${systemTag}.png" />').appendTo('.logoBox');
 
 LK.UI.text({
   $appendTo : $('.copyrightBox'),

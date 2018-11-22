@@ -423,8 +423,8 @@ var addMenus = function(menusJson, $container) {
  */
 var addMenu = function(menuJson, $container) {
   if (_WEB_DEBUG && typeof menuJson.params.url != 'undefined' && menuJson.params.url != '') {
-    $('head').append('<script type="text/javascript" src="' + _CTX + '/res/js' + menuJson.params.url + '/index/i18n/' + _LANG + _COMPRESS_SUFFIX + '.js"></script>');
-    $('head').append('<script type="text/javascript" src="' + _CTX + '/res/js' + menuJson.params.url + '/index/icons' + _COMPRESS_SUFFIX + '.js"></script>');
+    $('head').append('<script type="text/javascript" src="' + _JS + menuJson.params.url + '/index/i18n/' + _LANG + _COMPRESS_SUFFIX + '.js"></script>');
+    $('head').append('<script type="text/javascript" src="' + _JS + menuJson.params.url + '/index/icons' + _COMPRESS_SUFFIX + '.js"></script>');
   }
 
   if (menuJson.params.icon == '') {
