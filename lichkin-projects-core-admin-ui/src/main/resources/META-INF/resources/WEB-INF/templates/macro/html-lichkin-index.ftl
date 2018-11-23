@@ -1,9 +1,9 @@
 <#include "/_define.ftl"/>
 
-<#macro html type="",css=true,js=false,i18nJs=true,i18nJsAddition=true,iconsJs=true,iconsJsAddition=true>
+<#macro html css=true,js=false,i18nJs=true,i18nJsAddition=true,iconsJs=true,iconsJsAddition=true>
 	<#include "html-lichkin-simple.ftl"/>
 
-	<@html type=type css=css js=js i18nJs=i18nJs i18nJsAddition=i18nJsAddition iconsJs=iconsJs iconsJsAddition=iconsJsAddition;section>
+	<@html css=css js=js i18nJs=i18nJs i18nJsAddition=i18nJsAddition iconsJs=iconsJs iconsJsAddition=iconsJsAddition;section>
 		<#if section="link-after-self">
 			<@lichkin@cssTag url="/res/css/admin/index-addition" />
 		</#if>
