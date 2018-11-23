@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lichkin.defines.CoreStatics;
 import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
+import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysUserLoginR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
@@ -18,6 +19,7 @@ import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.LKRandomUtils;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
+import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LKApiService;
 import com.lichkin.springframework.services.LKApiServiceImpl;
@@ -49,6 +51,9 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 
 		app_pwd_incorrect(20005),
 
+		/** 不是员工 */
+		YOU_ARE_NOT_A_EMPLOYEE(29003),
+
 		;
 
 		private final Integer code;
@@ -62,6 +67,23 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 		SysUserLoginEntity userLogin = findUserLoginByLoginName(sin.getLoginName());
 		if (userLogin == null) {
 			throw new LKRuntimeException(ErrorCodes.app_account_inexistence);
+		}
+
+		// 用户版为OPEN，不会有公司ID，员工版为COMPANY_QUERY，有该值。
+		if (StringUtils.isNotBlank(compId)) {
+			// 验证是否为员工
+			QuerySQL sql = new QuerySQL(false, SysEmployeeEntity.class);
+			sql.eq(SysEmployeeR.compId, compId);
+			sql.eq(SysEmployeeR.cellphone, userLogin.getCellphone());
+			SysEmployeeEntity employee = dao.getOne(sql, SysEmployeeEntity.class);
+			if (employee == null) {
+				throw new LKException(ErrorCodes.YOU_ARE_NOT_A_EMPLOYEE);
+			}
+			if (StringUtils.isBlank(employee.getLoginId())) {
+				// 将员工与登录信息绑定
+				employee.setLoginId(userLogin.getId());
+				dao.mergeOne(employee);
+			}
 		}
 
 		if (LKUsingStatusEnum.LOCKED.equals(userLogin.getUsingStatus())) {
