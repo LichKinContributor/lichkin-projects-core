@@ -28,7 +28,6 @@
     <module>lichkin-projects-core-starter-web-api-common</module>
 
     <!-- 平台间通用模块（子项目不依赖） -->
-    <module>lichkin-projects-core-apis-generator</module>
     <module>lichkin-projects-core-apis-common</module>
 
     <!-- 管理平台模块（子项目需依赖starter） -->
