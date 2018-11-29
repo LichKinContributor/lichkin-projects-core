@@ -464,13 +464,16 @@ var addMenu = function(menuJson, $container) {
           if (menuJson.params.url == '/admin/core/errorLog') {
             LK.openWin(menuJson.params.url);
           } else {
-            LK.openWin(menuJson.params.url + '/index');
+            var lastSubUrlIndex = menuJson.params.url.lastIndexOf('/');
+            var lastSubUrl = menuJson.params.url.substring(lastSubUrlIndex + 1);
+            LK.openWin(((lastSubUrl.startsWith('{') && lastSubUrl.endsWith('}')) ? menuJson.params.url.substring(0, lastSubUrlIndex) : menuJson.params.url) + '/index');
           }
           return;
         }
         addTask(menuJson.id, menuJson.params.menuName, menuJson.params.icon, menuJson.params.url);
         var $dlg = $('[data-id=dialog_' + menuJson.id + ']');
         if ($dlg.length == 0) {
+          // 错误日志页面特殊处理
           if (menuJson.params.url == '/admin/core/errorLog') {
             LK.UI.openDialog({
               id : menuJson.id,
@@ -495,21 +498,31 @@ var addMenu = function(menuJson, $container) {
               }
             });
           } else {
-            LK.UI.openDialog({
-              id : menuJson.id,
-              url : menuJson.params.url + '/index',
-              title : menuJson.params.menuName,
-              icon : menuJson.params.icon,
+            var lastSubUrlIndex = menuJson.params.url.lastIndexOf('/');
+            var lastSubUrl = menuJson.params.url.substring(lastSubUrlIndex + 1);
+            var withConfigs = lastSubUrl.startsWith('{') && lastSubUrl.endsWith('}');
+            LK.UI.openDialog($.extend(
+            // 可修改的默认值配置项
+            {
               mask : false,
               formContent : false,
-              fitContent : true,
+              fitContent : true
+            },
+            // 动态配置项
+            (withConfigs ? JSON.parse(lastSubUrl) : {}),
+            // 不能修改的默认配置项
+            {
+              id : menuJson.id,
+              url : (withConfigs ? menuJson.params.url.substring(0, lastSubUrlIndex) : menuJson.params.url) + '/index',
+              title : menuJson.params.menuName,
+              icon : menuJson.params.icon,
               onFocus : function() {
                 activeTask(menuJson.id);
               },
               onAfterClose : function() {
                 removeTask(menuJson.id);
               }
-            });
+            }));
           }
         } else {
           $dlg.LKActiveDialog(true);
