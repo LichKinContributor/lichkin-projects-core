@@ -461,7 +461,11 @@ var addMenu = function(menuJson, $container) {
     if (typeof menuJson.params.url != 'undefined' && menuJson.params.url != '') {
       $menu.click(function() {
         if (_WEB_DEBUG) {
-          LK.openWin(menuJson.params.url + '/index');
+          if (menuJson.params.url == '/admin/core/errorLog') {
+            LK.openWin(menuJson.params.url);
+          } else {
+            LK.openWin(menuJson.params.url + '/index');
+          }
           return;
         }
         addTask(menuJson.id, menuJson.params.menuName, menuJson.params.icon, menuJson.params.url);
