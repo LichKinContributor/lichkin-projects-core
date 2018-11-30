@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,7 @@ import com.lichkin.framework.db.beans.SysAdminLoginRoleR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.entities.impl.SysAdminLoginRoleEntity;
 import com.lichkin.springframework.services.LKDBService;
@@ -23,21 +23,22 @@ import com.lichkin.springframework.services.LKDBService;
 @Service
 public class SysAdminLoginBusService extends LKDBService {
 
-	public List<SysAdminLoginEntity> findExist(String id, String compId, String busCompId, String email) {
+	public List<SysAdminLoginEntity> findExist(ApiKeyValues<?> params, String email) {
 		QuerySQL sql = new QuerySQL(false, SysAdminLoginEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysAdminLoginR.id, id);
-		}
+		addConditionId(sql, SysAdminLoginR.id, params.getId());
+//		addConditionLocale(sql, SysAdminLoginR.locale, params.getLocale());
+//		addConditionCompId(true, sql, SysAdminLoginR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysAdminLoginR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
-		if (LKFrameworkStatics.LichKin.equals(compId)) {
+		if (LKFrameworkStatics.LichKin.equals(params.getCompId())) {
 			sql.where(
 
 					new Condition(new eq(SysAdminLoginR.email, email)),
 
 					new Condition(false,
 
-							new Condition(null, new eq(SysAdminLoginR.compId, busCompId)),
+							new Condition(null, new eq(SysAdminLoginR.compId, params.getBusCompId())),
 
 							new Condition(true, new eq(SysAdminLoginR.superAdmin, Boolean.TRUE))
 

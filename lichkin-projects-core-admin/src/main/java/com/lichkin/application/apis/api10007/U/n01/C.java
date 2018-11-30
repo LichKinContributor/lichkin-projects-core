@@ -8,6 +8,7 @@ import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.enums.ApiType;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.controllers.LKApiBusUpdateController;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateWithoutCheckerService;
@@ -22,22 +23,14 @@ public class C extends LKApiBusUpdateController<I, SysAdminLoginEntity> {
 
 
 	@Override
-	protected LKApiBusUpdateWithoutCheckerService<I, SysAdminLoginEntity> getService(I cin) {
+	protected LKApiBusUpdateWithoutCheckerService<I, SysAdminLoginEntity> getService(I cin, ApiKeyValues<I> params) {
 		return service;
 	}
 
 
-	@Deprecated
 	@Override
-	protected I beforeInvokeService(I cin) throws LKException {
-		cin.setId(cin.getDatas().getLoginId());
-		return cin;
-	}
-
-
-	@Override
-	public String getSubOperBusType(I cin) {
-		return "ModifyPwd";
+	protected void beforeInvokeService(I cin, ApiKeyValues<I> params) throws LKException {
+		cin.setId(params.getLoginId());
 	}
 
 }

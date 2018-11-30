@@ -15,6 +15,7 @@ import com.lichkin.framework.db.beans.isNull;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.utils.LKCodeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysMenuEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
 
@@ -22,7 +23,7 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, SysMenuEntity, SysMenuEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		if (StringUtils.isNotBlank(sin.getMenuName())) {
 			sql.like(SysMenuR.menuName, LikeType.ALL, sin.getMenuName());
 		}
@@ -75,7 +76,7 @@ public class S extends LKApiBusGetListService<I, SysMenuEntity, SysMenuEntity> {
 
 
 	@Override
-	protected List<SysMenuEntity> afterQuery(I sin, String locale, String compId, String loginId, List<SysMenuEntity> list) {
+	protected List<SysMenuEntity> afterQuery(I sin, ApiKeyValues<I> params, List<SysMenuEntity> list) {
 		if (StringUtils.isNotBlank(sin.getMenuName()) || StringUtils.isNotBlank(sin.getRootOnly()) || StringUtils.isNotBlank(sin.getOnLine()) || StringUtils.isNotBlank(sin.getAssignable())) {
 			List<String> codeList = new ArrayList<>();
 			for (int i = 0; i < list.size(); i++) {

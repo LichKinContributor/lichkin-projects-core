@@ -21,4 +21,5 @@ public class I extends LKRequestBean {
 	@MD5
 	@NotBlank
 	private String pwdNew;
+
 }

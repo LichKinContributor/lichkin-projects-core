@@ -7,8 +7,8 @@ import com.lichkin.application.utils.LKDictUtils;
 import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysDictionaryR;
-import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDictionaryEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
 
@@ -16,7 +16,7 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, O, SysDictionaryEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysDictionaryR.id);
 		sql.select(SysDictionaryR.insertTime);
@@ -27,34 +27,16 @@ public class S extends LKApiBusGetListService<I, O, SysDictionaryEntity> {
 		// 关联表
 
 		// 字典表
+//		int i = 0;
 		LKDictUtils.usingStatus(sql, SysDictionaryR.usingStatus, 1);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		String busCompId = sin.getCompId();
-		sql.eq(SysDictionaryR.compId, LKFrameworkStatics.LichKin.equals(compId) && StringUtils.isNotBlank(busCompId) ? busCompId : compId);
-		// 在用状态
-		LKUsingStatusEnum usingStatus = sin.getUsingStatus();
-		if (usingStatus == null) {
-			if (LKFrameworkStatics.LichKin.equals(compId)) {
-				sql.neq(SysDictionaryR.usingStatus, LKUsingStatusEnum.DEPRECATED);
-			} else {
-				sql.eq(SysDictionaryR.usingStatus, LKUsingStatusEnum.USING);
-			}
-		} else {
-			sql.eq(SysDictionaryR.usingStatus, usingStatus);
-		}
+//		addConditionId(sql, SysDictionaryR.id, params.getId());
+		addConditionLocale(sql, SysDictionaryR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysDictionaryR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(true, params.getCompId(), sql, SysDictionaryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
-		String inLocale = sin.getLocale();
-		if (StringUtils.isNotBlank(inLocale)) {
-			sql.eq(SysDictionaryR.locale, inLocale);
-		} else {
-			if (!LKFrameworkStatics.LichKin.equals(compId)) {
-				sql.eq(SysDictionaryR.locale, locale);
-			}
-		}
-
 		String categoryCode = sin.getCategoryCode();
 		if (StringUtils.isNotBlank(categoryCode)) {
 			sql.eq(SysDictionaryR.categoryCode, categoryCode);

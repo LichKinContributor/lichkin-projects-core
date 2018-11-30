@@ -12,6 +12,7 @@ import com.lichkin.framework.db.beans.SysRoleMenuR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.utils.LKBeanUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysMenuEntity;
 import com.lichkin.springframework.entities.impl.SysRoleEntity;
 import com.lichkin.springframework.entities.impl.SysRoleMenuEntity;
@@ -21,8 +22,8 @@ import com.lichkin.springframework.services.LKApiBusGetOneService;
 public class S extends LKApiBusGetOneService<I, O, SysRoleEntity> {
 
 	@Override
-	protected void setOtherValues(SysRoleEntity entity, String id, I sin, String locale, String compId, String loginId, O out) {
-		LKBeanUtils.setStringValues(findListMenuByRoleId(compId, id), out,
+	protected void setOtherValues(SysRoleEntity entity, String id, I sin, ApiKeyValues<I> params, O out) {
+		LKBeanUtils.setStringValues(findListMenuByRoleId(params.getCompId(), id), out,
 
 				new String[] { "id", "menuName" },
 

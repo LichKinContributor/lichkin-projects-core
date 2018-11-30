@@ -9,8 +9,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestBean {
 
-//	private LKUsingStatusEnum usingStatus;
-
 //	private Byte sortId;
 
 	private String dictName;
@@ -18,8 +16,6 @@ public class I extends LKRequestBean {
 	private String dictCode;
 
 	private String categoryCode;
-
-//	private String locale;
 
 	/** 类目名称 */
 	private String categoryName;

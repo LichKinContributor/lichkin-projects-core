@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysDeptBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
@@ -34,7 +35,7 @@ public class S extends LKApiBusUpdateService<I, SysDeptEntity> {
 
 
 	@Override
-	protected boolean needCheckExist(I sin, String locale, String compId, String loginId, SysDeptEntity entity, String id) {
+	protected boolean needCheckExist(I sin, ApiKeyValues<I> params, SysDeptEntity entity, String id) {
 		if (!entity.getDeptName().equals(sin.getDeptName())) {
 			return true;
 		}
@@ -43,25 +44,25 @@ public class S extends LKApiBusUpdateService<I, SysDeptEntity> {
 
 
 	@Override
-	protected List<SysDeptEntity> findExist(I sin, String locale, String compId, String loginId, SysDeptEntity entity, String id) {
-		return busService.findExist(id, compId, null, entity.getParentCode(), sin.getDeptName());
+	protected List<SysDeptEntity> findExist(I sin, ApiKeyValues<I> params, SysDeptEntity entity, String id) {
+		return busService.findExist(params, entity.getParentCode(), sin.getDeptName());
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysDept_EXIST;
 	}
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysDeptEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysDeptEntity entity) {
 //		entity.setFullName(busService.analysisFullName();
 	}
 
 
 	@Override
-	protected void beforeCopyProperties(I sin, String locale, String compId, String loginId, SysDeptEntity entity) {
+	protected void beforeCopyProperties(I sin, ApiKeyValues<I> params, SysDeptEntity entity) {
 		entity.setFullName(busService.analysisFullName(entity.getId(), entity.getDeptCode(), entity.getDeptName(), sin.getDeptName(), entity.getFullName()));
 	}
 

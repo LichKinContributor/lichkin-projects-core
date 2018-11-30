@@ -11,6 +11,7 @@ import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LKApiServiceImpl;
 import com.lichkin.springframework.services.LKApiVoidService;
@@ -42,9 +43,9 @@ public class S extends LKApiServiceImpl<I, Void> implements LKApiVoidService<I> 
 
 	@Transactional
 	@Override
-	public void handle(I sin, String locale, String compId, String loginId) throws LKException {
+	public void handle(I sin, ApiKeyValues<I> params) throws LKException {
 		String cellphone = sin.getCellphone();
-		SysUserLoginEntity login = (SysUserLoginEntity) sin.getDatas().getLogin();
+		SysUserLoginEntity login = (SysUserLoginEntity) params.getLogin();
 
 		// 手机号码未修改
 		if (login.getCellphone().equals(cellphone)) {

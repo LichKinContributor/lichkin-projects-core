@@ -8,6 +8,7 @@ import com.lichkin.framework.db.beans.SysRoleR;
 import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysRoleEntity;
 import com.lichkin.springframework.entities.impl.SysRoleMenuEntity;
 import com.lichkin.springframework.services.LKApiBusDeleteService;
@@ -22,13 +23,13 @@ public class S extends LKApiBusDeleteService<I, SysRoleEntity> {
 
 
 	@Override
-	protected boolean realDelete(I sin, String locale, String compId, String loginId) {
+	protected boolean realDelete(I sin, ApiKeyValues<I> params) {
 		return true;
 	}
 
 
 	@Override
-	protected void beforeRealDelete(I sin, String locale, String compId, String loginId, SysRoleEntity entity, String id) {
+	protected void beforeRealDelete(I sin, ApiKeyValues<I> params, SysRoleEntity entity, String id) {
 		// TODO 删除数据为高风险操作，通常需要做一些业务校验才可以执行删除。
 		LKUsingStatusEnum usingStatus = entity.getUsingStatus();
 		switch (usingStatus) {

@@ -40,18 +40,18 @@ public abstract class LKApiController<CI extends LKRequestBean, CO> extends ApiC
 
 	@SuppressWarnings("incomplete-switch")
 	@Override
-	void initOthers(ApiType apiType, Datas datas, boolean fromSession) {
+	void initOthers(ApiType apiType, Datas datas, CI cin, ApiKeyValues<CI> params, boolean fromSession) {
 		switch (apiType) {
 			case COMPANY_BUSINESS:
-				initLogin(datas, fromSession, true);
-				initComp(datas, fromSession);
-				initEmployee(datas, fromSession);
+				initLogin(datas, cin, params, fromSession, true);
+				initComp(datas, cin, params, fromSession);
+				initEmployee(datas, cin, params, fromSession);
 			break;
 			case DEPT_BUSINESS: {
-				initLogin(datas, fromSession, true);
-				initComp(datas, fromSession);
-				initEmployee(datas, fromSession);
-				initDept(datas, fromSession);
+				initLogin(datas, cin, params, fromSession, true);
+				initComp(datas, cin, params, fromSession);
+				initEmployee(datas, cin, params, fromSession);
+				initDept(datas, cin, params, fromSession);
 			}
 			break;
 		}
@@ -61,36 +61,36 @@ public abstract class LKApiController<CI extends LKRequestBean, CO> extends ApiC
 	/**
 	 * 初始化员工信息
 	 * @param datas 统一请求参数
+	 * @param cin 控制器类入参
+	 * @param params 解析值参数
 	 * @param fromSession 是否从session中初始化
-	 * @param force 是否强制校验
 	 */
-	private void initEmployee(Datas datas, boolean fromSession) {
-		I_User employee = fromSession ? LKSession.getUser(session) : ((XEmployeeLoginService) loginService).findEmployeeByUserLoginIdAndCompToken(datas.getLoginId(), datas.getCompToken());
+	private void initEmployee(Datas datas, CI cin, ApiKeyValues<CI> params, boolean fromSession) {
+		I_User employee = fromSession ? LKSession.getUser(session) : ((XEmployeeLoginService) loginService).findEmployeeByUserLoginIdAndCompToken(params.getLoginId(), datas.getCompToken());
 
 		if (employee == null) {
 			throw new LKRuntimeException(XErrorCodes.YOU_ARE_NOT_A_EMPLOYEE);
 		}
 
-		datas.setUser(employee);
-		datas.setUserId(employee.getId());
+		params.setUser(employee);
 	}
 
 
 	/**
 	 * 初始化部门信息
 	 * @param datas 统一请求参数
+	 * @param cin 控制器类入参
+	 * @param params 解析值参数
 	 * @param fromSession 是否从session中初始化
-	 * @param force 是否强制校验
 	 */
-	private void initDept(Datas datas, boolean fromSession) {
-		I_Dept dept = fromSession ? LKSession.getDept(session) : ((XEmployeeLoginService) loginService).findDeptByEmployeeIdAndCompId(datas.getUserId(), datas.getCompId());
+	private void initDept(Datas datas, CI cin, ApiKeyValues<CI> params, boolean fromSession) {
+		I_Dept dept = fromSession ? LKSession.getDept(session) : ((XEmployeeLoginService) loginService).findDeptByEmployeeIdAndCompId(params.getUser().getId(), params.getCompId());
 
 		if (dept == null) {
 			throw new LKRuntimeException(XErrorCodes.DEPT_INEXIST);
 		}
 
-		datas.setDept(dept);
-		datas.setDeptId(dept.getId());
+		params.setDept(dept);
 	}
 
 }

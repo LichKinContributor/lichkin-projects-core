@@ -23,9 +23,8 @@ public class O {
 
 	private String categoryCode;
 
-	// private String locale;
-
-	/** 类目名称 */
 	private String categoryName;
+
+	private String locale;
 
 }

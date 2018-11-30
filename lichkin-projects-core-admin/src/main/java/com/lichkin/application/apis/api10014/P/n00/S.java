@@ -11,9 +11,9 @@ import com.lichkin.framework.db.beans.SysDeptR;
 import com.lichkin.framework.db.beans.SysEmployeeDeptR;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.enums.LikeType;
-import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
@@ -23,7 +23,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysEmployeeEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysEmployeeR.id);
 		sql.select(SysEmployeeR.insertTime);
@@ -48,23 +48,13 @@ public class S extends LKApiBusGetPageService<I, O, SysEmployeeEntity> {
 		LKDictUtils.education(sql, SysEmployeeR.education, i++);
 		LKDictUtils.maritalStatus(sql, SysEmployeeR.maritalStatus, i++);
 		LKDictUtils.nation(sql, SysEmployeeR.nation, i++);
-		LKDictUtils.jobTitle(sql, compId, SysEmployeeR.jobTitle, i++);
+		LKDictUtils.jobTitle(sql, params.getCompId(), SysEmployeeR.jobTitle, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		String busCompId = sin.getCompId();
-		sql.eq(SysEmployeeR.compId, LKFrameworkStatics.LichKin.equals(compId) && StringUtils.isNotBlank(busCompId) ? busCompId : compId);
-		// 在用状态
-		LKUsingStatusEnum usingStatus = sin.getUsingStatus();
-		if (usingStatus == null) {
-			if (LKFrameworkStatics.LichKin.equals(compId)) {
-				sql.neq(SysEmployeeR.usingStatus, LKUsingStatusEnum.DEPRECATED);
-			} else {
-				sql.eq(SysEmployeeR.usingStatus, LKUsingStatusEnum.USING);
-			}
-		} else {
-			sql.eq(SysEmployeeR.usingStatus, usingStatus);
-		}
+//		addConditionId(sql, SysEmployeeR.id, params.getId());
+//		addConditionLocale(sql, SysEmployeeR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysEmployeeR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(true, params.getCompId(), sql, SysEmployeeR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String userName = sin.getUserName();

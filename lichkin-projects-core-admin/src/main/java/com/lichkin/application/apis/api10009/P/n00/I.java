@@ -9,18 +9,10 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestPageBean {
 
-	private String compId;
-
 	/** 登录人姓名 */
 	private String userName;
 
 	/** 登录人邮箱 */
 	private String email;
-
-	/** 开始日期 */
-	private String startDate;
-
-	/** 结束日期 */
-	private String endDate;
 
 }

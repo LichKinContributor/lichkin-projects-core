@@ -126,7 +126,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }
     },
     form : {
-      url : '/SysAdminLogin/O',
+      url : '/SysAdminLogin/O01',
       plugins : compAdminMgmtEditFormPlugins
     },
     readonlyPlugins : function() {
@@ -136,7 +136,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsRemove : {
-    saveUrl : '/SysAdminLogin/US'
+    saveUrl : '/SysAdminLogin/US02'
   },
   toolsView : {
     dialog : {
@@ -146,7 +146,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }
     },
     form : {
-      url : '/SysAdminLogin/O',
+      url : '/SysAdminLogin/O01',
       plugins : compAdminMgmtEditFormPlugins
     }
   },
@@ -159,7 +159,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         icon : 'unlock',
         text : 'unlock',
-        saveUrl : '/SysAdminLogin/US',
+        saveUrl : '/SysAdminLogin/US01',
         usingStatus : 'USING',
         allowUsingStatusArr : [
           {

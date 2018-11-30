@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateWithoutCheckerService;
 
@@ -28,7 +29,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysAdminLoginEntit
 
 
 	@Override
-	protected boolean busCheck(I sin, String locale, String compId, String loginId, SysAdminLoginEntity entity, String id) {
+	protected boolean busCheck(I sin, ApiKeyValues<I> params, SysAdminLoginEntity entity, String id) {
 		if (!entity.getPwd().equals(LKMD5Encrypter.encrypt(sin.getPwdOld()))) {
 			throw new LKRuntimeException(ErrorCodes.SysAdminLogin_old_pwd_incorrect);
 		}
@@ -37,7 +38,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysAdminLoginEntit
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysAdminLoginEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysAdminLoginEntity entity) {
 		entity.setPwd(LKMD5Encrypter.encrypt(sin.getPwdNew()));
 	}
 

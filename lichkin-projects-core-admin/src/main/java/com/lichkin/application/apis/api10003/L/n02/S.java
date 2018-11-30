@@ -8,6 +8,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysCompR;
 import com.lichkin.framework.db.beans.SysDictionaryR;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysCompEntity;
 import com.lichkin.springframework.entities.impl.SysDictionaryEntity;
 import com.lichkin.springframework.services.LKApiBusGetListService;
@@ -16,7 +17,7 @@ import com.lichkin.springframework.services.LKApiBusGetListService;
 public class S extends LKApiBusGetListService<I, O, SysDictionaryEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysDictionaryR.id);
 //		sql.select(SysDictionaryR.insertTime);
@@ -36,11 +37,12 @@ public class S extends LKApiBusGetListService<I, O, SysDictionaryEntity> {
 //		LKDictUtils.x(sql, SysDictionaryR.y, i++);
 
 		// 筛选条件（必填项）
-//		sql.eq(SysDictionaryR.compId, compId);
-		sql.eq(SysDictionaryR.usingStatus, LKUsingStatusEnum.USING);
+//		addConditionId(sql, SysDictionaryR.id, params.getId());
+		addConditionLocale(sql, SysDictionaryR.locale, params.getLocale());
+		addConditionCompId(false, sql, SysDictionaryR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(true, params.getCompId(), sql, SysDictionaryR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
-		sql.eq(SysDictionaryR.locale, locale);
 		sql.eq(SysDictionaryR.categoryCode, sin.getCategoryCode());
 		sql.eq(SysDictionaryR.dictCode, sin.getDictCode());
 

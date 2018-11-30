@@ -12,6 +12,7 @@ import com.lichkin.framework.db.beans.SysCompR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.entities.impl.SysCompEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -20,7 +21,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysAdminLoginEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysAdminLoginR.id);
 //		sql.select(SysAdminLoginR.insertTime);
@@ -46,8 +47,10 @@ public class S extends LKApiBusGetPageService<I, O, SysAdminLoginEntity> {
 		LKDictUtils.usingStatus(sql, SysAdminLoginR.usingStatus, i++);
 
 		// 筛选条件（必填项）
-//		sql.eq(SysAdminLoginR.compId, compId);
-//		sql.eq(SysAdminLoginR.usingStatus, LKUsingStatusEnum.USING);
+//		addConditionId(sql, SysAdminLoginR.id, params.getId());
+//		addConditionLocale(sql, SysAdminLoginR.locale, params.getLocale());
+		addConditionCompId(false, sql, SysAdminLoginR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysAdminLoginR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 		sql.where(new Condition(
 
 				new Condition(null, new eq(SysAdminLoginR.usingStatus, LKUsingStatusEnum.USING)),

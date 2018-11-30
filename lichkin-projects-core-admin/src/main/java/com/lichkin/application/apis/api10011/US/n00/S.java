@@ -5,11 +5,13 @@ import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
+import com.lichkin.framework.beans.impl.LKRequestIDsBean;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysDeptR;
 import com.lichkin.framework.db.beans.SysEmployeeDeptR;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeDeptEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateUsingStatusService;
@@ -18,7 +20,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Service("SysDeptUS00Service")
-public class S extends LKApiBusUpdateUsingStatusService<I, SysDeptEntity> {
+public class S extends LKApiBusUpdateUsingStatusService<LKRequestIDsBean, SysDeptEntity> {
 
 	@Override
 	protected int getIdColumnResId() {
@@ -40,7 +42,7 @@ public class S extends LKApiBusUpdateUsingStatusService<I, SysDeptEntity> {
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysDeptEntity entity, String id) {
+	protected void beforeSaveMain(LKRequestIDsBean sin, ApiKeyValues<LKRequestIDsBean> params, SysDeptEntity entity, String id) {
 		QuerySQL sql = new QuerySQL(SysEmployeeDeptEntity.class);
 		sql.eq(SysEmployeeDeptR.deptId, id);
 		List<SysEmployeeDeptEntity> list = dao.getList(sql, SysEmployeeDeptEntity.class);
@@ -49,4 +51,5 @@ public class S extends LKApiBusUpdateUsingStatusService<I, SysDeptEntity> {
 			throw new LKRuntimeException(ErrorCodes.SysDept_can_not_delete_dept_when_has_employee);
 		}
 	}
+
 }

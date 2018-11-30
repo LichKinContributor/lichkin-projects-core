@@ -18,6 +18,7 @@ import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.beans.impl.LKDroplistBean;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDictionaryEntity;
 import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 
@@ -25,7 +26,7 @@ import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 public class S extends LKApiBusGetDroplistService<I> {
 
 	@Override
-	public List<LKDroplistBean> handle(I sin, String locale, String compId, String loginId) throws LKException {
+	public List<LKDroplistBean> handle(I sin, ApiKeyValues<I> params) throws LKException {
 		String categoryCode = sin.getCategoryCode();
 		if ("LOCALE".equals(categoryCode)) {
 			Locale[] locales = LKConfigStatics.IMPLEMENTED_LOCALE_ARR;
@@ -45,10 +46,10 @@ public class S extends LKApiBusGetDroplistService<I> {
 		sql.select(SysDictionaryR.dictName, "text");
 
 		sql.eq(SysDictionaryR.usingStatus, LKUsingStatusEnum.USING);
-		sql.eq(SysDictionaryR.locale, locale);
+		sql.eq(SysDictionaryR.locale, params.getLocale());
 		sql.eq(SysDictionaryR.categoryCode, categoryCode);
 
-		Category category = LKSysCatagoryCache.get(locale, categoryCode);
+		Category category = LKSysCatagoryCache.get(params.getLocale(), categoryCode);
 		if (category == null) {
 			return Collections.emptyList();
 		}
@@ -60,7 +61,7 @@ public class S extends LKApiBusGetDroplistService<I> {
 			case "R_2_C":
 			case "COMP":
 			case "COMMON":
-				sql.eq(SysDictionaryR.compId, compId);
+				sql.eq(SysDictionaryR.compId, params.getCompId());
 			break;
 		}
 

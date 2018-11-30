@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysDeptBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
-import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
@@ -38,27 +38,25 @@ public class S extends LKApiBusInsertService<I, SysDeptEntity> {
 
 
 	@Override
-	protected List<SysDeptEntity> findExist(I sin, String locale, String compId, String loginId) {
-		return busService.findExist(null, compId, sin.getCompId(), sin.getParentCode(), sin.getDeptName());
+	protected List<SysDeptEntity> findExist(I sin, ApiKeyValues<I> params) {
+		return busService.findExist(params, sin.getParentCode(), sin.getDeptName());
 	}
 
 
 	@Override
-	protected boolean forceCheck(I sin, String locale, String compId, String loginId) {
+	protected boolean forceCheck(I sin, ApiKeyValues<I> params) {
 		return false;
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysDept_EXIST;
 	}
 
 
 	@Override
-	protected void beforeRestore(I sin, String locale, String compId, String loginId, SysDeptEntity entity, SysDeptEntity exist) {
-		entity.setUsingStatus(LKUsingStatusEnum.USING);
-		entity.setCompId(exist.getCompId());
+	protected void beforeRestore(I sin, ApiKeyValues<I> params, SysDeptEntity entity, SysDeptEntity exist) {
 		if (!exist.getParentCode().equals(entity.getParentCode())) {
 			throw new LKRuntimeException(ErrorCodes.SysDept_parent_code_can_not_modify_when_restore).withParam("#parentCode", exist.getParentCode());
 		}
@@ -68,10 +66,9 @@ public class S extends LKApiBusInsertService<I, SysDeptEntity> {
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysDeptEntity entity) {
-		entity.setCompId(getCompId(compId, sin.getCompId()));
-		entity.setDeptCode(busService.analysisDeptCode(compId, sin.getParentCode()));
-		entity.setFullName(busService.analysisFullName(compId, entity.getDeptCode(), entity.getDeptName()));
+	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysDeptEntity entity) {
+		entity.setDeptCode(busService.analysisDeptCode(params.getCompId(), sin.getParentCode()));
+		entity.setFullName(busService.analysisFullName(params.getCompId(), entity.getDeptCode(), entity.getDeptName()));
 	}
 
 }

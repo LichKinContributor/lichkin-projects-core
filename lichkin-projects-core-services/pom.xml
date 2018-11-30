@@ -19,6 +19,10 @@
       <groupId>com.lichkin.springframework.boot</groupId>
       <artifactId>lichkin-spring-boot-starter-database</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.lichkin.springframework.boot</groupId>
+      <artifactId>lichkin-spring-boot-starter-service-api-defines</artifactId>
+    </dependency>
     <!-- lichkin projects core -->
     <dependency>
       <groupId>com.lichkin.projects</groupId>

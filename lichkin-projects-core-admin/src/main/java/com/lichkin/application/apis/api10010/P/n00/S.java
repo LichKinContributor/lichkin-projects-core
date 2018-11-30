@@ -11,10 +11,10 @@ import com.lichkin.framework.db.beans.SysAdminLoginR;
 import com.lichkin.framework.db.beans.SysAdminOperLogR;
 import com.lichkin.framework.db.beans.SysDictionaryR;
 import com.lichkin.framework.db.enums.LikeType;
-import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.enums.impl.LKDateTimeTypeEnum;
 import com.lichkin.framework.defines.enums.impl.LKOperTypeEnum;
 import com.lichkin.framework.utils.LKDateTimeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.entities.impl.SysAdminOperLogEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -23,7 +23,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysAdminOperLogEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysAdminOperLogR.id);
 		sql.select(SysAdminOperLogR.requestId);
@@ -37,20 +37,14 @@ public class S extends LKApiBusGetPageService<I, O, SysAdminOperLogEntity> {
 
 		// 字典表
 		int i = 0;
-		LKDictUtils.adminBusType(sql, SysAdminOperLogR.busType, i++);
+		LKDictUtils.adminBusType(sql, SysAdminOperLogR.requestUrl, i++);
 		LKDictUtils.operType(sql, SysAdminOperLogR.operType, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-		String busCompId = sin.getCompId();
-//		sql.eq(SysAdminOperLogR.compId, LKFrameworkStatics.LichKin.equals(compId) && StringUtils.isNotBlank(busCompId) ? busCompId : compId);
-		if (LKFrameworkStatics.LichKin.equals(compId)) {
-			if (StringUtils.isNotBlank(busCompId)) {
-				sql.eq(SysAdminOperLogR.compId, busCompId);
-			}
-		} else {
-			sql.eq(SysAdminOperLogR.compId, compId);
-		}
+//		addConditionId(sql, SysAdminOperLogR.id, params.getId());
+//		addConditionLocale(sql, SysAdminOperLogR.locale, params.getLocale());
+		addConditionCompId(false, sql, SysAdminOperLogR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysAdminOperLogR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		LKOperTypeEnum operType = sin.getOperType();

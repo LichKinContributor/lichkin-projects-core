@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.lichkin.application.services.OperLogService;
 import com.lichkin.application.services.extend.impl.XCompService;
 import com.lichkin.framework.beans.impl.Datas;
 import com.lichkin.framework.beans.impl.LKRequestBean;
@@ -29,7 +30,6 @@ import com.lichkin.framework.web.annotations.LKApiType;
 import com.lichkin.framework.web.annotations.LKController4Api;
 import com.lichkin.framework.web.enums.ApiType;
 import com.lichkin.springframework.services.LoginService;
-import com.lichkin.springframework.services.OperLogService;
 import com.lichkin.springframework.web.LKSession;
 import com.lichkin.springframework.web.beans.LKRequestInfo;
 import com.lichkin.springframework.web.utils.LKRequestUtils;
@@ -62,11 +62,11 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 			throw new LKFrameworkException("LKApiType must config and param apiType can not be null.");
 		}
 
+		// 创建解析对象，设置国际化值。
+		ApiKeyValues<CI> params = new ApiKeyValues<>(LKRequestUtils.getLocale(request).toString(), cin);
+
 		// 取入参
 		Datas datas = cin.getDatas();
-
-		// 设置国际化值
-		datas.setLocale(LKRequestUtils.getLocale(request).toString());
 
 		// 根据客户端类型判断是否从session中取值
 		boolean fromSession = LKClientTypeEnum.JAVASCRIPT.equals(datas.getClientType());
@@ -77,30 +77,28 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 			}
 			break;
 			case ROOT_QUERY: {
-				I_Comp comp = LichKin.getInstance();
-				datas.setComp(comp);
-				datas.setCompId(comp.getId());
+				params.setComp(LichKin.getInstance());
 			}
 			break;
 			case BEFORE_LOGIN: {
-				initLogin(datas, fromSession, false);
+				initLogin(datas, cin, params, fromSession, false);
 			}
 			break;
 			case PERSONAL_BUSINESS: {
-				initLogin(datas, fromSession, true);
+				initLogin(datas, cin, params, fromSession, true);
 			}
 			break;
 			case COMPANY_QUERY: {
-				initComp(datas, fromSession);
+				initComp(datas, cin, params, fromSession);
 			}
 			break;
 		}
 
-		initOthers(apiType, datas, fromSession);
+		initOthers(apiType, datas, cin, params, fromSession);
 
-		LKResponseBean<CO> responseBean = new LKResponseBean<>(handleInvoke(cin, datas.getLocale(), datas.getCompId(), datas.getLoginId()));
-		if (saveLog(cin)) {
-			saveLog(cin, datas, LKRequestUtils.getRequestURI(request));
+		LKResponseBean<CO> responseBean = new LKResponseBean<>(handleInvoke(cin, params));
+		if (saveLog(cin, params)) {
+			saveLog(cin, params, LKRequestUtils.getRequestURI(request));
 		}
 		return responseBean;
 	}
@@ -133,10 +131,12 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 	/**
 	 * 初始化登录信息
 	 * @param datas 统一请求参数
+	 * @param cin 控制器类入参
+	 * @param params 解析值参数
 	 * @param fromSession 是否从session中初始化
 	 * @param force 是否强制校验
 	 */
-	void initLogin(Datas datas, boolean fromSession, boolean force) {
+	void initLogin(Datas datas, CI cin, ApiKeyValues<CI> params, boolean fromSession, boolean force) {
 		String token = fromSession ? LKSession.getToken(session) : datas.getToken();
 
 		if (StringUtils.isBlank(token)) {
@@ -153,9 +153,7 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 			throw new LKRuntimeException(ErrorCodes.ACCOUNT_INEXIST);
 		}
 
-		datas.setToken(token);
-		datas.setLogin(login);
-		datas.setLoginId(login.getId());
+		params.setLogin(login);
 	}
 
 
@@ -166,17 +164,18 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 	/**
 	 * 初始化公司信息
 	 * @param datas 统一请求参数
+	 * @param cin 控制器类入参
+	 * @param params 解析值参数
 	 * @param fromSession 是否从session中初始化
 	 */
-	void initComp(Datas datas, boolean fromSession) {
+	void initComp(Datas datas, CI cin, ApiKeyValues<CI> params, boolean fromSession) {
 		I_Comp comp = fromSession ? LKSession.getComp(session) : compService.findCompByToken(datas.getCompToken());
 
 		if (comp == null) {
 			throw new LKRuntimeException(ErrorCodes.COMP_INEXIST);
 		}
 
-		datas.setComp(comp);
-		datas.setCompId(comp.getId());
+		params.setComp(comp);
 	}
 
 
@@ -184,21 +183,21 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 	 * 初始化其它信息
 	 * @param apiType 接口类型
 	 * @param datas 统一请求参数
+	 * @param cin 控制器类入参
+	 * @param params 解析值参数
 	 * @param fromSession 是否从session中初始化
 	 */
-	abstract void initOthers(ApiType apiType, Datas datas, boolean fromSession);
+	abstract void initOthers(ApiType apiType, Datas datas, CI cin, ApiKeyValues<CI> params, boolean fromSession);
 
 
 	/**
 	 * 请求处理方法
 	 * @param cin 控制器类入参
-	 * @param locale 国际化
-	 * @param compId 公司ID
-	 * @param loginId 登录ID
+	 * @param params 解析值参数
 	 * @return 控制器类出参
 	 * @throws LKException 业务处理失败但不希望已处理数据回滚时抛出异常
 	 */
-	abstract CO handleInvoke(@Valid CI cin, String locale, String compId, String loginId) throws LKException;
+	abstract CO handleInvoke(CI cin, ApiKeyValues<CI> params) throws LKException;
 
 
 	@Autowired
@@ -208,9 +207,10 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 	/**
 	 * 是否记录日志
 	 * @param cin 控制器类入参
+	 * @param params 解析值参数
 	 * @return true:记录日志;false:不记录日志;
 	 */
-	protected boolean saveLog(CI cin) {
+	protected boolean saveLog(CI cin, ApiKeyValues<CI> params) {
 		return true;
 	}
 
@@ -218,11 +218,11 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 	/**
 	 * 记录日志
 	 * @param cin 控制器类入参
-	 * @param datas 统一请求参数
+	 * @param params 解析值参数
 	 * @param requestURI 请求地址
 	 */
-	private void saveLog(CI cin, Datas datas, String requestURI) {
-		if (LKFrameworkStatics.LichKin.equals(datas.getCompId())) {
+	private void saveLog(CI cin, ApiKeyValues<CI> params, String requestURI) {
+		if (LKFrameworkStatics.LichKin.equals(params.getCompId())) {
 			return;
 		}
 		try {
@@ -231,9 +231,9 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 
 					LKStringUtils.capitalize(Platform.PLATFORM.toString().toLowerCase()),
 
-					StringUtils.trimToEmpty(datas.getCompId()),
+					StringUtils.trimToEmpty(params.getCompId()),
 
-					datas.getLoginId(),
+					params.getLoginId(),
 
 					requestInfo.getRequestId(),
 
@@ -245,9 +245,7 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 
 					requestInfo.getRequestDatas(),
 
-					getOperType(cin),
-
-					getBusType(cin)
+					getOperType(cin, params)
 
 			);
 		} catch (Exception e) {
@@ -259,20 +257,11 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 	/**
 	 * 获取操作类型
 	 * @param cin 控制器类入参
+	 * @param params 解析值参数
 	 * @return 操作类型
 	 */
-	protected LKOperTypeEnum getOperType(@Valid CI cin) {
+	protected LKOperTypeEnum getOperType(CI cin, ApiKeyValues<CI> params) {
 		return LKOperTypeEnum.OTHER;
-	}
-
-
-	/**
-	 * 获取业务操作类型
-	 * @param cin 控制器类入参
-	 * @return 业务操作类型
-	 */
-	protected String getBusType(CI cin) {
-		return null;
 	}
 
 }

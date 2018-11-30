@@ -9,9 +9,9 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysAdminLoginLogR;
 import com.lichkin.framework.db.beans.SysAdminLoginR;
 import com.lichkin.framework.db.enums.LikeType;
-import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.enums.impl.LKDateTimeTypeEnum;
 import com.lichkin.framework.utils.LKDateTimeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.entities.impl.SysAdminLoginLogEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -20,7 +20,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysAdminLoginLogEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysAdminLoginLogR.id);
 		sql.select(SysAdminLoginLogR.requestId);
@@ -36,16 +36,10 @@ public class S extends LKApiBusGetPageService<I, O, SysAdminLoginLogEntity> {
 //		int i = 0;
 
 		// 筛选条件（必填项）
-		// 公司ID
-		String busCompId = sin.getCompId();
-//		sql.eq(SysAdminLoginLogR.compId, LKFrameworkStatics.LichKin.equals(compId) && StringUtils.isNotBlank(busCompId) ? busCompId : compId);
-		if (LKFrameworkStatics.LichKin.equals(compId)) {
-			if (StringUtils.isNotBlank(busCompId)) {
-				sql.eq(SysAdminLoginLogR.compId, busCompId);
-			}
-		} else {
-			sql.eq(SysAdminLoginLogR.compId, compId);
-		}
+//		addConditionId(sql, SysAdminLoginR.id, params.getId());
+//		addConditionLocale(sql, SysAdminLoginR.locale, params.getLocale());
+		addConditionCompId(false, sql, SysAdminLoginR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysAdminLoginR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String userName = sin.getUserName();

@@ -17,6 +17,7 @@ import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.utils.LKRandomUtils;
 import com.lichkin.framework.utils.LKStringUtils;
 import com.lichkin.framework.utils.i18n.LKI18NUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysScEntity;
 import com.lichkin.springframework.entities.impl.SysSmsLogEntity;
 import com.lichkin.springframework.services.LKApiServiceImpl;
@@ -31,8 +32,8 @@ public class S extends LKApiServiceImpl<I, Void> implements LKApiVoidService<I> 
 
 	@Transactional
 	@Override
-	public void handle(I sin, String locale, String compId, String loginId) throws LKException {
-		sendSms(locale, sin.getCellphone(), sin.getBusType());
+	public void handle(I sin, ApiKeyValues<I> params) throws LKException {
+		sendSms(params.getLocale(), sin.getCellphone(), sin.getBusType());
 	}
 
 

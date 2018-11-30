@@ -2,28 +2,26 @@ package com.lichkin.application.services.bus.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.Condition;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysDictionaryR;
 import com.lichkin.framework.db.beans.eq;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDictionaryEntity;
 import com.lichkin.springframework.services.LKDBService;
 
 @Service
 public class SysDictionaryBusService extends LKDBService {
 
-	public List<SysDictionaryEntity> findExist(String id, String compId, String busCompId, String locale, String categoryCode, String dictCode, String dictName) {
+	public List<SysDictionaryEntity> findExist(ApiKeyValues<?> params, String categoryCode, String dictCode, String dictName) {
 		QuerySQL sql = new QuerySQL(false, SysDictionaryEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysDictionaryR.id, id);
-		}
+		addConditionId(sql, SysDictionaryR.id, params.getId());
+		addConditionLocale(sql, SysDictionaryR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysDictionaryR.compId, params.getCompId(), params.getBusCompId());
 
-		addConditionCompId(true, sql, SysDictionaryR.compId, compId, busCompId);
-		sql.eq(SysDictionaryR.locale, locale);
 		sql.eq(SysDictionaryR.categoryCode, categoryCode);
 
 		sql.where(

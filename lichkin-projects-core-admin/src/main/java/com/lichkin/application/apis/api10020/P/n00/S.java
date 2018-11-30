@@ -10,7 +10,9 @@ import com.lichkin.framework.db.beans.SysUserLoginR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.LKDateTimeTypeEnum;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.utils.LKDateTimeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
 
@@ -18,7 +20,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysUserLoginEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysUserLoginR.id);
 		sql.select(SysUserLoginR.insertTime);
@@ -39,8 +41,10 @@ public class S extends LKApiBusGetPageService<I, O, SysUserLoginEntity> {
 		LKDictUtils.gender(sql, SysUserLoginR.gender, i++);
 
 		// 筛选条件（必填项）
-		// 在用状态
-		addConditionUsingStatus(sql, SysUserLoginR.usingStatus, compId, sin.getUsingStatus());
+//		addConditionId(sql, SysUserLoginR.id, params.getId());
+//		addConditionLocale(sql, SysUserLoginR.locale, params.getLocale());
+//		addConditionCompId(true, sql, SysUserLoginR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(true, params.getCompId(), sql, SysUserLoginR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		String userName = sin.getUserName();

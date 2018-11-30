@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.db.beans.DeleteSQL;
@@ -12,6 +11,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysRoleMenuR;
 import com.lichkin.framework.db.beans.SysRoleR;
 import com.lichkin.framework.defines.LKFrameworkStatics;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysRoleEntity;
 import com.lichkin.springframework.entities.impl.SysRoleMenuEntity;
 import com.lichkin.springframework.services.LKDBService;
@@ -19,14 +19,13 @@ import com.lichkin.springframework.services.LKDBService;
 @Service
 public class SysRoleBusService extends LKDBService {
 
-	public List<SysRoleEntity> findExist(String id, String compId, String busCompId, String roleName) {
+	public List<SysRoleEntity> findExist(ApiKeyValues<?> params, String roleName) {
 		QuerySQL sql = new QuerySQL(false, SysRoleEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysRoleR.id, id);
-		}
-
-		addConditionCompId(true, sql, SysRoleR.compId, compId, busCompId);
+		addConditionId(sql, SysRoleR.id, params.getId());
+//		addConditionLocale(sql, SysRoleR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysRoleR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysRoleR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		sql.eq(SysRoleR.roleName, roleName);
 

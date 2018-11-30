@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysEmployeeDeptR;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.eq;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.services.LKDBService;
@@ -18,26 +19,29 @@ import com.lichkin.springframework.services.LKDBService;
 @Service
 public class SysEmployeeBusService extends LKDBService {
 
-	public List<SysEmployeeEntity> findExist(String id, String compId, String busCompId, String cellphone, String email, String userCard, String jobNumber) {
+	public List<SysEmployeeEntity> findExist(ApiKeyValues<?> params, String cellphone, String email, String userCard, String jobNumber) {
 		QuerySQL sql = new QuerySQL(false, SysEmployeeEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysEmployeeR.id, id);
-		}
+		addConditionId(sql, SysEmployeeR.id, params.getId());
+//		addConditionLocale(sql, SysEmployeeR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysEmployeeR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysEmployeeR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
-		addConditionCompId(true, sql, SysEmployeeR.compId, compId, busCompId);
+		sql.where(
 
-		sql.where(new Condition(true,
+				new Condition(true,
 
-				new Condition(false, new eq(SysEmployeeR.cellphone, cellphone)),
+						new Condition(false, new eq(SysEmployeeR.cellphone, cellphone)),
 
-				new Condition(false, new eq(SysEmployeeR.email, email)),
+						new Condition(false, new eq(SysEmployeeR.email, email)),
 
-				new Condition(false, new eq(SysEmployeeR.userCard, userCard)),
+						new Condition(false, new eq(SysEmployeeR.userCard, userCard)),
 
-				new Condition(false, new eq(SysEmployeeR.jobNumber, jobNumber))
+						new Condition(false, new eq(SysEmployeeR.jobNumber, jobNumber))
 
-		));
+				)
+
+		);
 
 		return dao.getList(sql, SysEmployeeEntity.class);
 	}

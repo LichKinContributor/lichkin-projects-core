@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.SysEmployeeDeptR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.utils.LKBeanUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeDeptEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
@@ -20,8 +21,8 @@ import com.lichkin.springframework.services.LKApiBusGetOneService;
 public class S extends LKApiBusGetOneService<I, O, SysEmployeeEntity> {
 
 	@Override
-	protected void setOtherValues(SysEmployeeEntity entity, String id, I sin, String locale, String compId, String loginId, O out) {
-		LKBeanUtils.setStringValues(findListDeptByEmployeeLoginId(compId, id), out,
+	protected void setOtherValues(SysEmployeeEntity entity, String id, I sin, ApiKeyValues<I> params, O out) {
+		LKBeanUtils.setStringValues(findListDeptByEmployeeLoginId(params.getCompId(), id), out,
 
 				new String[] { "id", },
 

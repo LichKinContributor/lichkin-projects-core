@@ -47,7 +47,7 @@ $loginBtn.click(function(e) {
     return;
   }
   LK.ajax({
-    url : '/AccountLogin',
+    url : '/Web/AccountLogin',
     data : {
       loginName : loginName,
       pwd : SparkMD5.hash(pwd)

@@ -15,7 +15,7 @@ import com.lichkin.framework.web.enums.ApiType;
 public abstract class LKApiController<CI extends LKRequestBean, CO> extends ApiController<CI, CO> {
 
 	@Override
-	void initOthers(ApiType apiType, Datas datas, boolean fromSession) {
+	void initOthers(ApiType apiType, Datas datas, CI cin, ApiKeyValues<CI> params, boolean fromSession) {
 	}
 
 }

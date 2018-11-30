@@ -3,11 +3,12 @@ package com.lichkin.application.apis.ModifyPassword;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lichkin.framework.defines.entities.I_Login;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
-import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.services.LKApiServiceImpl;
 import com.lichkin.springframework.services.LKApiVoidService;
 
@@ -21,7 +22,9 @@ public class S extends LKApiServiceImpl<I, Void> implements LKApiVoidService<I> 
 	@RequiredArgsConstructor
 	enum ErrorCodes implements LKCodeEnum {
 
-		app_old_pwd_incorrect(20007),
+		old_pwd_incorrect(20007),
+
+		new_pwd_is_same_to_saved(20010),
 
 		;
 
@@ -32,19 +35,21 @@ public class S extends LKApiServiceImpl<I, Void> implements LKApiVoidService<I> 
 
 	@Transactional
 	@Override
-	public void handle(I sin, String locale, String compId, String loginId) throws LKException {
-		SysUserLoginEntity login = (SysUserLoginEntity) sin.getDatas().getLogin();
+	public void handle(I sin, ApiKeyValues<I> params) throws LKException {
+		I_Login login = params.getLogin();
 
-		String pwdOld = LKMD5Encrypter.encrypt(sin.getPwdOld());
-		if (!login.getPwd().equals(pwdOld)) {
-			throw new LKRuntimeException(ErrorCodes.app_old_pwd_incorrect);
+		String pwdSaved = login.getPwd();
+		if (!pwdSaved.equals(LKMD5Encrypter.encrypt(sin.getPwdOld()))) {
+			throw new LKRuntimeException(ErrorCodes.old_pwd_incorrect);
 		}
 
-		String pwdNew = LKMD5Encrypter.encrypt(sin.getPwdNew());
-		if (!login.getPwd().equals(pwdNew)) {
-			login.setPwd(pwdNew);
-			dao.mergeOne(login);
+		String pwdNew = sin.getPwdNew();
+		if (pwdSaved.equals(pwdNew)) {
+			throw new LKRuntimeException(ErrorCodes.new_pwd_is_same_to_saved);
 		}
+
+		login.setPwd(LKMD5Encrypter.encrypt(pwdNew));
+		dao.mergeOne(login);
 	}
 
 }

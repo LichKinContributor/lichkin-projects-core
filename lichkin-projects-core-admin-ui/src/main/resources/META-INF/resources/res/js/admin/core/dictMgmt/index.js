@@ -159,6 +159,11 @@ LK.UI.datagrid({
   },
   toolsEdit : {
     titleTools : true,
+    beforeSave : function($button, $datagrid, $selecteds, selectedDatas, value, $dialogButton, $dialog) {
+      return {
+        locale : $datagrid.LKGetSiblingPlugin('category').LKGetValue().split('@#@')[1]
+      };
+    },
     saveUrl : '/SysDictionary/U',
     dialog : {
       size : {

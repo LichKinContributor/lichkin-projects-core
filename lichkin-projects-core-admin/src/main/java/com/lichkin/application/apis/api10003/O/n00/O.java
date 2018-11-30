@@ -13,10 +13,6 @@ public class O {
 
 //	private String insertTime;
 
-//	private String compId;
-
-//	private String locale;
-
 //	private String categoryCode;
 
 	private String dictCode;

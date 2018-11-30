@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysCategoryBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysCategoryEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
@@ -34,31 +35,25 @@ public class S extends LKApiBusInsertService<I, SysCategoryEntity> {
 
 
 	@Override
-	protected List<SysCategoryEntity> findExist(I sin, String locale, String compId, String loginId) {
-		return busService.findExist(null, getLocale(locale, sin.getLocale()), sin.getCategoryCode(), sin.getCategoryName());
+	protected List<SysCategoryEntity> findExist(I sin, ApiKeyValues<I> params) {
+		return busService.findExist(params, sin.getLocale(), sin.getCategoryCode(), sin.getCategoryName());
 	}
 
 
 	@Override
-	protected boolean forceCheck(I sin, String locale, String compId, String loginId) {
+	protected boolean forceCheck(I sin, ApiKeyValues<I> params) {
 		return true;
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysCategory_EXIST;
 	}
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysCategoryEntity entity) {
-		entity.setLocale(getLocale(locale, sin.getLocale()));
-	}
-
-
-	@Override
-	protected void afterSaveMain(I sin, String locale, String compId, String loginId, SysCategoryEntity entity, String id) {
+	protected void afterSaveMain(I sin, ApiKeyValues<I> params, SysCategoryEntity entity, String id) {
 		busService.cacheCategory();
 	}
 

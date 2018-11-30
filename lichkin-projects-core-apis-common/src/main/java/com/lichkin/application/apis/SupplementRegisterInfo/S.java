@@ -13,6 +13,7 @@ import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LKApiService;
 import com.lichkin.springframework.services.LKApiServiceImpl;
@@ -38,8 +39,8 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 
 	@Transactional
 	@Override
-	public O handle(I sin, String locale, String compId, String loginId) throws LKException {
-		SysUserLoginEntity login = (SysUserLoginEntity) sin.getDatas().getLogin();
+	public O handle(I sin, ApiKeyValues<I> params) throws LKException {
+		SysUserLoginEntity login = (SysUserLoginEntity) params.getLogin();
 		SysUserLoginEntity exist = findUserLoginByLoginName(sin.getLoginName());
 		if ((exist != null) && !exist.getId().equals(login.getId())) {
 			throw new LKRuntimeException(ErrorCodes.app_account_exist);

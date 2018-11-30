@@ -10,8 +10,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestPageBean {
 
-	private String compId;
-
 	private LKOperTypeEnum operType;
 
 	private String busType;
@@ -21,11 +19,5 @@ public class I extends LKRequestPageBean {
 
 	/** 手机号码 */
 	private String cellphone;
-
-	/** 开始日期 */
-	private String startDate;
-
-	/** 结束日期 */
-	private String endDate;
 
 }

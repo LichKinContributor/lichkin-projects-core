@@ -11,7 +11,6 @@ import com.lichkin.framework.defines.annotations.FieldGenerator;
 import com.lichkin.framework.defines.annotations.InsertCheckType;
 import com.lichkin.framework.defines.annotations.InsertType;
 import com.lichkin.framework.defines.annotations.UpdateCheckType;
-import com.lichkin.framework.defines.entities.I_LoginId;
 import com.lichkin.framework.defines.entities.I_User;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 import com.lichkin.springframework.entities.suppers.BaseCompEntity;
@@ -56,7 +55,7 @@ import lombok.Setter;
 		, oneResultColumns = { "String deptId 部门ID", "String loginName 登录名" }
 
 )
-public class SysEmployeeEntity extends BaseCompEntity implements I_User, I_LoginId {
+public class SysEmployeeEntity extends BaseCompEntity implements I_User {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 10014L;

@@ -12,13 +12,16 @@ import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysEmployeeR;
 import com.lichkin.framework.db.beans.SysUserLoginR;
 import com.lichkin.framework.db.beans.eq;
+import com.lichkin.framework.defines.Platform;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.framework.defines.enums.LKPlatform;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.LKRandomUtils;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LKApiService;
@@ -63,17 +66,16 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 
 	@Transactional
 	@Override
-	public O handle(I sin, String locale, String compId, String loginId) throws LKException {
+	public O handle(I sin, ApiKeyValues<I> params) throws LKException {
 		SysUserLoginEntity userLogin = findUserLoginByLoginName(sin.getLoginName());
 		if (userLogin == null) {
 			throw new LKRuntimeException(ErrorCodes.app_account_inexistence);
 		}
 
-		// 用户版为OPEN，不会有公司ID，员工版为COMPANY_QUERY，有该值。
-		if (StringUtils.isNotBlank(compId)) {
+		if (Platform.PLATFORM.equals(LKPlatform.EMPLOYEE)) {
 			// 验证是否为员工
 			QuerySQL sql = new QuerySQL(false, SysEmployeeEntity.class);
-			sql.eq(SysEmployeeR.compId, compId);
+			sql.eq(SysEmployeeR.compId, params.getCompId());
 			sql.eq(SysEmployeeR.cellphone, userLogin.getCellphone());
 			SysEmployeeEntity employee = dao.getOne(sql, SysEmployeeEntity.class);
 			if (employee == null) {

@@ -122,6 +122,12 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
             {
               plugin : 'hidden',
               options : {
+                name : 'locale',
+                value : selectedDatas.locale
+              }
+            }, {
+              plugin : 'hidden',
+              options : {
                 name : 'categoryCode',
                 value : selectedDatas.categoryCode
               }

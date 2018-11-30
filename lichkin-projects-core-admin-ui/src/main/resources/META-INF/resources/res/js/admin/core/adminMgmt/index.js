@@ -122,7 +122,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
     }
   },
   toolsRemove : {
-    saveUrl : '/SysAdminLogin/US'
+    saveUrl : '/SysAdminLogin/US02'
   },
   toolsUS : [
       {
@@ -133,7 +133,7 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
       }, {
         icon : 'unlock',
         text : 'unlock',
-        saveUrl : '/SysAdminLogin/US',
+        saveUrl : '/SysAdminLogin/US01',
         usingStatus : 'USING',
         allowUsingStatusArr : [
           {

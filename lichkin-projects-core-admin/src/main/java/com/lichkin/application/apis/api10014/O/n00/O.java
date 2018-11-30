@@ -16,10 +16,6 @@ public class O {
 
 //	private String insertTime;
 
-//	private String compId;
-
-//	private String loginId;
-
 	private String photo;
 
 	private String userName;

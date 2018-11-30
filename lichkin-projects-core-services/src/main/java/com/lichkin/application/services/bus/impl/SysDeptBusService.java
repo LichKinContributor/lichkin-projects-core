@@ -2,7 +2,6 @@ package com.lichkin.application.services.bus.impl;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +11,7 @@ import com.lichkin.framework.db.beans.SysDeptR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.utils.LKCodeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.services.LKCodeService;
 import com.lichkin.springframework.services.LKDBService;
@@ -35,14 +35,14 @@ public class SysDeptBusService extends LKDBService {
 	}
 
 
-	public List<SysDeptEntity> findExist(String id, String compId, String busCompId, String parentCode, String deptName) {
+	public List<SysDeptEntity> findExist(ApiKeyValues<?> params, String parentCode, String deptName) {
 		QuerySQL sql = new QuerySQL(false, SysDeptEntity.class);
 
-		if (StringUtils.isNotBlank(id)) {
-			sql.neq(SysDeptR.id, id);
-		}
+		addConditionId(sql, SysDeptR.id, params.getId());
+//		addConditionLocale(sql, SysDeptR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysDeptR.compId, params.getCompId(), params.getBusCompId());
+//		addConditionUsingStatus(true, params.getCompId(), sql, SysDeptR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
-		addConditionCompId(true, sql, SysDeptR.compId, compId, busCompId);
 		sql.eq(SysDeptR.parentCode, parentCode);
 		sql.eq(SysDeptR.deptName, deptName);
 

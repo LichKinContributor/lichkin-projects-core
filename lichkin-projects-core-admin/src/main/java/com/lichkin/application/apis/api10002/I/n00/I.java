@@ -10,8 +10,6 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestBean {
 
-	private String locale;
-
 	private String categoryCode;
 
 	private String categoryName;

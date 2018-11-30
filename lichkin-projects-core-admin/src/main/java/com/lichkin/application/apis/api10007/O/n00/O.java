@@ -11,31 +11,11 @@ public class O {
 
 	private String id;
 
-//	private LKUsingStatusEnum usingStatus;
-
-//	private String insertTime;
-
-	private String compId;
-
 	private String userName;
 
 	private LKGenderEnum gender;
 
 	private String email;
-
-//	private String pwd;
-
-//	private String securityCode;
-
-//	private Byte errorTimes;
-
-//	private Byte level;
-
-//	private String token;
-
-//	private String lockTime;
-
-//	private Boolean superAdmin;
 
 	private String photo;
 

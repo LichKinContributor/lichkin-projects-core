@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysRoleBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysRoleEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
@@ -34,7 +35,7 @@ public class S extends LKApiBusUpdateService<I, SysRoleEntity> {
 
 
 	@Override
-	protected boolean needCheckExist(I sin, String locale, String compId, String loginId, SysRoleEntity entity, String id) {
+	protected boolean needCheckExist(I sin, ApiKeyValues<I> params, SysRoleEntity entity, String id) {
 		if (!entity.getRoleName().equals(sin.getRoleName())) {
 			return true;
 		}
@@ -43,25 +44,25 @@ public class S extends LKApiBusUpdateService<I, SysRoleEntity> {
 
 
 	@Override
-	protected List<SysRoleEntity> findExist(I sin, String locale, String compId, String loginId, SysRoleEntity entity, String id) {
-		return busService.findExist(id, compId, null, sin.getRoleName());
+	protected List<SysRoleEntity> findExist(I sin, ApiKeyValues<I> params, SysRoleEntity entity, String id) {
+		return busService.findExist(params, sin.getRoleName());
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysRole_EXIST;
 	}
 
 
 	@Override
-	protected void clearSubs(I sin, String locale, String compId, String loginId, SysRoleEntity entity, String id) {
+	protected void clearSubs(I sin, ApiKeyValues<I> params, SysRoleEntity entity, String id) {
 		busService.clearRoleMenu(id);
 	}
 
 
 	@Override
-	protected void addSubs(I sin, String locale, String compId, String loginId, SysRoleEntity entity, String id) {
+	protected void addSubs(I sin, ApiKeyValues<I> params, SysRoleEntity entity, String id) {
 		busService.addRoleMenu(id, sin.getMenuIds());
 	}
 

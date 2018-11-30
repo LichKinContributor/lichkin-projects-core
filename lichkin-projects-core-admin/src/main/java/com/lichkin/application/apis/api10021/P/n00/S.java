@@ -13,7 +13,9 @@ import com.lichkin.framework.db.beans.SysUserOperLogR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.enums.impl.LKDateTimeTypeEnum;
 import com.lichkin.framework.defines.enums.impl.LKOperTypeEnum;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.utils.LKDateTimeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.entities.impl.SysUserOperLogEntity;
 import com.lichkin.springframework.services.LKApiBusGetPageService;
@@ -22,7 +24,7 @@ import com.lichkin.springframework.services.LKApiBusGetPageService;
 public class S extends LKApiBusGetPageService<I, O, SysUserOperLogEntity> {
 
 	@Override
-	protected void initSQL(I sin, String locale, String compId, String loginId, QuerySQL sql) {
+	protected void initSQL(I sin, ApiKeyValues<I> params, QuerySQL sql) {
 		// 主表
 		sql.select(SysUserOperLogR.id);
 		sql.select(SysUserOperLogR.requestId);
@@ -36,13 +38,14 @@ public class S extends LKApiBusGetPageService<I, O, SysUserOperLogEntity> {
 
 		// 字典表
 		int i = 0;
-		LKDictUtils.userBusType(sql, SysUserOperLogR.busType, i++);
+		LKDictUtils.userBusType(sql, SysUserOperLogR.requestUrl, i++);
 		LKDictUtils.operType(sql, SysUserOperLogR.operType, i++);
 
 		// 筛选条件（必填项）
-		// 公司ID
-//		String busCompId = sin.getCompId();
-//		sql.eq(SysUserOperLogR.compId, LKFrameworkStatics.LichKin.equals(compId) && StringUtils.isNotBlank(busCompId) ? busCompId : compId);
+//		addConditionId(sql, SysUserLoginR.id, params.getId());
+//		addConditionLocale(sql, SysUserLoginR.locale, params.getLocale());
+//		addConditionCompId(true, sql, SysUserLoginR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(true, params.getCompId(), sql, SysUserLoginR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		LKOperTypeEnum operType = sin.getOperType();

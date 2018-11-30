@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.lichkin.defines.CoreStatics;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.utils.LKBeanUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LKApiService;
 import com.lichkin.springframework.services.LKApiServiceImpl;
@@ -19,8 +20,8 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 
 
 	@Override
-	public O handle(I sin, String locale, String compId, String loginId) throws LKException {
-		SysUserLoginEntity login = (SysUserLoginEntity) sin.getDatas().getLogin();
+	public O handle(I sin, ApiKeyValues<I> params) throws LKException {
+		SysUserLoginEntity login = (SysUserLoginEntity) params.getLogin();
 		O out = LKBeanUtils.newInstance(login, O.class);
 		out.setSecurityCenterUrl(apisServerRootUrl + CoreStatics.SSO_URL + CoreStatics.SECURITY_CENTER_URL);
 		out.setApiServerRootUrl(apisServerRootUrl);

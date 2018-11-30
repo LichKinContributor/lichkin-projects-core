@@ -14,11 +14,11 @@ public abstract class LKApiController<CI extends LKRequestBean, CO> extends ApiC
 
 	@SuppressWarnings("incomplete-switch")
 	@Override
-	void initOthers(ApiType apiType, Datas datas, boolean fromSession) {
+	void initOthers(ApiType apiType, Datas datas, CI cin, ApiKeyValues<CI> params, boolean fromSession) {
 		switch (apiType) {
 			case COMPANY_BUSINESS: {
-				initLogin(datas, fromSession, true);
-				initComp(datas, fromSession);
+				initLogin(datas, cin, params, fromSession, true);
+				initComp(datas, cin, params, fromSession);
 			}
 			break;
 		}

@@ -10,6 +10,7 @@ import com.lichkin.framework.db.beans.SysRoleR;
 import com.lichkin.framework.defines.beans.impl.LKDroplistBean;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysRoleEntity;
 import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 
@@ -17,7 +18,7 @@ import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 public class S extends LKApiBusGetDroplistService<I> {
 
 	@Override
-	public List<LKDroplistBean> handle(I sin, String locale, String compId, String loginId) throws LKException {
+	public List<LKDroplistBean> handle(I sin, ApiKeyValues<I> params) throws LKException {
 		QuerySQL sql = new QuerySQL(SysRoleEntity.class);
 
 		// 查询结果
@@ -25,8 +26,10 @@ public class S extends LKApiBusGetDroplistService<I> {
 		sql.select(SysRoleR.roleName, "text");
 
 		// 筛选条件（必填项）
-		addConditionCompId(true, sql, SysRoleR.compId, compId, sin.getCompId());
-		sql.eq(SysRoleR.usingStatus, LKUsingStatusEnum.USING);
+//		addConditionId(sql, SysRoleR.id, params.getId());
+//		addConditionLocale(sql, SysRoleR.locale, params.getLocale());
+		addConditionCompId(true, sql, SysRoleR.compId, params.getCompId(), params.getBusCompId());
+		addConditionUsingStatus(true, params.getCompId(), sql, SysRoleR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 

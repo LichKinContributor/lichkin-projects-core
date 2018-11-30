@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysCompBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
-import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysCompEntity;
 import com.lichkin.springframework.services.LKApiBusInsertService;
 
@@ -42,26 +42,25 @@ public class S extends LKApiBusInsertService<I, SysCompEntity> {
 
 
 	@Override
-	protected List<SysCompEntity> findExist(I sin, String locale, String compId, String loginId) {
-		return busService.findExist(null, sin.getParentCode(), sin.getCompName(), sin.getCompKey(), sin.getToken());
+	protected List<SysCompEntity> findExist(I sin, ApiKeyValues<I> params) {
+		return busService.findExist(params, sin.getParentCode(), sin.getCompName(), sin.getCompKey(), sin.getToken());
 	}
 
 
 	@Override
-	protected boolean forceCheck(I sin, String locale, String compId, String loginId) {
+	protected boolean forceCheck(I sin, ApiKeyValues<I> params) {
 		return false;
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysComp_EXIST;
 	}
 
 
 	@Override
-	protected void beforeRestore(I sin, String locale, String compId, String loginId, SysCompEntity entity, SysCompEntity exist) {
-		entity.setUsingStatus(LKUsingStatusEnum.USING);
+	protected void beforeRestore(I sin, ApiKeyValues<I> params, SysCompEntity entity, SysCompEntity exist) {
 		if (!exist.getParentCode().equals(entity.getParentCode())) {
 			throw new LKRuntimeException(ErrorCodes.SysComp_parent_code_can_not_modify_when_restore).withParam("#parentCode", exist.getParentCode());
 		}
@@ -76,7 +75,7 @@ public class S extends LKApiBusInsertService<I, SysCompEntity> {
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysCompEntity entity) {
+	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysCompEntity entity) {
 		entity.setCompCode(busService.analysisCompCode(sin.getParentCode()));
 	}
 

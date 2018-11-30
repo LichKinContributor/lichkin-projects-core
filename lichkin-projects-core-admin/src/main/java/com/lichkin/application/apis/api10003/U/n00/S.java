@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysDictionaryBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDictionaryEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
@@ -34,7 +35,7 @@ public class S extends LKApiBusUpdateService<I, SysDictionaryEntity> {
 
 
 	@Override
-	protected boolean needCheckExist(I sin, String locale, String compId, String loginId, SysDictionaryEntity entity, String id) {
+	protected boolean needCheckExist(I sin, ApiKeyValues<I> params, SysDictionaryEntity entity, String id) {
 		if (!entity.getDictName().equals(sin.getDictName())) {
 			return true;
 		}
@@ -43,13 +44,13 @@ public class S extends LKApiBusUpdateService<I, SysDictionaryEntity> {
 
 
 	@Override
-	protected List<SysDictionaryEntity> findExist(I sin, String locale, String compId, String loginId, SysDictionaryEntity entity, String id) {
-		return busService.findExist(id, compId, null, entity.getLocale(), entity.getCategoryCode(), entity.getDictCode(), sin.getDictName());
+	protected List<SysDictionaryEntity> findExist(I sin, ApiKeyValues<I> params, SysDictionaryEntity entity, String id) {
+		return busService.findExist(params, entity.getCategoryCode(), entity.getDictCode(), sin.getDictName());
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysDictionary_EXIST;
 	}
 

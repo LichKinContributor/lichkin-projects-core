@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateWithoutCheckerService;
 
@@ -15,7 +16,7 @@ public class S extends LKApiBusUpdateWithoutCheckerService<I, SysAdminLoginEntit
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysAdminLoginEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysAdminLoginEntity entity) {
 		entity.setPwd(LKMD5Encrypter.encrypt(LKMD5Encrypter.encrypt(defaultPwd)));
 	}
 

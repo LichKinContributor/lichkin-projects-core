@@ -31,9 +31,8 @@ LK.home.$photo = LK.UI.icon({
             if ($form.LKValidate()) {
               var photo = $form.find('input[name=photo]').val();
               LK.ajax({
-                url : '/ModifyPhoto',
+                url : '/UploadPhoto',
                 data : {
-                  id : LK.home.userInfo.id,
                   photo : photo,
                 },
                 showSuccess : true,
@@ -165,7 +164,7 @@ LK.home.commonMenus = {
                     return;
                   }
                   LK.ajax({
-                    url : '/ModifyPwd',
+                    url : '/ModifyPassword',
                     data : {
                       pwdOld : SparkMD5.hash($('input[name=pwdOld]').val()),
                       pwdNew : SparkMD5.hash(pwdNew)
@@ -344,7 +343,8 @@ $(function() {
 
   // 加载个人信息
   LK.ajax({
-    url : '/AccountInfo',
+    showLoading : false,
+    url : '/GetUserInfo',
     success : function(datas, options) {
       LK.home.userInfo = datas;
       // 更换头像
@@ -354,6 +354,7 @@ $(function() {
 
   // 加载菜单
   LK.ajax({
+    showLoading : false,
     url : '/Menus',
     success : function(datas, options) {
       // 添加应用菜单
@@ -744,7 +745,7 @@ LK.ajax({
       (function(categoryCode) {
         LK.ajax({
           showLoading : false,
-          url : '/SysDictionary/LD',
+          url : '/GetDictionaryList',
           data : {
             categoryCode : categoryCode
           },

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysEmployeeBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.services.LKApiBusUpdateService;
 
@@ -34,7 +35,7 @@ public class S extends LKApiBusUpdateService<I, SysEmployeeEntity> {
 
 
 	@Override
-	protected boolean needCheckExist(I sin, String locale, String compId, String loginId, SysEmployeeEntity entity, String id) {
+	protected boolean needCheckExist(I sin, ApiKeyValues<I> params, SysEmployeeEntity entity, String id) {
 		if (!entity.getCellphone().equals(sin.getCellphone())) {
 			return true;
 		}
@@ -53,31 +54,31 @@ public class S extends LKApiBusUpdateService<I, SysEmployeeEntity> {
 
 
 	@Override
-	protected List<SysEmployeeEntity> findExist(I sin, String locale, String compId, String loginId, SysEmployeeEntity entity, String id) {
-		return busService.findExist(id, compId, null, sin.getCellphone(), sin.getEmail(), sin.getUserCard(), entity.getJobNumber());
+	protected List<SysEmployeeEntity> findExist(I sin, ApiKeyValues<I> params, SysEmployeeEntity entity, String id) {
+		return busService.findExist(params, sin.getCellphone(), sin.getEmail(), sin.getUserCard(), entity.getJobNumber());
 	}
 
 
 	@Override
-	protected LKCodeEnum existErrorCode(I sin, String locale, String compId, String loginId) {
+	protected LKCodeEnum existErrorCode(I sin, ApiKeyValues<I> params) {
 		return ErrorCodes.SysEmployee_EXIST;
 	}
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysEmployeeEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysEmployeeEntity entity) {
 		entity.setBirthday(busService.analysisBirthday(entity.getUserCard()));
 	}
 
 
 	@Override
-	protected void clearSubs(I sin, String locale, String compId, String loginId, SysEmployeeEntity entity, String id) {
+	protected void clearSubs(I sin, ApiKeyValues<I> params, SysEmployeeEntity entity, String id) {
 		busService.clearEmployeeDept(id);
 	}
 
 
 	@Override
-	protected void addSubs(I sin, String locale, String compId, String loginId, SysEmployeeEntity entity, String id) {
+	protected void addSubs(I sin, ApiKeyValues<I> params, SysEmployeeEntity entity, String id) {
 		busService.addEmployeeDept(id, sin.getDeptId());
 	}
 

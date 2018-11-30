@@ -23,8 +23,6 @@ public class O {
 
 	// private String categoryCode;
 
-	// private String locale;
-
 	/** 公司名称 */
 	private String compName;
 

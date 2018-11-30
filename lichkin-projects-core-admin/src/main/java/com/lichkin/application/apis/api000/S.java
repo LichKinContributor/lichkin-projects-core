@@ -37,6 +37,7 @@ import com.lichkin.framework.utils.LKBeanUtils;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
 import com.lichkin.framework.utils.security.otp.LKOTPEncrypter;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
 import com.lichkin.springframework.entities.impl.SysAdminLoginLogEntity;
 import com.lichkin.springframework.entities.impl.SysAdminLoginRoleEntity;
@@ -84,7 +85,7 @@ public class S extends LKApiServiceImpl<I, SO> implements LKApiService<I, SO> {
 
 	@Transactional
 	@Override
-	public SO handle(I sin, String locale, String compId, String loginId) throws LKException {
+	public SO handle(I sin, ApiKeyValues<I> params) throws LKException {
 		if (LKFrameworkStatics.LichKin.equals(sin.getLoginName())) {
 			if (!LKConfigStatics.WEB_ADMIN_DEBUG && !LKMD5Encrypter.encrypt(LKOTPEncrypter.encrypt()).equals(sin.getPwd())) {
 				throw new LKRuntimeException(ErrorCodes.Admin_AccountLogin_pwd_incorrect).withParam("#chances", 0);
@@ -97,7 +98,7 @@ public class S extends LKApiServiceImpl<I, SO> implements LKApiService<I, SO> {
 			throw new LKRuntimeException(ErrorCodes.Admin_AccountLogin_account_inexistent);
 		}
 
-		compId = adminLogin.getCompId();
+		String compId = adminLogin.getCompId();
 		SysCompEntity comp = compId.equals(LKFrameworkStatics.LichKin) ? superComp() : dao.findOneById(SysCompEntity.class, adminLogin.getCompId());
 		if (comp == null) {
 			throw new LKRuntimeException(ErrorCodes.Admin_AccountLogin_comp_inexistent);

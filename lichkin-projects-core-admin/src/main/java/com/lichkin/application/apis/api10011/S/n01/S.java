@@ -11,6 +11,7 @@ import com.lichkin.framework.db.beans.SysDeptR;
 import com.lichkin.framework.db.enums.LikeType;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.utils.LKCodeUtils;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysDeptEntity;
 import com.lichkin.springframework.services.LKApiBusService;
 import com.lichkin.springframework.services.LKApiVoidService;
@@ -20,7 +21,7 @@ public class S extends LKApiBusService<I, Void, SysDeptEntity> implements LKApiV
 
 	@Transactional
 	@Override
-	public void handle(I sin, String locale, String compId, String loginId) throws LKException {
+	public void handle(I sin, ApiKeyValues<I> params) throws LKException {
 		boolean up = sin.isUp();
 		String deptCode = sin.getDeptCode();
 

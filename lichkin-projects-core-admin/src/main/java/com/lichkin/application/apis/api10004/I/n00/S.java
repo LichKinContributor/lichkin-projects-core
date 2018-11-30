@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.lichkin.application.services.bus.impl.SysMenuBusService;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
+import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysMenuEntity;
 import com.lichkin.springframework.services.LKApiBusInsertWithoutCheckerService;
 
@@ -30,13 +31,13 @@ public class S extends LKApiBusInsertWithoutCheckerService<I, SysMenuEntity> {
 
 
 	@Override
-	protected void beforeAddNew(I sin, String locale, String compId, String loginId, SysMenuEntity entity) {
+	protected void beforeAddNew(I sin, ApiKeyValues<I> params, SysMenuEntity entity) {
 		entity.setMenuCode(busService.analysisMenuCode(sin.getParentCode()));
 	}
 
 
 	@Override
-	protected void beforeSaveMain(I sin, String locale, String compId, String loginId, SysMenuEntity entity) {
+	protected void beforeSaveMain(I sin, ApiKeyValues<I> params, SysMenuEntity entity) {
 		entity.setUrl(busService.analysisUrl(sin.getUrl()));
 	}
 
