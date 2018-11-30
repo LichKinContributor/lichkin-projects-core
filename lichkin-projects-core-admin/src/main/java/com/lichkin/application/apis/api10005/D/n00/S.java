@@ -2,6 +2,7 @@ package com.lichkin.application.apis.api10005.D.n00;
 
 import org.springframework.stereotype.Service;
 
+import com.lichkin.framework.beans.impl.LKRequestIDsBean;
 import com.lichkin.framework.db.beans.DeleteSQL;
 import com.lichkin.framework.db.beans.SysRoleMenuR;
 import com.lichkin.framework.db.beans.SysRoleR;
@@ -14,7 +15,7 @@ import com.lichkin.springframework.entities.impl.SysRoleMenuEntity;
 import com.lichkin.springframework.services.LKApiBusDeleteService;
 
 @Service("SysRoleD00Service")
-public class S extends LKApiBusDeleteService<I, SysRoleEntity> {
+public class S extends LKApiBusDeleteService<LKRequestIDsBean, SysRoleEntity> {
 
 	@Override
 	protected int getIdColumnResId() {
@@ -23,13 +24,7 @@ public class S extends LKApiBusDeleteService<I, SysRoleEntity> {
 
 
 	@Override
-	protected boolean realDelete(I sin, ApiKeyValues<I> params) {
-		return true;
-	}
-
-
-	@Override
-	protected void beforeRealDelete(I sin, ApiKeyValues<I> params, SysRoleEntity entity, String id) {
+	protected void beforeRealDelete(LKRequestIDsBean sin, ApiKeyValues<LKRequestIDsBean> params, SysRoleEntity entity, String id) {
 		// TODO 删除数据为高风险操作，通常需要做一些业务校验才可以执行删除。
 		LKUsingStatusEnum usingStatus = entity.getUsingStatus();
 		switch (usingStatus) {
