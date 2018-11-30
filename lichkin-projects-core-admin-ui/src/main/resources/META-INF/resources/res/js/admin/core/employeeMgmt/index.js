@@ -10,7 +10,8 @@ var employeeMgmtFormPlugins = [
       plugin : 'datepicker',
       options : {
         name : 'entryDate',
-        validator : true
+        validator : true,
+        minDate: '1986-11-01'
       }
     }, {
       plugin : 'textbox',
