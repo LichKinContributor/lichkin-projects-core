@@ -55,7 +55,7 @@ $loginBtn.click(function(e) {
     success : function() {
       beforeToHome();
       setTimeout(function() {
-        LK.Go('/admin/home');
+        LK.Go('/admin/home', {}, true);
       }, 1000);
     }
   });

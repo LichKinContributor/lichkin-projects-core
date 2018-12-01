@@ -287,7 +287,7 @@ LK.home.commonMenus = {
   exit : {
     type : 'danger',
     click : function() {
-      LK.Go('/logout');
+      LK.Go('/logout', {}, true);
     }
   }
 };
