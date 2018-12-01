@@ -15,6 +15,7 @@ import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.defines.Platform;
 import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.LKPlatform;
+import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
@@ -57,6 +58,9 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 		/** 不是员工 */
 		YOU_ARE_NOT_A_EMPLOYEE(29003),
 
+		/** 不能绑定多个员工 */
+		CAN_NOT_BIND_AN_OTHER_EMPLOYEE(20011),
+
 		;
 
 		private final Integer code;
@@ -70,22 +74,6 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 		SysUserLoginEntity userLogin = findUserLoginByLoginName(sin.getLoginName());
 		if (userLogin == null) {
 			throw new LKRuntimeException(ErrorCodes.app_account_inexistence);
-		}
-
-		if (Platform.PLATFORM.equals(LKPlatform.EMPLOYEE)) {
-			// 验证是否为员工
-			QuerySQL sql = new QuerySQL(false, SysEmployeeEntity.class);
-			sql.eq(SysEmployeeR.compId, params.getCompId());
-			sql.eq(SysEmployeeR.cellphone, userLogin.getCellphone());
-			SysEmployeeEntity employee = dao.getOne(sql, SysEmployeeEntity.class);
-			if (employee == null) {
-				throw new LKException(ErrorCodes.YOU_ARE_NOT_A_EMPLOYEE);
-			}
-			if (StringUtils.isBlank(employee.getLoginId())) {
-				// 将员工与登录信息绑定
-				employee.setLoginId(userLogin.getId());
-				dao.mergeOne(employee);
-			}
 		}
 
 		if (LKUsingStatusEnum.LOCKED.equals(userLogin.getUsingStatus())) {
@@ -103,7 +91,7 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 				userLogin.setUsingStatus(LKUsingStatusEnum.LOCKED);
 				userLogin.setLockTime(LKDateTimeUtils.now());
 				dao.mergeOne(userLogin);
-				throw new LKException(ErrorCodes.app_account_locked);
+				throw new LKException(ErrorCodes.app_account_locked).withParam("#remainingTime", lockTimeoutMinutes);
 			} else {
 				dao.mergeOne(userLogin);
 				throw new LKException(ErrorCodes.app_pwd_incorrect).withParam("#chances", maxErrorTimes - userLogin.getErrorTimes());
@@ -111,6 +99,41 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 		} else {
 			userLogin.setToken(LKRandomUtils.create64());
 			dao.mergeOne(userLogin);
+		}
+
+		if (Platform.PLATFORM.equals(LKPlatform.EMPLOYEE)) {
+			// 首先查找绑定过的用户
+			QuerySQL sql = new QuerySQL(false, SysEmployeeEntity.class);
+			sql.eq(SysEmployeeR.compId, params.getCompId());
+			sql.eq(SysEmployeeR.loginId, userLogin.getId());
+			SysEmployeeEntity employee = dao.getOne(sql, SysEmployeeEntity.class);
+			if (employee == null) {
+				// 验证是否为员工
+				sql = new QuerySQL(false, SysEmployeeEntity.class);
+				sql.eq(SysEmployeeR.compId, params.getCompId());
+				sql.eq(SysEmployeeR.cellphone, userLogin.getCellphone());
+				employee = dao.getOne(sql, SysEmployeeEntity.class);
+				if (employee == null) {// 不是员工
+					throw new LKException(ErrorCodes.YOU_ARE_NOT_A_EMPLOYEE);
+				}
+
+				if (StringUtils.isBlank(employee.getLoginId())) {
+					// 将员工与登录信息绑定
+					employee.setLoginId(userLogin.getId());
+					dao.mergeOne(employee);
+					// 绑定过的用户从员工补充用户信息
+					if (initUserInfoFromEmployee(userLogin, employee)) {
+						dao.mergeOne(userLogin);
+					}
+				} else {// 通过登录ID未找到，通过手机号找到，但却绑定过登录ID，将会绑定多个员工。
+					throw new LKException(ErrorCodes.CAN_NOT_BIND_AN_OTHER_EMPLOYEE);
+				}
+			} else {
+				// 绑定过的用户从员工补充用户信息
+				if (initUserInfoFromEmployee(userLogin, employee)) {
+					dao.mergeOne(userLogin);
+				}
+			}
 		}
 
 		O out = new O();
@@ -121,6 +144,38 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 		out.setSecurityCenterUrl(apisServerRootUrl + CoreStatics.SSO_URL + CoreStatics.SECURITY_CENTER_URL);
 		out.setApiServerRootUrl(apisServerRootUrl);
 		return out;
+	}
+
+
+	/**
+	 * 从员工补充用户信息
+	 * @param employee 员工信息
+	 * @param userLogin 用户信息
+	 * @return 是否被修改了值
+	 */
+	private boolean initUserInfoFromEmployee(SysUserLoginEntity userLogin, SysEmployeeEntity employee) {
+		boolean changed = false;
+		if (StringUtils.isBlank(userLogin.getUserName()) && StringUtils.isNotBlank(employee.getUserName())) {
+			changed = true;
+			userLogin.setUserName(employee.getUserName());
+		}
+
+		if ((LKGenderEnum.UNKNOWN.equals(userLogin.getGender())) && (LKGenderEnum.MALE.equals(employee.getGender()) || LKGenderEnum.FEMALE.equals(employee.getGender()))) {
+			changed = true;
+			userLogin.setGender(employee.getGender());
+		}
+
+		if (StringUtils.isBlank(userLogin.getEmail()) && StringUtils.isNotBlank(employee.getEmail())) {
+			changed = true;
+			userLogin.setEmail(employee.getEmail());
+		}
+
+		if (StringUtils.isBlank(userLogin.getUserCard()) && StringUtils.isNotBlank(employee.getUserCard())) {
+			changed = true;
+			userLogin.setUserCard(employee.getUserCard());
+		}
+
+		return changed;
 	}
 
 
