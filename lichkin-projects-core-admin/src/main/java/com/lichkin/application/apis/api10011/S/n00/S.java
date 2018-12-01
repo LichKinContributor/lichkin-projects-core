@@ -30,10 +30,8 @@ public class S extends LKApiBusGetListService<I, SysDeptEntity, SysDeptEntity> {
 //		int i = 0;
 
 		// 筛选条件（必填项）
-//		addConditionId(sql, SysDeptR.id, params.getId());
-//		addConditionLocale(sql, SysDeptR.locale, params.getLocale());
-		addConditionCompId(true, sql, SysDeptR.compId, params.getCompId(), params.getBusCompId());
-		addConditionUsingStatus(true, params.getCompId(), sql, SysDeptR.usingStatus, params.getUsingStatus(), LKUsingStatusEnum.STAND_BY, LKUsingStatusEnum.USING);
+		sql.eq(SysDeptR.compId, params.getCompId());
+		sql.eq(SysDeptR.usingStatus, LKUsingStatusEnum.USING);
 
 		// 筛选条件（业务项）
 		if (StringUtils.isNotBlank(sin.getDeptName())) {
