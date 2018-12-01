@@ -14,7 +14,7 @@ var compAdminMgmtAddFormPlugins = [
       options : {
         key : 'compName',
         name : 'compId',
-        url : '/SysComp/LD',
+        url : '/ROOT_GetCompLD',
         validator : true,
         cancelable : false,
         linkages : [

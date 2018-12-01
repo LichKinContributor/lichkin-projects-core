@@ -1,9 +1,10 @@
-package com.lichkin.application.apis.api10001.LD.n00;
+package com.lichkin.application.apis.ROOT.GetCompLD;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.lichkin.framework.beans.impl.LKRequestBean;
 import com.lichkin.framework.db.beans.Order;
 import com.lichkin.framework.db.beans.QuerySQL;
 import com.lichkin.framework.db.beans.SysCompR;
@@ -14,11 +15,11 @@ import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysCompEntity;
 import com.lichkin.springframework.services.LKApiBusGetDroplistService;
 
-@Service("SysCompLD00Service")
-public class S extends LKApiBusGetDroplistService<I> {
+@Service(Statics.SERVICE_NAME)
+public class S extends LKApiBusGetDroplistService<LKRequestBean> {
 
 	@Override
-	public List<LKDroplistBean> handle(I sin, ApiKeyValues<I> params) throws LKException {
+	public List<LKDroplistBean> handle(LKRequestBean sin, ApiKeyValues<LKRequestBean> params) throws LKException {
 		QuerySQL sql = new QuerySQL(SysCompEntity.class);
 
 		// 查询结果
@@ -26,10 +27,7 @@ public class S extends LKApiBusGetDroplistService<I> {
 		sql.select(SysCompR.compName, "text");
 
 		// 筛选条件（必填项）
-//		sql.eq(SysCompR.compId, compId);
 		sql.eq(SysCompR.usingStatus, LKUsingStatusEnum.USING);
-
-		// 筛选条件（业务项）
 
 		// 排序条件
 		sql.addOrders(new Order(SysCompR.id, false));
