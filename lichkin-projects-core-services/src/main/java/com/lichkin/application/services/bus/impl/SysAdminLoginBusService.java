@@ -14,6 +14,7 @@ import com.lichkin.framework.db.beans.SysAdminLoginR;
 import com.lichkin.framework.db.beans.SysAdminLoginRoleR;
 import com.lichkin.framework.db.beans.eq;
 import com.lichkin.framework.defines.LKFrameworkStatics;
+import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
 import com.lichkin.springframework.controllers.ApiKeyValues;
 import com.lichkin.springframework.entities.impl.SysAdminLoginEntity;
@@ -49,6 +50,19 @@ public class SysAdminLoginBusService extends LKDBService {
 			sql.eq(SysAdminLoginR.email, email);
 		}
 
+		return dao.getList(sql, SysAdminLoginEntity.class);
+	}
+
+
+	/**
+	 * 查询公司下的所有账号列表
+	 * @param compId 公司ID
+	 * @return 账号列表
+	 */
+	public List<SysAdminLoginEntity> findAdminLoginByCompId(String compId) {
+		QuerySQL sql = new QuerySQL(false, SysAdminLoginEntity.class);
+		sql.eq(SysAdminLoginR.compId, compId);
+		sql.neq(SysAdminLoginR.usingStatus, LKUsingStatusEnum.DEPRECATED);
 		return dao.getList(sql, SysAdminLoginEntity.class);
 	}
 
