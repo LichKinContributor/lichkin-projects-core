@@ -82,6 +82,11 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 			// 设置Token
 			userLogin.setToken(LKRandomUtils.create64());
 
+			if (Platform.PLATFORM.equals(LKPlatform.EMPLOYEE)) {
+				// 从员工补充用户信息
+				initUserInfoFromEmployee(userLogin, employee);
+			}
+
 			// 修改数据
 			dao.mergeOne(userLogin);
 
@@ -98,7 +103,6 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 
 			// 设置其它值
 			userLogin.setUserName("");
-			userLogin.setUserCard("");
 			userLogin.setGender(LKGenderEnum.UNKNOWN);
 			userLogin.setLoginName(cellphone);
 			userLogin.setCellphone(cellphone);
@@ -109,6 +113,11 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 			userLogin.setErrorTimes((byte) 0);
 			userLogin.setLevel((byte) 1);
 			userLogin.setLockTime(LKDateTimeUtils.toString(LKDateTimeUtils.toDateTime("19700101000000000")));
+
+			if (Platform.PLATFORM.equals(LKPlatform.EMPLOYEE)) {
+				// 从员工补充用户信息
+				initUserInfoFromEmployee(userLogin, employee);
+			}
 
 			// 新增数据
 			dao.persistOne(userLogin);
@@ -129,6 +138,30 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 		out.setSecurityCenterUrl(apisServerRootUrl + CoreStatics.SSO_URL + CoreStatics.SECURITY_CENTER_URL);
 		out.setApiServerRootUrl(apisServerRootUrl);
 		return out;
+	}
+
+
+	/**
+	 * 从员工补充用户信息
+	 * @param employee 员工信息
+	 * @param userLogin 用户信息
+	 */
+	private void initUserInfoFromEmployee(SysUserLoginEntity userLogin, SysEmployeeEntity employee) {
+		if (StringUtils.isBlank(userLogin.getUserName()) && StringUtils.isNotBlank(employee.getUserName())) {
+			userLogin.setUserName(employee.getUserName());
+		}
+
+		if ((LKGenderEnum.UNKNOWN.equals(userLogin.getGender())) && (LKGenderEnum.MALE.equals(employee.getGender()) || LKGenderEnum.FEMALE.equals(employee.getGender()))) {
+			userLogin.setGender(employee.getGender());
+		}
+
+		if (StringUtils.isBlank(userLogin.getEmail()) && StringUtils.isNotBlank(employee.getEmail())) {
+			userLogin.setEmail(employee.getEmail());
+		}
+
+		if (StringUtils.isBlank(userLogin.getUserCard()) && StringUtils.isNotBlank(employee.getUserCard())) {
+			userLogin.setUserCard(employee.getUserCard());
+		}
 	}
 
 
