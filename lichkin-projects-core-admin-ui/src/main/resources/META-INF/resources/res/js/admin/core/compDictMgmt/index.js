@@ -118,11 +118,27 @@ LK.UI.datagrid($.extend((typeof LK.home == 'undefined' ? {
             return selectedDatas;
           }
         },
-        param : {
-          locale : selectedDatas.locale,
-          categoryCode : selectedDatas.categoryCode,
-          dictCode : selectedDatas.dictCode
-        }
+        searchForm : [
+            {
+              plugin : 'hidden',
+              options : {
+                name : 'locale',
+                value : selectedDatas.locale
+              }
+            }, {
+              plugin : 'hidden',
+              options : {
+                name : 'categoryCode',
+                value : selectedDatas.categoryCode
+              }
+            }, {
+              plugin : 'hidden',
+              options : {
+                name : 'dictCode',
+                value : selectedDatas.dictCode
+              }
+            }
+        ]
       });
     },
     icon : 'set',
