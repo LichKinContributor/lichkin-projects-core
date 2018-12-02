@@ -4,8 +4,8 @@ var compMgmtFormPlugins = [
       options : {
         key : 'compLogo',
         name : 'photo',
-        compressWidth : 256,
-        compressHeight : 256,
+        compressWidth : 512,
+        compressHeight : 512,
         cols : 1,
         rows : 4,
         validator : true
