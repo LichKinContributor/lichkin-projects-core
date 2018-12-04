@@ -23,6 +23,7 @@ import com.lichkin.framework.defines.enums.impl.LKOperTypeEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.defines.exceptions.LKFrameworkException;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
+import com.lichkin.framework.json.LKJsonUtils;
 import com.lichkin.framework.utils.LKClassUtils;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.LKStringUtils;
@@ -56,6 +57,12 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 	@Deprecated
 	@PostMapping
 	public LKResponseBean<CO> invoke(@Valid @RequestBody CI cin) throws LKException {
+		String requestDatasJson = LKJsonUtils.toJsonWithExcludes(cin, "datas");
+		request.setAttribute("requestDatasJson", requestDatasJson);
+		if (logger.isDebugEnabled()) {
+			logger.debug("{requestId:\"" + ((LKRequestInfo) request.getAttribute("requestInfo")).getRequestId() + "\",requestDatas:" + requestDatasJson + "}");
+		}
+
 		// 取接口类型
 		ApiType apiType = ((LKApiType) LKClassUtils.deepGetAnnotation(getClass(), LKApiType.class.getName())).apiType();
 		if (apiType == null) {
@@ -243,7 +250,7 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 
 					requestInfo.getRequestUri(),
 
-					requestInfo.getRequestDatas(),
+					request.getAttribute("requestDatasJson").toString(),
 
 					getOperType(cin, params)
 
