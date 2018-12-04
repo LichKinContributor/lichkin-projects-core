@@ -2,7 +2,6 @@ package com.lichkin.springframework.entities.impl;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Lob;
 
 import com.lichkin.framework.defines.annotations.ClassGenerator;
 import com.lichkin.framework.defines.annotations.FieldGenerator;
@@ -74,8 +73,4 @@ public class SysAdminLoginLogEntity extends CompIDEntity implements I_LoginId {
 	@Column(length = 64, nullable = false)
 	private String requestIp;
 
-	/** 请求数据 */
-	@Lob
-	@Column(nullable = false)
-	private String requestDatas;
 }

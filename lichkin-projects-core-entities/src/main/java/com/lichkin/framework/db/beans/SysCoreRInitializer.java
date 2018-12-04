@@ -99,7 +99,6 @@ class SysCoreRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("10009003", "SysAdminLoginLogEntity", "requestId");
 		LKDBResource.addColumn("10009004", "SysAdminLoginLogEntity", "requestTime");
 		LKDBResource.addColumn("10009005", "SysAdminLoginLogEntity", "requestIp");
-		LKDBResource.addColumn("10009006", "SysAdminLoginLogEntity", "requestDatas");
 		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysAdminOperLogEntity", "T_SYS_ADMIN_OPER_LOG", "SysAdminOperLogEntity");
 		LKDBResource.addColumn("10010000", "SysAdminOperLogEntity", "id");
 		LKDBResource.addColumn("10010001", "SysAdminOperLogEntity", "compId");

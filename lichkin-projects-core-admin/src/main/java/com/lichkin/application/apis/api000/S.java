@@ -32,7 +32,6 @@ import com.lichkin.framework.defines.enums.LKCodeEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
-import com.lichkin.framework.json.LKJsonUtils;
 import com.lichkin.framework.utils.LKBeanUtils;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.security.md5.LKMD5Encrypter;
@@ -231,7 +230,6 @@ public class S extends LKApiServiceImpl<I, SO> implements LKApiService<I, SO> {
 		log.setRequestId(requestInfo.getRequestId());
 		log.setRequestTime(LKDateTimeUtils.toString(requestInfo.getRequestTime()));
 		log.setRequestIp(requestInfo.getRequestIp());
-		log.setRequestDatas(LKJsonUtils.toJson(requestInfo.getRequestDatas()));
 		dao.persistOne(log);
 	}
 

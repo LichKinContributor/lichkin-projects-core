@@ -18,6 +18,4 @@ public interface SysAdminLoginLogR {
 
 	public static final int requestIp = 0x10009005;
 
-	public static final int requestDatas = 0x10009006;
-
 }
