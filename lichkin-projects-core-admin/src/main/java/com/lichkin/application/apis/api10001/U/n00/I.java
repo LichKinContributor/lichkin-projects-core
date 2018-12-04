@@ -1,6 +1,7 @@
 package com.lichkin.application.apis.api10001.U.n00;
 
 import com.lichkin.framework.beans.impl.LKRequestIDBean;
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +26,7 @@ public class I extends LKRequestIDBean {
 
 	private String linkmanCellphone;
 
+	@IgnoreLog
 	private String photo;
 
 }

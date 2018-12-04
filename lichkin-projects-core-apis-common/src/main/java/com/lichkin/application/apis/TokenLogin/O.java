@@ -1,5 +1,7 @@
 package com.lichkin.application.apis.TokenLogin;
 
+import com.lichkin.framework.defines.annotations.IgnoreLog;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +10,7 @@ import lombok.Setter;
 public class O {
 
 	/** 头像 */
+	@IgnoreLog
 	private String photo;
 
 	/** 等级 */

@@ -25,8 +25,6 @@ public class I extends LKRequestIDBean {
 
 //	private String email;
 
-//	private String photo;
-
 //	private LKGenderEnum gender;
 
 //	private String userName;

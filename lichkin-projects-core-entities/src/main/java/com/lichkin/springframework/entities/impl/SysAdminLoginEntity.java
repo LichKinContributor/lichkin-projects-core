@@ -10,6 +10,7 @@ import com.lichkin.framework.defines.annotations.ClassGenerator;
 import com.lichkin.framework.defines.annotations.DefaultByteValue;
 import com.lichkin.framework.defines.annotations.DefaultStringValue;
 import com.lichkin.framework.defines.annotations.FieldGenerator;
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 import com.lichkin.framework.defines.annotations.InsertCheckType;
 import com.lichkin.framework.defines.annotations.InsertType;
 import com.lichkin.framework.defines.annotations.UpdateCheckType;
@@ -108,6 +109,7 @@ public class SysAdminLoginEntity extends BaseCompEntity implements I_User, I_Log
 
 	/** 照片（Base64） */
 	@Lob
+	@IgnoreLog
 	@FieldGenerator
 	@Column
 	private String photo;

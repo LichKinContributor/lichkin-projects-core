@@ -15,6 +15,7 @@ public class O {
 
 	private String usingStatusDictCode;// for usingStatus
 
+//	@IgnoreLog
 //	private String photo;
 
 //	private Boolean superAdmin;

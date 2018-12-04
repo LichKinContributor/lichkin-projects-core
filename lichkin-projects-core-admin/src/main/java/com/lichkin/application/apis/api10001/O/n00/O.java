@@ -1,5 +1,7 @@
 package com.lichkin.application.apis.api10001.O.n00;
 
+import com.lichkin.framework.defines.annotations.IgnoreLog;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -39,6 +41,7 @@ public class O {
 
 	private String linkmanCellphone;
 
+	@IgnoreLog
 	private String photo;
 
 }

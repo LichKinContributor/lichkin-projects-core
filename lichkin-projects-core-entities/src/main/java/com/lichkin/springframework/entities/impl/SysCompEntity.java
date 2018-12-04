@@ -6,6 +6,7 @@ import javax.persistence.Lob;
 
 import com.lichkin.framework.defines.annotations.ClassGenerator;
 import com.lichkin.framework.defines.annotations.FieldGenerator;
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 import com.lichkin.framework.defines.annotations.InsertCheckType;
 import com.lichkin.framework.defines.annotations.InsertType;
 import com.lichkin.framework.defines.annotations.UpdateCheckType;
@@ -103,6 +104,7 @@ public class SysCompEntity extends BaseEntity implements I_Comp {
 
 	/** 照片（Base64） */
 	@Lob
+	@IgnoreLog
 	@FieldGenerator
 	@Column(nullable = false)
 	private String photo;

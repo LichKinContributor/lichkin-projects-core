@@ -1,6 +1,7 @@
 package com.lichkin.application.apis.api10001.I.n00;
 
 import com.lichkin.framework.beans.impl.LKRequestBean;
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,7 @@ public class I extends LKRequestBean {
 
 	private String linkmanCellphone;
 
+	@IgnoreLog
 	private String photo;
 
 }

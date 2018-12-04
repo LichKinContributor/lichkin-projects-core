@@ -1,6 +1,7 @@
 package com.lichkin.application.apis.api10007.I.n00;
 
 import com.lichkin.framework.beans.impl.LKRequestBean;
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 
 import lombok.Getter;
@@ -16,6 +17,7 @@ public class I extends LKRequestBean {
 
 	private String email;
 
+	@IgnoreLog
 	private String photo;
 
 	/** 角色IDs */

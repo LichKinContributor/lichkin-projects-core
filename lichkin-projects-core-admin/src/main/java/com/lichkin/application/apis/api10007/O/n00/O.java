@@ -1,5 +1,6 @@
 package com.lichkin.application.apis.api10007.O.n00;
 
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 
 import lombok.Getter;
@@ -17,6 +18,7 @@ public class O {
 
 	private String email;
 
+	@IgnoreLog
 	private String photo;
 
 	/** 角色IDs */

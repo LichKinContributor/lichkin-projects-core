@@ -1,6 +1,7 @@
 package com.lichkin.application.apis.api10007.U.n00;
 
 import com.lichkin.framework.beans.impl.LKRequestIDBean;
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 
 import lombok.Getter;
@@ -26,6 +27,7 @@ public class I extends LKRequestIDBean {
 
 //	private String lockTime;
 
+	@IgnoreLog
 	private String photo;
 
 	/** 角色IDs */

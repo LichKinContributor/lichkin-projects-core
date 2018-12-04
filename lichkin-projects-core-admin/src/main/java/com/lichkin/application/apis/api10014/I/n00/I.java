@@ -1,6 +1,7 @@
 package com.lichkin.application.apis.api10014.I.n00;
 
 import com.lichkin.framework.beans.impl.LKRequestBean;
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 
 import lombok.Getter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestBean {
 
+	@IgnoreLog
 	private String photo;
 
 	private String userName;

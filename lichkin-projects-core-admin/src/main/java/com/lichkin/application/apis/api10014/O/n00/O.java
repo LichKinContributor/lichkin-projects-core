@@ -1,5 +1,6 @@
 package com.lichkin.application.apis.api10014.O.n00;
 
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 import com.lichkin.framework.defines.enums.impl.LKGenderEnum;
 import com.lichkin.framework.defines.enums.impl.LKUsingStatusEnum;
 
@@ -16,6 +17,7 @@ public class O {
 
 //	private String insertTime;
 
+	@IgnoreLog
 	private String photo;
 
 	private String userName;
