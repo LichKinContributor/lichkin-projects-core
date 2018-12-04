@@ -14,6 +14,7 @@ import com.lichkin.framework.beans.impl.LKRequestBean;
 import com.lichkin.framework.beans.impl.LKResponseBean;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.Platform;
+import com.lichkin.framework.defines.annotations.IgnoreLog;
 import com.lichkin.framework.defines.beans.impl.LichKin;
 import com.lichkin.framework.defines.entities.I_Comp;
 import com.lichkin.framework.defines.entities.I_Login;
@@ -57,7 +58,7 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 	@Deprecated
 	@PostMapping
 	public LKResponseBean<CO> invoke(@Valid @RequestBody CI cin) throws LKException {
-		String requestDatasJson = LKJsonUtils.toJsonWithExcludes(cin, "datas");
+		String requestDatasJson = LKJsonUtils.toJsonWithExcludes(cin, new Class<?>[] { IgnoreLog.class }, "datas");
 		request.setAttribute("requestDatasJson", requestDatasJson);
 		if (logger.isDebugEnabled()) {
 			logger.debug("{requestId:\"" + ((LKRequestInfo) request.getAttribute("requestInfo")).getRequestId() + "\",requestDatas:" + requestDatasJson + "}");
