@@ -1,8 +1,14 @@
 package com.lichkin.springframework.controllers;
 
+import static com.lichkin.springframework.web.LKRequestStatics.REQUEST_ID;
+import static com.lichkin.springframework.web.LKRequestStatics.REQUEST_IP;
+import static com.lichkin.springframework.web.LKRequestStatics.REQUEST_TIME;
+import static com.lichkin.springframework.web.LKRequestStatics.REQUEST_URI;
+
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +39,6 @@ import com.lichkin.framework.web.annotations.LKController4Api;
 import com.lichkin.framework.web.enums.ApiType;
 import com.lichkin.springframework.services.LoginService;
 import com.lichkin.springframework.web.LKSession;
-import com.lichkin.springframework.web.beans.LKRequestInfo;
 import com.lichkin.springframework.web.utils.LKRequestUtils;
 
 import lombok.Getter;
@@ -58,12 +63,6 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 	@Deprecated
 	@PostMapping
 	public LKResponseBean<CO> invoke(@Valid @RequestBody CI cin) throws LKException {
-		String requestDatasJson = LKJsonUtils.toJsonWithExcludes(cin, new Class<?>[] { IgnoreLog.class }, "datas");
-		request.setAttribute("requestDatasJson", requestDatasJson);
-		if (logger.isDebugEnabled()) {
-			logger.debug("{requestId:\"" + ((LKRequestInfo) request.getAttribute("requestInfo")).getRequestId() + "\",requestDatas:" + requestDatasJson + "}");
-		}
-
 		// 取接口类型
 		ApiType apiType = ((LKApiType) LKClassUtils.deepGetAnnotation(getClass(), LKApiType.class.getName())).apiType();
 		if (apiType == null) {
@@ -103,6 +102,10 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 		}
 
 		initOthers(apiType, datas, cin, params, fromSession);
+
+		String requestDatasJson = LKJsonUtils.toJsonWithExcludes(cin, new Class<?>[] { IgnoreLog.class }, "datas");
+		request.setAttribute("requestDatasJson", requestDatasJson);
+		logger.info(String.format("invoke -> {\"requestId\":\"%s\",\"requestDatas\":%s}", request.getAttribute(REQUEST_ID), LKJsonUtils.toJsonWithExcludes(cin, new Class<?>[] { IgnoreLog.class })));
 
 		LKResponseBean<CO> responseBean = new LKResponseBean<>(handleInvoke(cin, params));
 		if (saveLog(cin, params)) {
@@ -234,7 +237,6 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 			return;
 		}
 		try {
-			LKRequestInfo requestInfo = (LKRequestInfo) request.getAttribute("requestInfo");
 			operLogService.save(
 
 					LKStringUtils.capitalize(Platform.PLATFORM.toString().toLowerCase()),
@@ -243,13 +245,13 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 
 					params.getLoginId(),
 
-					requestInfo.getRequestId(),
+					(String) request.getAttribute(REQUEST_ID),
 
-					LKDateTimeUtils.toString(requestInfo.getRequestTime()),
+					LKDateTimeUtils.toString((DateTime) request.getAttribute(REQUEST_TIME)),
 
-					requestInfo.getRequestIp(),
+					(String) request.getAttribute(REQUEST_IP),
 
-					requestInfo.getRequestUri(),
+					(String) request.getAttribute(REQUEST_URI),
 
 					request.getAttribute("requestDatasJson").toString(),
 

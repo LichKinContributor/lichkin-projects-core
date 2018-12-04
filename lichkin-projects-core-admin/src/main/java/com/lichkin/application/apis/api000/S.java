@@ -46,7 +46,6 @@ import com.lichkin.springframework.entities.impl.SysRoleEntity;
 import com.lichkin.springframework.entities.impl.SysRoleMenuEntity;
 import com.lichkin.springframework.services.LKApiService;
 import com.lichkin.springframework.services.LKApiServiceImpl;
-import com.lichkin.springframework.web.beans.LKRequestInfo;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -223,13 +222,25 @@ public class S extends LKApiServiceImpl<I, SO> implements LKApiService<I, SO> {
 
 
 	@Transactional
-	public void saveLog(String loginId, String compId, LKRequestInfo requestInfo) {
+	public void saveLog(
+
+			String loginId,
+
+			String compId,
+
+			String requestId,
+
+			String requestTime,
+
+			String requestIp
+
+	) {
 		SysAdminLoginLogEntity log = new SysAdminLoginLogEntity();
 		log.setLoginId(loginId);
 		log.setCompId(compId);
-		log.setRequestId(requestInfo.getRequestId());
-		log.setRequestTime(LKDateTimeUtils.toString(requestInfo.getRequestTime()));
-		log.setRequestIp(requestInfo.getRequestIp());
+		log.setRequestId(requestId);
+		log.setRequestTime(requestTime);
+		log.setRequestIp(requestIp);
 		dao.persistOne(log);
 	}
 
