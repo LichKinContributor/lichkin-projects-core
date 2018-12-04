@@ -57,15 +57,16 @@ public class OperLogService extends LKDBService {
 		switch (Platform.PLATFORM) {
 			case ADMIN:
 				entity = new SysAdminOperLogEntity();
+				((SysAdminOperLogEntity) entity).setCompId(compId);
 			break;
 			case USER:
 				entity = new SysUserOperLogEntity();
 			break;
 			case EMPLOYEE:
 				entity = new SysEmployeeOperLogEntity();
+				((SysEmployeeOperLogEntity) entity).setCompId(compId);
 			break;
 		}
-		entity.setCompId(compId);
 		entity.setLoginId(loginId);
 		entity.setRequestId(requestId);
 		entity.setRequestTime(requestTime);
