@@ -216,6 +216,16 @@ class SysCoreRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("10022018", "SysAMapLocationEntity", "buildingId");
 		LKDBResource.addColumn("10022019", "SysAMapLocationEntity", "floor");
 		LKDBResource.addColumn("10022020", "SysAMapLocationEntity", "gpsAccuracyStatus");
+		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysCalendarEntity", "T_SYS_CALENDAR", "SysCalendarEntity");
+		LKDBResource.addColumn("10023000", "SysCalendarEntity", "id");
+		LKDBResource.addColumn("10023001", "SysCalendarEntity", "calendarDate");
+		LKDBResource.addColumn("10023002", "SysCalendarEntity", "year");
+		LKDBResource.addColumn("10023003", "SysCalendarEntity", "quarter");
+		LKDBResource.addColumn("10023004", "SysCalendarEntity", "month");
+		LKDBResource.addColumn("10023005", "SysCalendarEntity", "week");
+		LKDBResource.addColumn("10023006", "SysCalendarEntity", "dayOfMonth");
+		LKDBResource.addColumn("10023007", "SysCalendarEntity", "dayOfWeek");
+		LKDBResource.addColumn("10023008", "SysCalendarEntity", "holiday");
 	}
 
 }
