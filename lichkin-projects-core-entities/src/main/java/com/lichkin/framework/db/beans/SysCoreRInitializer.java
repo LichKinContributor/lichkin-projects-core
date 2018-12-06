@@ -51,6 +51,8 @@ class SysCoreRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("10003006", "SysDictionaryEntity", "dictCode");
 		LKDBResource.addColumn("10003007", "SysDictionaryEntity", "dictName");
 		LKDBResource.addColumn("10003008", "SysDictionaryEntity", "sortId");
+		LKDBResource.addColumn("10003009", "SysDictionaryEntity", "imgUrl");
+		LKDBResource.addColumn("10003010", "SysDictionaryEntity", "dictValue");
 		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysMenuEntity", "T_SYS_MENU", "SysMenuEntity");
 		LKDBResource.addColumn("10004000", "SysMenuEntity", "id");
 		LKDBResource.addColumn("10004001", "SysMenuEntity", "parentCode");

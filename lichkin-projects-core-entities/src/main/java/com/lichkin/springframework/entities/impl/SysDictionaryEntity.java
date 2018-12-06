@@ -62,4 +62,12 @@ public class SysDictionaryEntity extends BaseCompEntity implements I_Locale {
 	@Column(nullable = false)
 	private Byte sortId;
 
+	/** 图片地址 */
+	@Column(length = 256)
+	private String imgUrl;
+
+	/** 字典值 */
+	@Column(length = 64)
+	private String dictValue;
+
 }

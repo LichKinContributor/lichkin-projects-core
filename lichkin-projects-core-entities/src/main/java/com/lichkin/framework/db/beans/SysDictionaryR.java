@@ -24,4 +24,8 @@ public interface SysDictionaryR {
 
 	public static final int sortId = 0x10003008;
 
+	public static final int imgUrl = 0x10003009;
+
+	public static final int dictValue = 0x10003010;
+
 }
