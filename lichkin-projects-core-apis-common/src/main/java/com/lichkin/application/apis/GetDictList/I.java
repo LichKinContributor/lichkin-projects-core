@@ -18,4 +18,7 @@ public class I extends LKRequestBean {
 	/** 排除的值 */
 	private String excludes;
 
+	/** 允许空值 */
+	private boolean allowEmptyResult;
+
 }
