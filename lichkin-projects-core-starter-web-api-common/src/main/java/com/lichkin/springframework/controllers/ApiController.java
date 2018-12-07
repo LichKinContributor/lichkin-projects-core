@@ -78,6 +78,10 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 		// 根据客户端类型判断是否从session中取值
 		boolean fromSession = LKClientTypeEnum.JAVASCRIPT.equals(datas.getClientType());
 
+		if (fromSession) {
+			datas.setAppKey("javascript");
+		}
+
 		// 根据不同接口类型初始化数据
 		switch (apiType) {
 			case OPEN: {
