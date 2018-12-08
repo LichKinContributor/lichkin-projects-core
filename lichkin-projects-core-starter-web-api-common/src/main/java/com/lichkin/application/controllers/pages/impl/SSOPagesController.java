@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.Platform;
+import com.lichkin.framework.defines.enums.impl.LKClientTypeEnum;
 import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
 
@@ -19,18 +20,28 @@ public abstract class SSOPagesController {
 
 
 	@GetMapping(value = "/SSO")
-	public ModelAndView sso(String compToken, String token, String redirectUrl) {
+	public ModelAndView sso(String compToken, String token, String redirectUrl, LKClientTypeEnum clientType) {
 		String platform = Platform.PLATFORM.toString().toLowerCase();
 		try {
-			if (StringUtils.isBlank(compToken) || StringUtils.isBlank(token) || StringUtils.isBlank(redirectUrl)) {
+			if (StringUtils.isBlank(compToken) || StringUtils.isBlank(token) || StringUtils.isBlank(redirectUrl) || (clientType == null)) {
 				throw new LKRuntimeException(LKErrorCodesEnum.PARAM_ERROR);
+			}
+
+			switch (clientType) {
+				case ANDROID:
+				case IOS:
+					session.setAttribute("jsBridge", "true");
+				break;
+				default:
+					session.setAttribute("jsBridge", "false");
+				break;
 			}
 
 			handle(compToken, token);
 
 			return new ModelAndView("redirect:" + "/" + platform + redirectUrl + "/index" + LKFrameworkStatics.WEB_MAPPING_PAGES);
 		} catch (Exception e) {
-			return new ModelAndView("redirect:" + "/" + platform + "/index");
+			return new ModelAndView("redirect:" + "/" + platform + "/index" + LKFrameworkStatics.WEB_MAPPING_PAGES);
 		}
 	}
 
