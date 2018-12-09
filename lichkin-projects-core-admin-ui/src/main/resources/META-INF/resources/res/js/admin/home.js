@@ -305,7 +305,7 @@ LK.home.currentTasks = new Array();
 
 $(function() {
   // 菜单显示隐藏控制
-  $(document).click(function(e) {
+  $doc.click(function(e) {
     var target = $(e.target);
     if (target.is(LK.home.$taskStarterContainer) || target.parents('#lichkin-task-starter-container').length != 0) {
       if (LK.home.$menusContainer.is(':visible')) {

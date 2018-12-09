@@ -40,7 +40,7 @@ var compDictMgmtFormPlugins = [
         pageable : false,
         showSearchButton : false,
         showResetButton : false,
-        $appendTo : $('body'),
+        $appendTo : $body,
         columns : [
           {
             text : 'compName',
