@@ -13,7 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class BaseSummaryEntity extends CompIDEntity {
+public abstract class BaseSummaryEntity extends IDEntity {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 1L;
