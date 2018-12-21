@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lichkin.framework.defines.enums.impl.LKErrorCodesEnum;
 import com.lichkin.framework.defines.exceptions.LKRuntimeException;
-import com.lichkin.framework.web.annotations.WithoutLogin;
 import com.lichkin.springframework.controllers.LKPagesController;
 import com.lichkin.springframework.web.LKSession;
 import com.lichkin.springframework.web.beans.LKPage;
@@ -17,15 +16,6 @@ import com.lichkin.springframework.web.beans.LKPage;
 @Controller
 @RequestMapping("/admin")
 public class AdminCorePagesController extends LKPagesController {
-
-	@WithoutLogin
-	@GetMapping(value = "/index" + MAPPING)
-	public LKPage toIndex() {
-		LKPage mv = new LKPage();
-		mv.putAttribute("systemTag", $systemTag);
-		return mv;
-	}
-
 
 	/** 日志服务器URL根路径 */
 	@Value("${com.lichkin.logs.server.rootUrl}")
