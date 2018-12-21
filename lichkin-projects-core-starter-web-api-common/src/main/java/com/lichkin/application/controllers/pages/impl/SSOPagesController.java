@@ -30,6 +30,7 @@ public abstract class SSOPagesController {
 			switch (clientType) {
 				case ANDROID:
 				case IOS:
+				case APP:
 					session.setAttribute("jsBridge", "true");
 				break;
 				default:
