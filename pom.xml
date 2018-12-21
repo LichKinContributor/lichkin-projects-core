@@ -55,6 +55,7 @@
     <module>lichkin-projects-core-db-connector</module>
     <module>lichkin-projects-core-ALiYunSmsSender</module>
     <module>lichkin-projects-core-admin-index</module>
+    <module>lichkin-projects-core-admin-index-addition</module>
   </modules>
 
   <dependencyManagement>
