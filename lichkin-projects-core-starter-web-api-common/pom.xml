@@ -37,9 +37,10 @@
       <artifactId>lichkin-projects-core-starter-web-common</artifactId>
       <version>${com.lichkin.projects.core.version}</version>
     </dependency>
+    <!-- lichkin projects core -->
     <dependency>
       <groupId>com.lichkin.projects</groupId>
-      <artifactId>lichkin-projects-core-services</artifactId>
+      <artifactId>lichkin-projects-core-entities</artifactId>
       <version>${com.lichkin.projects.core.version}</version>
     </dependency>
   </dependencies>

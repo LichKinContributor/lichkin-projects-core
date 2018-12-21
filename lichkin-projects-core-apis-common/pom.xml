@@ -37,6 +37,11 @@
       <artifactId>lichkin-projects-core-starter-web-api-common</artifactId>
       <version>${com.lichkin.projects.core.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.lichkin.projects</groupId>
+      <artifactId>lichkin-projects-core-services</artifactId>
+      <version>${com.lichkin.projects.core.version}</version>
+    </dependency>
   </dependencies>
 
 </project>
