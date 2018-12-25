@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.lichkin.framework.defines.LKConfigStatics;
 import com.lichkin.framework.defines.LKFrameworkStatics;
 import com.lichkin.framework.defines.Platform;
 import com.lichkin.framework.defines.enums.impl.LKClientTypeEnum;
@@ -31,7 +32,7 @@ public abstract class SSOPagesController {
 				case ANDROID:
 				case IOS:
 				case APP:
-					session.setAttribute("jsBridge", "true");
+					session.setAttribute("jsBridge", LKConfigStatics.WEB_DEBUG ? "false" : "true");
 				break;
 				default:
 					session.setAttribute("jsBridge", "false");
