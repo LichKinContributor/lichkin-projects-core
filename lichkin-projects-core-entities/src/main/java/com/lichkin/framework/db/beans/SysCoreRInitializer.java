@@ -232,6 +232,12 @@ class SysCoreRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("10024000", "SysHolidayEntity", "id");
 		LKDBResource.addColumn("10024001", "SysHolidayEntity", "calendarDate");
 		LKDBResource.addColumn("10024002", "SysHolidayEntity", "holidayType");
+		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysHourEntity", "T_SYS_HOUR", "SysHourEntity");
+		LKDBResource.addColumn("10025000", "SysHourEntity", "id");
+		LKDBResource.addColumn("10025001", "SysHourEntity", "startMinutes");
+		LKDBResource.addColumn("10025002", "SysHourEntity", "endMinutes");
+		LKDBResource.addColumn("10025003", "SysHourEntity", "hourText1");
+		LKDBResource.addColumn("10025004", "SysHourEntity", "hourText2");
 	}
 
 }
