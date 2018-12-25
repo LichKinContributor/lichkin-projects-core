@@ -40,7 +40,7 @@ public abstract class SSOPagesController {
 
 			handle(compToken, token);
 
-			return new ModelAndView("redirect:" + "/" + platform + redirectUrl + "/index" + LKFrameworkStatics.WEB_MAPPING_PAGES);
+			return new ModelAndView("redirect:" + "/" + platform + redirectUrl + (((redirectUrl.split("/").length > 2) || redirectUrl.equals("/home")) ? "" : "/index") + LKFrameworkStatics.WEB_MAPPING_PAGES);
 		} catch (Exception e) {
 			return new ModelAndView("redirect:" + "/" + platform + "/index" + LKFrameworkStatics.WEB_MAPPING_PAGES);
 		}
