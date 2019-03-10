@@ -109,7 +109,9 @@ public abstract class ApiController<CI extends LKRequestBean, CO> extends LKCont
 
 		String requestDatasJson = LKJsonUtils.toJsonWithExcludes(cin, new Class<?>[] { IgnoreLog.class }, "datas");
 		request.setAttribute("requestDatasJson", requestDatasJson);
-		logger.info(String.format("invoke -> {\"requestId\":\"%s\",\"requestDatas\":%s}", request.getAttribute(REQUEST_ID), LKJsonUtils.toJsonWithExcludes(cin, new Class<?>[] { IgnoreLog.class })));
+		if (logger.isDebugEnabled()) {
+			logger.debug(String.format("invoke -> {\"requestId\":\"%s\",\"requestDatas\":%s}", request.getAttribute(REQUEST_ID), LKJsonUtils.toJsonWithExcludes(cin, new Class<?>[] { IgnoreLog.class })));
+		}
 
 		LKResponseBean<CO> responseBean = new LKResponseBean<>(handleInvoke(cin, params));
 		if (saveLog(cin, params)) {
