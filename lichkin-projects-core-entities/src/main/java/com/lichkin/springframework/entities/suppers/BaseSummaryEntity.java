@@ -32,6 +32,6 @@ public abstract class BaseSummaryEntity extends IDEntity {
 
 	/** 汇总数量 */
 	@Column(nullable = false)
-	private Integer quantity;
+	private Long quantity;
 
 }
