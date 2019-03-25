@@ -5,11 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-import com.lichkin.framework.defines.annotations.ClassGenerator;
-import com.lichkin.framework.defines.annotations.FieldGenerator;
-import com.lichkin.framework.defines.annotations.InsertCheckType;
-import com.lichkin.framework.defines.annotations.InsertType;
-import com.lichkin.framework.defines.annotations.UpdateCheckType;
 import com.lichkin.framework.defines.entities.I_Locale;
 import com.lichkin.framework.defines.enums.impl.CategoryAuthTypeEnum;
 import com.lichkin.springframework.entities.suppers.IDEntity;
@@ -24,43 +19,29 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@ClassGenerator(
-
-		afterSaveMain = true, IUSubTables = {}
-
-		, insertCheckType = InsertCheckType.FORCE_CHECK
-
-		, updateCheckType = UpdateCheckType.CHECK
-
-)
 public class SysCategoryEntity extends IDEntity implements I_Locale {
 
 	/** serialVersionUID */
 	private static final long serialVersionUID = 10002L;
 
 	/** 国际化编码 */
-	@FieldGenerator(check = true, insertType = InsertType.COPY_ERROR, updateable = false)
 	@Column(length = 5, nullable = false)
 	private String locale;
 
 	/** 类目编码 */
-	@FieldGenerator(check = true, insertType = InsertType.COPY_ERROR, updateable = false)
 	@Column(length = 64, nullable = false)
 	private String categoryCode;
 
 	/** 类目名称 */
-	@FieldGenerator(check = true)
 	@Column(length = 64, nullable = false)
 	private String categoryName;
 
 	/** 排序号 */
-	@FieldGenerator
 	@Column(nullable = false)
 	private Byte sortId;
 
 	/** 权限类型（枚举） */
 	@Enumerated(EnumType.STRING)
-	@FieldGenerator(insertType = InsertType.COPY_ERROR)
 	@Column(length = 6, nullable = false)
 	private CategoryAuthTypeEnum authType;
 
