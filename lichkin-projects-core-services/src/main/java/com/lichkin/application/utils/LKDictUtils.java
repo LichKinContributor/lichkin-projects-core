@@ -236,4 +236,16 @@ public class LKDictUtils {
 		leftJoinDictionary(sql, "jobTitle", compId, "JOB_TITLE", columnResId, tableIdx);
 	}
 
+
+	/**
+	 * 连接字典表（位置编码）
+	 * @param sql SQL语句对象
+	 * @param compId 公司ID
+	 * @param columnResId 列资源ID
+	 * @param tableIdx 字典表序号（从0开始）
+	 */
+	public static void locationCode(QuerySQL sql, String compId, int columnResId, int tableIdx) {
+		leftJoinDictionary(sql, "locationCode", compId, "LOCATION_CODE", columnResId, tableIdx);
+	}
+
 }
