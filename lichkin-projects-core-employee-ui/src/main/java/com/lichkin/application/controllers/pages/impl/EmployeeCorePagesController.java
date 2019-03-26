@@ -28,7 +28,7 @@ public class EmployeeCorePagesController extends LKPagesController {
 
 
 	/** 日志服务器URL根路径 */
-	@Value("${com.lichkin.logs.server.rootUrl}")
+	@Value("${com.lichkin.logs.server.rootUrl:http://logs.lichkin.com}")
 	private String logsServerRootUrl;
 
 

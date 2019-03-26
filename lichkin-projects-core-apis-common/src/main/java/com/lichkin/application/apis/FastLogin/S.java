@@ -47,7 +47,7 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 
 
 	/** 接口服务器URL根路径 */
-	@Value("${com.lichkin.apis.server.rootUrl}")
+	@Value("${com.lichkin.apis.server.rootUrl:http://apis.lichkin.com}")
 	private String apisServerRootUrl;
 
 	@Autowired
