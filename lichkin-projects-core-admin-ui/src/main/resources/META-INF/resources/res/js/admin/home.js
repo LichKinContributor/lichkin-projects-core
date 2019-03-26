@@ -463,7 +463,7 @@ var addMenu = function(menuJson, $container) {
       $menu.click(function() {
         if (_WEB_DEBUG) {
           if (menuJson.params.url == '/admin/core/errorLog') {
-            LK.openWin(menuJson.params.url);
+            LK.openWin(_logsServerRootUrl);
           } else {
             var lastSubUrlIndex = menuJson.params.url.lastIndexOf('/');
             var lastSubUrl = menuJson.params.url.substring(lastSubUrlIndex + 1);
