@@ -461,7 +461,7 @@ var addMenu = function(menuJson, $container) {
   if (menuJson.children.length == 0) {
     if (typeof menuJson.params.url != 'undefined' && menuJson.params.url != '') {
       $menu.click(function() {
-        if (_WEB_DEBUG) {
+        if (_WEB_DEBUG && !_UI_DEBUG) {
           if (menuJson.params.url == '/admin/core/errorLog') {
             LK.openWin(_logsServerRootUrl);
           } else {
