@@ -21,11 +21,16 @@ public class AdminCorePagesController extends LKPagesController {
 	@Value("${com.lichkin.logs.server.rootUrl:http://logs.lichkin.com}")
 	private String logsServerRootUrl;
 
+	/** 高德地图API参数 */
+	@Value("${com.lichkin.AmapParams:v=1.4.14&key=xxx}")
+	private String AmapParams;
+
 
 	@GetMapping(value = "/home" + MAPPING)
 	public LKPage toHome() {
 		LKPage mv = new LKPage();
 		mv.putAttribute("logsServerRootUrl", logsServerRootUrl);
+		mv.putAttribute("AmapParams", AmapParams);
 		return mv;
 	}
 
