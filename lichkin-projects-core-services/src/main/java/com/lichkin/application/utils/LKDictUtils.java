@@ -220,8 +220,8 @@ public class LKDictUtils {
 	 * @param columnResId 列资源ID
 	 * @param tableIdx 字典表序号（从0开始）
 	 */
-	public static void mapAPI(QuerySQL sql, int columnResId, int tableIdx) {
-		leftJoinDictionary(sql, "mapAPI", LKFrameworkStatics.LichKin, "MAP_API", columnResId, tableIdx);
+	public static void mapType(QuerySQL sql, int columnResId, int tableIdx) {
+		leftJoinDictionary(sql, "mapType", LKFrameworkStatics.LichKin, "MAP_TYPE", columnResId, tableIdx);
 	}
 
 
