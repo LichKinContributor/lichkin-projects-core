@@ -238,6 +238,19 @@ class SysCoreRInitializer implements LKRInitializer {
 		LKDBResource.addColumn("10025002", "SysHourEntity", "endMinutes");
 		LKDBResource.addColumn("10025003", "SysHourEntity", "hourText1");
 		LKDBResource.addColumn("10025004", "SysHourEntity", "hourText2");
+		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysAccumulateEntity", "T_SYS_ACCUMULATE", "SysAccumulateEntity");
+		LKDBResource.addColumn("10026000", "SysAccumulateEntity", "id");
+		LKDBResource.addColumn("10026001", "SysAccumulateEntity", "appKey");
+		LKDBResource.addColumn("10026002", "SysAccumulateEntity", "loginId");
+		LKDBResource.addColumn("10026003", "SysAccumulateEntity", "accumulate");
+		LKDBResource.addTable("com.lichkin.springframework.entities.impl.SysAccumulateFlowEntity", "T_SYS_ACCUMULATE_FLOW", "SysAccumulateFlowEntity");
+		LKDBResource.addColumn("10027000", "SysAccumulateFlowEntity", "id");
+		LKDBResource.addColumn("10027001", "SysAccumulateFlowEntity", "appKey");
+		LKDBResource.addColumn("10027002", "SysAccumulateFlowEntity", "loginId");
+		LKDBResource.addColumn("10027003", "SysAccumulateFlowEntity", "accumulate");
+		LKDBResource.addColumn("10027004", "SysAccumulateFlowEntity", "increase");
+		LKDBResource.addColumn("10027005", "SysAccumulateFlowEntity", "remarks");
+		LKDBResource.addColumn("10027006", "SysAccumulateFlowEntity", "insertTime");
 	}
 
 }
