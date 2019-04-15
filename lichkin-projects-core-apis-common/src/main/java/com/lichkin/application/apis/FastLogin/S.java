@@ -21,6 +21,8 @@ import com.lichkin.framework.defines.exceptions.LKException;
 import com.lichkin.framework.utils.LKDateTimeUtils;
 import com.lichkin.framework.utils.LKRandomUtils;
 import com.lichkin.springframework.controllers.ApiKeyValues;
+import com.lichkin.springframework.entities.impl.SysAccumulateEntity;
+import com.lichkin.springframework.entities.impl.SysAccumulateFlowEntity;
 import com.lichkin.springframework.entities.impl.SysEmployeeEntity;
 import com.lichkin.springframework.entities.impl.SysUserLoginEntity;
 import com.lichkin.springframework.services.LKApiService;
@@ -49,6 +51,10 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 	/** 接口服务器URL根路径 */
 	@Value("${com.lichkin.apis.server.rootUrl:http://apis.lichkin.com}")
 	private String apisServerRootUrl;
+
+	/** 注册积分 */
+	@Value("${com.lichkin.apis.register.accumulate:2000}")
+	private Integer registerAccumulate;
 
 	@Autowired
 	private com.lichkin.application.apis.ValidateSmsSecurityCode.S validateSmsSecurityCodeService;
@@ -122,10 +128,32 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 			// 新增数据
 			dao.persistOne(userLogin);
 
-			if (Platform.PLATFORM.equals(LKPlatform.EMPLOYEE)) {
-				// 将员工与登录信息绑定
-				employee.setLoginId(userLogin.getId());
-				dao.mergeOne(employee);
+			switch (Platform.PLATFORM) {
+				case EMPLOYEE: {
+					// 将员工与登录信息绑定
+					employee.setLoginId(userLogin.getId());
+					dao.mergeOne(employee);
+				}
+				break;
+				case USER: {
+					SysAccumulateEntity accumulate = new SysAccumulateEntity();
+					accumulate.setAppKey(sin.getDatas().getAppKey());
+					accumulate.setLoginId(userLogin.getId());
+					accumulate.setAccumulate(registerAccumulate.longValue());
+					dao.persistOne(accumulate);
+
+					SysAccumulateFlowEntity accumulateFlow = new SysAccumulateFlowEntity();
+					accumulateFlow.setAppKey(sin.getDatas().getAppKey());
+					accumulateFlow.setLoginId(userLogin.getId());
+					accumulateFlow.setIncrease(true);
+					accumulateFlow.setAccumulate(registerAccumulate);
+					accumulateFlow.setRemarks("注册");
+					accumulateFlow.setInsertTime(LKDateTimeUtils.now());
+					dao.persistOne(accumulateFlow);
+				}
+				break;
+				default:
+				break;
 			}
 		}
 
