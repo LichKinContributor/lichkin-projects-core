@@ -25,4 +25,7 @@ public class O {
 	/** 登录名 */
 	private String loginName;
 
+	/** 姓名 */
+	private String userName;
+
 }

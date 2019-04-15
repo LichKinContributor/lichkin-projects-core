@@ -13,6 +13,10 @@ import lombok.Setter;
 @Setter
 public class I extends LKRequestBean {
 
+	/** 姓名 */
+	@NotBlank
+	private String userName;
+
 	/** 登录名 */
 	@LoginName
 	@NotBlank

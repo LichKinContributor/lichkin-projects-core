@@ -143,6 +143,7 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 		out.setPhoto(userLogin.getPhoto());
 		out.setSecurityCenterUrl(apisServerRootUrl + CoreStatics.SSO_URL + CoreStatics.SECURITY_CENTER_URL);
 		out.setApiServerRootUrl(apisServerRootUrl);
+		out.setUserName(userLogin.getUserName());
 		return out;
 	}
 

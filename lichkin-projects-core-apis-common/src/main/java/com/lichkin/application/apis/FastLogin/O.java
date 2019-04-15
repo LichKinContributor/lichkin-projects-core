@@ -31,4 +31,7 @@ public class O {
 	/** true:登录;false:注册. */
 	private boolean login;
 
+	/** 姓名 */
+	private String userName;
+
 }

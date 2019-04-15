@@ -45,11 +45,12 @@ public class S extends LKApiServiceImpl<I, O> implements LKApiService<I, O> {
 		if ((exist != null) && !exist.getId().equals(login.getId())) {
 			throw new LKRuntimeException(ErrorCodes.app_account_exist);
 		}
+		login.setUserName(sin.getUserName());
 		login.setLoginName(sin.getLoginName());
 		login.setPwd(LKMD5Encrypter.encrypt(sin.getPwd()));
 		dao.mergeOne(login);
 
-		return new O(login.getLoginName());
+		return new O(login.getUserName(), login.getLoginName());
 	}
 
 

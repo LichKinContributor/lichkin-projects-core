@@ -28,4 +28,7 @@ public class O {
 	/** 令牌 */
 	private String token;
 
+	/** 姓名 */
+	private String userName;
+
 }
